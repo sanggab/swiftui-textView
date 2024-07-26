@@ -14,23 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "swiftui-textView"
-               BuildableName = "swiftui-textView"
-               BlueprintName = "swiftui-textView"
+               BlueprintIdentifier = "GabTextViewTests"
+               BuildableName = "GabTextViewTests"
+               BlueprintName = "GabTextViewTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "swiftui-textViewTests"
-               BuildableName = "swiftui-textViewTests"
-               BlueprintName = "swiftui-textViewTests"
+               BlueprintIdentifier = "GabTextView"
+               BuildableName = "GabTextView"
+               BlueprintName = "GabTextView"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "swiftui-textViewTests"
-               BuildableName = "swiftui-textViewTests"
-               BlueprintName = "swiftui-textViewTests"
+               BlueprintIdentifier = "GabTextViewTests"
+               BuildableName = "GabTextViewTests"
+               BlueprintName = "GabTextViewTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -75,9 +75,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "swiftui-textView"
-            BuildableName = "swiftui-textView"
-            BlueprintName = "swiftui-textView"
+            BlueprintIdentifier = "GabTextViewTests"
+            BuildableName = "GabTextViewTests"
+            BlueprintName = "GabTextViewTests"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
