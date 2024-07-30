@@ -16,9 +16,12 @@ struct ContentView: View {
         Text("112323")
         
         TextView(text: $text)
+            .changeBackgroundColor(.blue)
             .frame(height: 50)
             .frame(maxWidth: .infinity)
-            .background(Color.black)
+            .onChange(of: text) { newValue in
+                print("newValue : \(newValue)")
+            }
         
     }
 }
