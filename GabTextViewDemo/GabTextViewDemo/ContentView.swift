@@ -7,15 +7,19 @@
 
 import SwiftUI
 
+import GabTextView
+
 struct ContentView: View {
+    @State private var text: String = ""
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-//                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        Text("112323")
+        
+        TextView(text: $text)
+            .frame(height: 50)
+            .frame(maxWidth: .infinity)
+            .background(Color.black)
+        
     }
 }
 

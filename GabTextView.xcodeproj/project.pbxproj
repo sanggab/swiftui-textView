@@ -10,6 +10,7 @@
 		EF4C21EE2C538FDB00688997 /* GabTextView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4C21E42C538FDB00688997 /* GabTextView.framework */; };
 		EF4C21F32C538FDB00688997 /* GabTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */; };
 		EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21FB2C538FEB00688997 /* GabTextView.swift */; };
+		EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +28,7 @@
 		EF4C21ED2C538FDB00688997 /* GabTextViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GabTextViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewTests.swift; sourceTree = "<group>"; };
 		EF4C21FB2C538FEB00688997 /* GabTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextView.swift; sourceTree = "<group>"; };
+		EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 		EF4C21BF2C538FA700688997 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				EFC4CA612C58B5A600C1C86D /* ViewModel */,
 				EF4C21E52C538FDB00688997 /* GabTextView */,
 			);
 			path = Sources;
@@ -96,6 +99,14 @@
 				EF4C21F12C538FDB00688997 /* GabTextViewTests */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		EFC4CA612C58B5A600C1C86D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */,
+				EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

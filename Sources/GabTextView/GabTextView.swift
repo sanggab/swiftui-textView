@@ -7,12 +7,57 @@
 
 import SwiftUI
 
-struct GabTextView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+public struct TextView: UIViewRepresentable {
+    public typealias UIViewType = UITextView
+    
+    
+    @Binding public var text: String
+    
+    public init(text: Binding<String>) {
+        self._text = text
+    }
+    
+    public func makeUIView(context: Context) -> UIViewType {
+        let textView: UITextView = UITextView()
+        textView.backgroundColor = .gray
+        
+//        textView.backgroundColor = .clear
+        textView.delegate = context.coordinator
+        textView.showsVerticalScrollIndicator = false
+        textView.isEditable = true
+        textView.isSelectable = true
+//        textView.isScrollEnabled = isScrollEnabled
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = 0
+        textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        
+        return textView
+    }
+    
+    public func updateUIView(_ textView: UIViewType, context: Context) {
+        print(#function)
+    }
+    
+    public func makeCoordinator() -> TextViewCoordinator {
+        TextViewCoordinator()
+    }
+    
+}
+
+
+// TODO: Modifier 채우기
+public extension TextView {
+    
+    func changeBackgroundColor(_ color: Color) -> TextView {
+        let view = self
+        return view
     }
 }
 
-#Preview {
-    GabTextView()
+public final class TextViewCoordinator: NSObject, UITextViewDelegate {
+    public func textViewDidChange(_ textView: UITextView) {
+        
+    }
+    
 }
