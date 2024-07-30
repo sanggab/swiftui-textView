@@ -19,9 +19,9 @@ struct ContentView: View {
             .changeBackgroundColor(.blue)
             .frame(height: 50)
             .frame(maxWidth: .infinity)
-            .onChange(of: text) { newValue in
-                print("newValue : \(newValue)")
-            }
+//            .onChange(of: text) { newValue in
+//                print("newValue : \(newValue)")
+//            }
         
     }
 }

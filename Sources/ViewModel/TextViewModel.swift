@@ -25,6 +25,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var isEditable: Bool = true
         var isSelectable: Bool = true
         var backgroundColor: Color = .gray
+        var inputModel: TextViewInputModel = .default
     }
     
     enum TextAction: Equatable {
@@ -32,6 +33,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateScrollEnabled(Bool)
         case updateEditable(Bool)
         case updateSelectable(Bool)
+        case updateInputModel(TextViewInputModel)
     }
     
     @Published private var state: TextState = .init()
@@ -50,6 +52,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             update(\.isEditable, value: state)
         case .updateSelectable(let state):
             update(\.isSelectable, value: state)
+        case .updateInputModel(let model):
+            update(\.inputModel, value: model)
         }
     }
 }

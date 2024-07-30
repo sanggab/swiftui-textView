@@ -11,6 +11,7 @@
 		EF4C21F32C538FDB00688997 /* GabTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */; };
 		EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21FB2C538FEB00688997 /* GabTextView.swift */; };
 		EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */; };
+		EFC4CA662C58D15D00C1C86D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC4CA652C58D15D00C1C86D /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewTests.swift; sourceTree = "<group>"; };
 		EF4C21FB2C538FEB00688997 /* GabTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextView.swift; sourceTree = "<group>"; };
 		EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewModel.swift; sourceTree = "<group>"; };
+		EFC4CA652C58D15D00C1C86D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		EF4C21BF2C538FA700688997 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				EFC4CA642C58D15700C1C86D /* Model */,
 				EFC4CA612C58B5A600C1C86D /* ViewModel */,
 				EF4C21E52C538FDB00688997 /* GabTextView */,
 			);
@@ -107,6 +110,14 @@
 				EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		EFC4CA642C58D15700C1C86D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EFC4CA652C58D15D00C1C86D /* Model.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFC4CA662C58D15D00C1C86D /* Model.swift in Sources */,
 				EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */,
 				EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */,
 			);

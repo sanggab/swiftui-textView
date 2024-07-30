@@ -72,6 +72,12 @@ public extension TextView {
         view.viewModel.action(.updateSelectable(state))
         return view
     }
+    
+    func setInputModel(model: TextViewInputModel) -> TextView {
+        let view = self
+        view.viewModel.action(.updateInputModel(model))
+        return view
+    }
 }
 
 public final class TextViewCoordinator: NSObject, UITextViewDelegate {
@@ -83,7 +89,6 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidChange(_ textView: UITextView) {
-        print("text : \(textView.text)")
         parent.text = textView.text
     }
     
