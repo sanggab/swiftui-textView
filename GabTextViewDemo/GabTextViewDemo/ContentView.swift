@@ -17,9 +17,9 @@ struct ContentView: View {
         
         TextView(text: $text)
 //            .changeBackgroundColor(.gray)
-            .isPlaceHolder(content: {
-                Text("Placeholder")
-            })
+            .isPlaceHolder(.topLeading) {
+                Text("Input Message")
+            }
             .frame(height: 50)
             .frame(maxWidth: .infinity)
 //            .onChange(of: text) { newValue in

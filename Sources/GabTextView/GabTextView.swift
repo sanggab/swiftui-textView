@@ -79,16 +79,31 @@ public extension TextView {
         return view
     }
     
-    @available(iOS 15.0, *)
-    func isPlaceHolder<V>(@ViewBuilder content: @escaping () -> V, _ alignment: Alignment = .center) -> some View where V: View {
-        return self.overlay(alignment: alignment) {
-            if self.text.count <= 0 {
-                content()
-            } else {
-                EmptyView()
+    @ViewBuilder
+    func isPlaceHolder<V>(_ alignment: Alignment = .center, @ViewBuilder content: @escaping () -> V) -> some View where V: View {
+        if #available(iOS 15.0, *) {
+            self.overlay(alignment: alignment) {
+                makePlaceHolderView(content: content)
             }
+        } else {
+            self.overlay(makePlaceHolderView(content: content), alignment: alignment)
         }
     }
+}
+
+// MARK: - Helper
+private extension TextView {
+    
+    @ViewBuilder
+    func makePlaceHolderView<V>(@ViewBuilder content: @escaping () -> V) -> some View where V: View {
+        if self.text.count <= 0 {
+            content()
+                .allowsHitTesting(false)
+        } else {
+            EmptyView()
+        }
+    }
+    
 }
 
 public final class TextViewCoordinator: NSObject, UITextViewDelegate {
