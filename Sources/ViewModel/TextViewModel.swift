@@ -26,6 +26,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var isSelectable: Bool = true
         var backgroundColor: Color = .gray
         var inputModel: TextViewInputModel = .default
+        var placeHolderMode: Bool = false
+        var isShowPlaceHolder: Bool = false
     }
     
     enum TextAction: Equatable {
@@ -34,6 +36,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateEditable(Bool)
         case updateSelectable(Bool)
         case updateInputModel(TextViewInputModel)
+        case updatePlaceHolderMode(Bool)
+        case updateShowPlaceHolder(Bool)
     }
     
     @Published private var state: TextState = .init()
@@ -46,14 +50,24 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         switch action {
         case .updateColor(let color):
             update(\.backgroundColor, value: color)
+            
         case .updateScrollEnabled(let state):
             update(\.isScrollEnabled, value: state)
+            
         case .updateEditable(let state):
             update(\.isEditable, value: state)
+            
         case .updateSelectable(let state):
             update(\.isSelectable, value: state)
+            
         case .updateInputModel(let model):
             update(\.inputModel, value: model)
+            
+        case .updatePlaceHolderMode(let state):
+            update(\.placeHolderMode, value: state)
+            
+        case .updateShowPlaceHolder(let state):
+            update(\.isShowPlaceHolder, value: state)
         }
     }
 }

@@ -78,6 +78,17 @@ public extension TextView {
         view.viewModel.action(.updateInputModel(model))
         return view
     }
+    
+    @available(iOS 15.0, *)
+    func isPlaceHolder<V>(@ViewBuilder content: @escaping () -> V, _ alignment: Alignment = .center) -> some View where V: View {
+        return self.overlay(alignment: alignment) {
+            if self.text.count <= 0 {
+                content()
+            } else {
+                EmptyView()
+            }
+        }
+    }
 }
 
 public final class TextViewCoordinator: NSObject, UITextViewDelegate {

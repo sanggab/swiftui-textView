@@ -16,7 +16,10 @@ struct ContentView: View {
         Text("112323")
         
         TextView(text: $text)
-            .changeBackgroundColor(.blue)
+//            .changeBackgroundColor(.gray)
+            .isPlaceHolder(content: {
+                Text("Placeholder")
+            })
             .frame(height: 50)
             .frame(maxWidth: .infinity)
 //            .onChange(of: text) { newValue in

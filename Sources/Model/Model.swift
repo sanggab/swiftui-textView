@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct TextStyle: Equatable {
-    public static let placeHolder = TextStyle(font: .boldSystemFont(ofSize: 15), color: .gray)
+    public static let noneFocus = TextStyle(font: .boldSystemFont(ofSize: 15), color: .gray)
     public static let focus = TextStyle(font: .boldSystemFont(ofSize: 15), color: .black)
     
     public var font: UIFont
@@ -21,14 +21,14 @@ public struct TextStyle: Equatable {
 }
 
 public struct TextViewInputModel: Equatable {
-    public static let `default` = TextViewInputModel(placeHolder: .placeHolder, focus: .focus)
+    public static let `default` = TextViewInputModel(noneFocus: .noneFocus, focus: .focus)
     
-    public var placeHolder: TextStyle
+    public var noneFocus: TextStyle
     public var focus: TextStyle
     
-    public init(placeHolder: TextStyle,
+    public init(noneFocus: TextStyle,
                 focus: TextStyle) {
-        self.placeHolder = placeHolder
+        self.noneFocus = noneFocus
         self.focus = focus
     }
 }
