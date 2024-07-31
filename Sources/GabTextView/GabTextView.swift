@@ -80,7 +80,7 @@ public extension TextView {
     }
     
     @ViewBuilder
-    func isPlaceHolder<V>(_ alignment: Alignment = .center, @ViewBuilder content: @escaping () -> V) -> some View where V: View {
+    func overlayPlaceHolder<V>(_ alignment: Alignment = .center, @ViewBuilder content: @escaping () -> V) -> some View where V: View {
         if #available(iOS 15.0, *) {
             self.overlay(alignment: alignment) {
                 makePlaceHolderView(content: content)
@@ -114,8 +114,22 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         self.parent = parent
     }
     
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+        print("beginEditing")
+        let focusModel = parent.viewModel(\.inputModel).focus
+        textView.font = focusModel.font
+        textView.textColor = UIColor(focusModel.color)
+    }
+    
     public func textViewDidChange(_ textView: UITextView) {
         parent.text = textView.text
+    }
+    
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        print("endEditing")
+        let noneFocusModel = parent.viewModel(\.inputModel).noneFocus
+        textView.font = noneFocusModel.font
+        textView.textColor = UIColor(noneFocusModel.color)
     }
     
 }

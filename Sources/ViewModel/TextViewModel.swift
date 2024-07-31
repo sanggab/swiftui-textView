@@ -24,7 +24,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var isScrollEnabled: Bool = true
         var isEditable: Bool = true
         var isSelectable: Bool = true
-        var backgroundColor: Color = .gray
+        var backgroundColor: Color = .white
         var inputModel: TextViewInputModel = .default
         var placeHolderMode: Bool = false
         var isShowPlaceHolder: Bool = false

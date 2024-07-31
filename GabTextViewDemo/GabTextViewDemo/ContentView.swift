@@ -11,20 +11,25 @@ import GabTextView
 
 struct ContentView: View {
     @State private var text: String = ""
+    @FocusState private var keyboardState
     
     var body: some View {
-        Text("112323")
+        Text("키보드 내려")
+            .onTapGesture {
+                keyboardState = false
+            }
         
         TextView(text: $text)
-//            .changeBackgroundColor(.gray)
-            .isPlaceHolder(.topLeading) {
+            .changeBackgroundColor(.gray.opacity(0.5))
+            .isEditable(true)
+            .isSelectable(true)
+            .setInputModel(model: .default)
+            .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
             }
             .frame(height: 50)
             .frame(maxWidth: .infinity)
-//            .onChange(of: text) { newValue in
-//                print("newValue : \(newValue)")
-//            }
+            .focused($keyboardState)
         
     }
 }
