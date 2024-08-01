@@ -50,25 +50,25 @@ public struct TextView: UIViewRepresentable {
 public extension TextView {
     
     func changeBackgroundColor(_ color: Color) -> TextView {
-        let view = self
+        let view: TextView = self
         view.viewModel.action(.updateColor(color))
         return view
     }
     
     func isScrollEnabled(_ state: Bool) -> TextView {
-        let view = self
+        let view: TextView = self
         view.viewModel.action(.updateScrollEnabled(state))
         return view
     }
     
     func isEditable(_ state: Bool) -> TextView {
-        let view = self
+        let view: TextView = self
         view.viewModel.action(.updateEditable(state))
         return view
     }
     
     func isSelectable(_ state: Bool) -> TextView {
-        let view = self
+        let view: TextView = self
         view.viewModel.action(.updateSelectable(state))
         return view
     }
@@ -88,6 +88,18 @@ public extension TextView {
         } else {
             self.overlay(makePlaceHolderView(content: content), alignment: alignment)
         }
+    }
+    
+    func limieCount(_ count: Int) -> TextView {
+        let view = self
+        
+        return view
+    }
+    
+    func limitLine(_ line: Int) -> TextView {
+        let view = self
+        
+        return view
     }
 }
 
@@ -116,20 +128,25 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     
     public func textViewDidBeginEditing(_ textView: UITextView) {
         print("beginEditing")
-        let focusModel = parent.viewModel(\.inputModel).focus
+        let focusModel: TextStyle = parent.viewModel(\.inputModel).focus
         textView.font = focusModel.font
         textView.textColor = UIColor(focusModel.color)
     }
     
     public func textViewDidChange(_ textView: UITextView) {
+        print("textViewDidChange")
         parent.text = textView.text
     }
     
     public func textViewDidEndEditing(_ textView: UITextView) {
         print("endEditing")
-        let noneFocusModel = parent.viewModel(\.inputModel).noneFocus
+        let noneFocusModel: TextStyle = parent.viewModel(\.inputModel).noneFocus
         textView.font = noneFocusModel.font
         textView.textColor = UIColor(noneFocusModel.color)
     }
     
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        print(#function)
+        return true
+    }
 }

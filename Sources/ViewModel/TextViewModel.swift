@@ -28,6 +28,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var inputModel: TextViewInputModel = .default
         var placeHolderMode: Bool = false
         var isShowPlaceHolder: Bool = false
+        var limitCount: Int = 999999
+        var limitLine: Int = 999999
     }
     
     enum TextAction: Equatable {
