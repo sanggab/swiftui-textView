@@ -159,7 +159,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         
         let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
                                                   options: .usesLineFragmentOrigin,
-                                                  attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.systemFont(ofSize: 17)],
+                                                  attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.systemFont(ofSize: 15)],
                                                   context: nil).height
         
         let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
