@@ -40,6 +40,9 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateInputModel(TextViewInputModel)
         case updatePlaceHolderMode(Bool)
         case updateShowPlaceHolder(Bool)
+        
+        case updateLimitCount(Int)
+        case updateLimitLine(Int)
     }
     
     @Published private var state: TextState = .init()
@@ -70,6 +73,12 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             
         case .updateShowPlaceHolder(let state):
             update(\.isShowPlaceHolder, value: state)
+            
+        case .updateLimitCount(let count):
+            update(\.limitCount, value: count)
+            
+        case .updateLimitLine(let line):
+            update(\.limitLine, value: line)
         }
     }
 }

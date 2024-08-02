@@ -24,6 +24,7 @@ struct ContentView: View {
             .isEditable(true)
             .isSelectable(true)
             .setInputModel(model: .default)
+            .limitCountAndLine(10, 5)
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
             }

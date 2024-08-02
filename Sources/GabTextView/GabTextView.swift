@@ -90,15 +90,22 @@ public extension TextView {
         }
     }
     
-    func limieCount(_ count: Int) -> TextView {
+    func limitCount(_ count: Int) -> TextView {
         let view = self
-        
+        view.viewModel.action(.updateLimitCount(count))
         return view
     }
     
     func limitLine(_ line: Int) -> TextView {
         let view = self
-        
+        view.viewModel.action(.updateLimitLine(line))
+        return view
+    }
+    
+    func limitCountAndLine(_ count: Int, _ line: Int) -> TextView {
+        let view = self
+        view.viewModel.action(.updateLimitCount(count))
+        view.viewModel.action(.updateLimitLine(line))
         return view
     }
 }
@@ -147,6 +154,23 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         print(#function)
+        
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        
+        let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
+                                                  options: .usesLineFragmentOrigin,
+                                                  attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.systemFont(ofSize: 17)],
+                                                  context: nil).height
+        
+        let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
+        
+        print("lines : \(lines)")
+        print("newTextCount: \(newText.count)")
+        
+        if lines > parent.viewModel(\.limitLine) || newText.count > parent.viewModel(\.limitCount) {
+            return false
+        }
+        
         return true
     }
 }
