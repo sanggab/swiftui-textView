@@ -51,31 +51,31 @@ public extension TextView {
     
     func changeBackgroundColor(_ color: Color) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.updateColor(color))
+        view.viewModel.action(.viewOption(.updateColor(color)))
         return view
     }
     
     func isScrollEnabled(_ state: Bool) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.updateScrollEnabled(state))
+        view.viewModel.action(.viewOption(.updateScrollEnabled(state)))
         return view
     }
     
     func isEditable(_ state: Bool) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.updateEditable(state))
+        view.viewModel.action(.viewOption(.updateEditable(state)))
         return view
     }
     
     func isSelectable(_ state: Bool) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.updateSelectable(state))
+        view.viewModel.action(.viewOption(.updateSelectable(state)))
         return view
     }
     
     func setInputModel(model: TextViewInputModel) -> TextView {
         let view = self
-        view.viewModel.action(.updateInputModel(model))
+        view.viewModel.action(.style(.updateInputModel(model)))
         return view
     }
     
@@ -92,20 +92,20 @@ public extension TextView {
     
     func limitCount(_ count: Int) -> TextView {
         let view = self
-        view.viewModel.action(.updateLimitCount(count))
+        view.viewModel.action(.style(.updateLimitCount(count)))
         return view
     }
     
     func limitLine(_ line: Int) -> TextView {
         let view = self
-        view.viewModel.action(.updateLimitLine(line))
+        view.viewModel.action(.style(.updateLimitLine(line)))
         return view
     }
     
     func limitCountAndLine(_ count: Int, _ line: Int) -> TextView {
         let view = self
-        view.viewModel.action(.updateLimitCount(count))
-        view.viewModel.action(.updateLimitLine(line))
+        view.viewModel.action(.style(.updateLimitCount(count)))
+        view.viewModel.action(.style(.updateLimitLine(line)))
         return view
     }
 }
@@ -127,9 +127,9 @@ private extension TextView {
 
 public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     
-    var parent: TextView
+    private var parent: TextView
     
-    init(parent: TextView) {
+    fileprivate init(parent: TextView) {
         self.parent = parent
     }
     

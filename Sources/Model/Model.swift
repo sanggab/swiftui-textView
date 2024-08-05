@@ -32,3 +32,4 @@ public struct TextViewInputModel: Equatable {
         self.focus = focus
     }
 }
+

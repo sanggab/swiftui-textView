@@ -26,20 +26,25 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var isSelectable: Bool = true
         var backgroundColor: Color = .white
         var inputModel: TextViewInputModel = .default
-        var placeHolderMode: Bool = false
-        var isShowPlaceHolder: Bool = false
         var limitCount: Int = 999999
         var limitLine: Int = 999999
     }
     
     enum TextAction: Equatable {
+        case viewOption(ViewOptionAction)
+        
+        case style(StyleAction)
+    }
+    
+    enum ViewOptionAction: Equatable {
         case updateColor(Color)
         case updateScrollEnabled(Bool)
         case updateEditable(Bool)
         case updateSelectable(Bool)
+    }
+    
+    enum StyleAction: Equatable {
         case updateInputModel(TextViewInputModel)
-        case updatePlaceHolderMode(Bool)
-        case updateShowPlaceHolder(Bool)
         
         case updateLimitCount(Int)
         case updateLimitLine(Int)
@@ -53,6 +58,18 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     
     func action(_ action: TextAction) {
         switch action {
+        case .viewOption(let action):
+            optionAction(action)
+        case .style(let action):
+            styleAction(action)
+        }
+    }
+}
+
+private extension TextViewModel {
+    
+    private func optionAction(_ action: ViewOptionAction) {
+        switch action {
         case .updateColor(let color):
             update(\.backgroundColor, value: color)
             
@@ -64,15 +81,17 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             
         case .updateSelectable(let state):
             update(\.isSelectable, value: state)
-            
+        }
+    }
+    
+}
+
+private extension TextViewModel {
+    
+    private func styleAction(_ action: StyleAction) {
+        switch action {
         case .updateInputModel(let model):
             update(\.inputModel, value: model)
-            
-        case .updatePlaceHolderMode(let state):
-            update(\.placeHolderMode, value: state)
-            
-        case .updateShowPlaceHolder(let state):
-            update(\.isShowPlaceHolder, value: state)
             
         case .updateLimitCount(let count):
             update(\.limitCount, value: count)
