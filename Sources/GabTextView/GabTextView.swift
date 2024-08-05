@@ -21,6 +21,11 @@ public struct TextView: UIViewRepresentable {
     public func makeUIView(context: Context) -> UIViewType {
         let textView: UITextView = UITextView()
         
+        let noneFocusModel: TextStyle = viewModel(\.inputModel).noneFocus
+        textView.font = noneFocusModel.font
+        textView.textColor = UIColor(noneFocusModel.color)
+        textView.text = text
+        
         textView.backgroundColor = UIColor(viewModel(\.backgroundColor))
         textView.delegate = context.coordinator
         textView.showsVerticalScrollIndicator = false
@@ -31,6 +36,11 @@ public struct TextView: UIViewRepresentable {
         textView.textContainer.lineFragmentPadding = 0
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
+        if text.count > viewModel(\.limitCount) {
+            let prefixText = textView.text.prefix(viewModel(\.limitCount))
+            textView.text = String(prefixText)
+            text = String(prefixText)
+        }
         
         return textView
     }
@@ -134,26 +144,22 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidBeginEditing(_ textView: UITextView) {
-        print("beginEditing")
         let focusModel: TextStyle = parent.viewModel(\.inputModel).focus
         textView.font = focusModel.font
         textView.textColor = UIColor(focusModel.color)
     }
     
     public func textViewDidChange(_ textView: UITextView) {
-        print("textViewDidChange")
         parent.text = textView.text
     }
     
     public func textViewDidEndEditing(_ textView: UITextView) {
-        print("endEditing")
         let noneFocusModel: TextStyle = parent.viewModel(\.inputModel).noneFocus
         textView.font = noneFocusModel.font
         textView.textColor = UIColor(noneFocusModel.color)
     }
     
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        print(#function)
         
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         
@@ -164,11 +170,22 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         
         let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
         
-        print("lines : \(lines)")
-        print("newTextCount: \(newText.count)")
-        
-        if lines > parent.viewModel(\.limitLine) || newText.count > parent.viewModel(\.limitCount) {
+        if lines > parent.viewModel(\.limitLine) {
             return false
+        }
+        
+        if newText.count > parent.viewModel(\.limitCount) {
+            let prefixCount = parent.viewModel(\.limitCount) - textView.text.count
+            
+            guard prefixCount > 0 else {
+                return false
+            }
+            
+            let prefixText = text.prefix(prefixCount)
+            textView.text.append(contentsOf: prefixText)
+            parent.text = textView.text
+            
+            textView.selectedRange = NSRange(location: parent.viewModel(\.limitCount), length: 0)
         }
         
         return true
