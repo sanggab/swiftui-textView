@@ -67,8 +67,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
 }
 
 private extension TextViewModel {
-    
-    private func optionAction(_ action: ViewOptionAction) {
+    func optionAction(_ action: ViewOptionAction) {
         switch action {
         case .updateColor(let color):
             update(\.backgroundColor, value: color)
@@ -87,8 +86,7 @@ private extension TextViewModel {
 }
 
 private extension TextViewModel {
-    
-    private func styleAction(_ action: StyleAction) {
+    func styleAction(_ action: StyleAction) {
         switch action {
         case .updateInputModel(let model):
             update(\.inputModel, value: model)
