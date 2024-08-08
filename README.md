@@ -105,6 +105,8 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
   <br>
 
+<a name="limit"></a>
+
 <a name="textcountlimit"></a>
 * `func limitCount(_ count: Int) -> TextView`   
   TextView의 textCount를 제한합니다.   
@@ -141,7 +143,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
   <br>
 
-<a name="placeholder">
+<a name="placeholder"></a>
 ## PlaceHolder
 
 * `@ViewBuilder
