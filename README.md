@@ -50,7 +50,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
   <br>
   
-
+<a name="isscrollenabled"></a>
 * `func isScrollEnabled(_ state: Bool) -> TextView`   
   TextView의 isScrollEnabled를 설정합니다.   
   default값은 true입니다.
@@ -62,7 +62,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
   <br>
   
-
+<a name="iseditable"></a>
 * `func isEditable(_ state: Bool) -> TextView`   
   TextView의 isEditable을 설정합니다.   
   default값은 true입니다.
@@ -74,7 +74,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
   <br>
   
-
+<a name="isselectable"></a>
 * `func isSelectable(_ state: Bool) -> TextView`   
   TextView의 isSelectable을 설정합니다.   
   default값은 true입니다.
@@ -85,32 +85,13 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
       .isSelectable(false)
   ```
   <br>
-
-* `@ViewBuilder
-  func overlayPlaceHolder<V>(_ alignment: Alignment = .center, @ViewBuilder content: @escaping () -> V) -> some View where V: View`   
-  TextView에 PlaceHolder를 세팅합니다.   
-  alignment옵션으로 content의 alignment를 설정할 수 있습니다.   
-  text의 count가 0이하일 경우에만 content가 노출 되고, 아닐 경우에는 EmptyView()를 리턴합니다.
-
-  ##### Usage examples:
-  ```swift
-  TextView(text: $text)
-      .changeBackgroundColor(.gray)
-      .overlayPlaceHolder(.topLeading) {
-          Text("Input Message!")
-      }
-      .frame(height: 50)
-  ```
-
-  <img src="doc_img/modifier/overlayPlaceHolder/overlayPlaceHolder.gif"/>
-
-  <br>
   <br>
   <br>
 
 <a name="style"></a>
 ## Style
 
+<a name="setinputModel"></a>
 * `func setInputModel(model: TextViewInputModel) -> TextView`   
   TextView의 keyboard focus / noneFocus일 때 font하고 textColor를 설정합니다.
 
@@ -124,6 +105,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
   <br>
 
+<a name="textcountlimit"></a>
 * `func limitCount(_ count: Int) -> TextView`   
   TextView의 textCount를 제한합니다.   
   default값은 999,999입니다.
@@ -135,7 +117,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
   <br>
   
-
+<a name="textlintlimit"></a>
 * `func limitLine(_ line: Int) -> TextView`
   TextView의 line을 제한합니다.   
   default값은 999,999입니다.
@@ -158,6 +140,29 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
       .limitCountAndLine(100, 5)
   ```
   <br>
-  
 
+<a name="placeholder">
+## PlaceHolder
+
+* `@ViewBuilder
+  func overlayPlaceHolder<V>(_ alignment: Alignment = .center, @ViewBuilder content: @escaping () -> V) -> some View where V: View`   
+  TextView에 PlaceHolder를 세팅합니다.   
+  alignment옵션으로 content의 alignment를 설정할 수 있습니다.   
+  text의 count가 0이하일 경우에만 content가 노출 되고, 아닐 경우에는 EmptyView()를 리턴합니다.
+
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .changeBackgroundColor(.gray)
+      .overlayPlaceHolder(.topLeading) {
+          Text("Input Message!")
+      }
+      .frame(height: 50)
+  ```
+
+  <img src="doc_img/modifier/overlayPlaceHolder/overlayPlaceHolder.gif"/>
+
+  <br>
+  <br>
+  <br>
 
