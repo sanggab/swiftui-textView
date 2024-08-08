@@ -9,6 +9,17 @@
 ### Content
 * [Documentation](#documentation)
 * [Modifier](#modifier)
+  * [ViewOption](#viewOption)
+    * [ChangeBackgroundColor](#changebackgroundcolor)
+    * [ScrollEnabled](#isscrollenabled)
+    * [Editable](#iseditable)
+    * [Selectable](#isselectable)
+  * [Style](#style)
+    * [InputModel](#setinputModel)
+    * [Limit](#limit)
+      * [TextCount](#textcountlimit)
+      * [TextLine](#textlintlimit)
+  * [PlaceHolder](#placeholder)
 
 
 <a name="documentation"></a>
@@ -21,6 +32,12 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
 <a name="modifier"></a>
 # Modifier
 
+
+
+<a name="viewOption"></a>
+## ViewOption
+
+<a name="changebackgroundcolor"></a>
 * `func changeBackgroundColor(_ color: Color) -> TextView`   
   TextView의 backgroundColor를 지정합니다.
   TextView의 backgroundColor를 변경하려면 Representable로 구현된 View에 .background() modifier 구현해도 변경되지 않기 때문에, UITextView의 background 옵션을 직접 변경해줘야 합니다.   
@@ -68,20 +85,6 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
       .isSelectable(false)
   ```
   <br>
-  
-
-* `func setInputModel(model: TextViewInputModel) -> TextView`   
-  TextView의 keyboard focus / noneFocus일 때 font하고 textColor를 설정합니다.
-
-  ##### Usage examples:
-  ```swift
-  TextView(text: $text)
-      .setInputModel(model: TextViewInputModel(noneFocus: TextStyle(font: .boldSystemFont(ofSize: 15),
-                                                                    color: .orange),
-                                               focus: TextStyle(font: .boldSystemFont(ofSize: 15),
-                                                                color: .blue)))
-  ```
-  <br>
 
 * `@ViewBuilder
   func overlayPlaceHolder<V>(_ alignment: Alignment = .center, @ViewBuilder content: @escaping () -> V) -> some View where V: View`   
@@ -99,10 +102,27 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
       .frame(height: 50)
   ```
 
-
+  <img src="doc_img/modifier/overlayPlaceHolder/overlayPlaceHolder.gif"/>
 
   <br>
-  
+  <br>
+  <br>
+
+<a name="style"></a>
+## Style
+
+* `func setInputModel(model: TextViewInputModel) -> TextView`   
+  TextView의 keyboard focus / noneFocus일 때 font하고 textColor를 설정합니다.
+
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .setInputModel(model: TextViewInputModel(noneFocus: TextStyle(font: .boldSystemFont(ofSize: 15),
+                                                                    color: .orange),
+                                               focus: TextStyle(font: .boldSystemFont(ofSize: 15),
+                                                                color: .blue)))
+  ```
+  <br>
 
 * `func limitCount(_ count: Int) -> TextView`   
   TextView의 textCount를 제한합니다.   
