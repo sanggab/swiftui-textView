@@ -18,19 +18,26 @@ struct ContentView: View {
             .onTapGesture {
                 keyboardState = false
             }
+//        
+//        TextView(text: $text)
+//            .changeBackgroundColor(.gray.opacity(0.5))
+//            .isEditable(true)
+//            .isSelectable(true)
+//            .setInputModel(model: .default)
+//            .limitCountAndLine(10, 5)
+//            .overlayPlaceHolder(.topLeading) {
+//                Text("Input Message")
+//            }
+//            .frame(height: 50)
+//            .frame(maxWidth: .infinity)
+//            .focused($keyboardState)
         
         TextView(text: $text)
-            .changeBackgroundColor(.gray.opacity(0.5))
-            .isEditable(true)
-            .isSelectable(true)
-            .setInputModel(model: .default)
-            .limitCountAndLine(10, 5)
+            .changeBackgroundColor(.gray)
             .overlayPlaceHolder(.topLeading) {
-                Text("Input Message")
+                Text("Input Message!")
             }
             .frame(height: 50)
-            .frame(maxWidth: .infinity)
-            .focused($keyboardState)
         
     }
 }
