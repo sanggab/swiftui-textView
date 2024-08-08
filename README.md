@@ -41,7 +41,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ##### Usage examples:
   ```swift
   TextView(text: $text)
-      .isScrollEnabled(true)
+      .isScrollEnabled(false)
   ```
   <br>
   
@@ -53,7 +53,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ##### Usage examples:
   ```swift
   TextView(text: $text)
-      .isEditable(true)
+      .isEditable(false)
   ```
   <br>
   
@@ -65,7 +65,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ##### Usage examples:
   ```swift
   TextView(text: $text)
-      .isSelectable(true)
+      .isSelectable(false)
   ```
   <br>
   
@@ -92,10 +92,15 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ##### Usage examples:
   ```swift
   TextView(text: $text)
-      .overlayPlaceHolder(.leading) {
+      .changeBackgroundColor(.gray)
+      .overlayPlaceHolder(.topLeading) {
           Text("Input Message!")
       }
+      .frame(height: 50)
   ```
+
+
+
   <br>
   
 
@@ -106,7 +111,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
     ##### Usage examples:
   ```swift
   TextView(text: $text)
-      .changeBackgroundColor(.gray)
+      .limitCount(100)
   ```
   <br>
   
@@ -118,7 +123,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
     ##### Usage examples:
   ```swift
   TextView(text: $text)
-      .changeBackgroundColor(.gray)
+      .limitLine(5)
   ```
   <br>
   
@@ -130,7 +135,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ##### Usage examples:
   ```swift
   TextView(text: $text)
-      .changeBackgroundColor(.gray)
+      .limitCountAndLine(100, 5)
   ```
   <br>
   
