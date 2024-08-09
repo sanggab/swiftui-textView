@@ -85,13 +85,13 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
       .isSelectable(false)
   ```
   <br>
-  <br>
-  <br>
 
 <a name="style"></a>
 ## Style
 
+
 <a name="appearance"></a>
+### Appearance
 * `func setTextViewAppearanceModel(_ config: TextViewAppearanceModel = .default) -> TextView`   
   TextView의 keyboard focus / noneFocus일 때 font하고 textColor를 설정합니다.
 
@@ -130,6 +130,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
 
   
 <a name="limit"></a>
+### Limit
 
 <a name="textcountlimit"></a>
 * `func limitCount(_ count: Int) -> TextView`   
