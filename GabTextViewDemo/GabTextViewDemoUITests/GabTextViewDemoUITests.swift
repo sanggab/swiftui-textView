@@ -26,6 +26,22 @@ final class GabTextViewDemoUITests: XCTestCase {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
+        
+//        let textview =  app.staticTexts["GabTextView"].firstMatch
+        let textView = app.textViews["GabTextView"].firstMatch
+        
+        XCTAssertNotNil(textView)
+        
+        textView.tap()
+//        textView.typeText("Hi Nice to meet you")
+        textView.typeText("h\nq\nw\ne\nr\nt\ny\n")
+        textView.typeText("limit count test")
+        
+        let hideText = app.staticTexts["키보드 내려"].firstMatch
+        
+        XCTAssertNotNil(hideText)
+        
+        hideText.tap()
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }

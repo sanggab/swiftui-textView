@@ -87,7 +87,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EF4C21AB2C538F4000688997"
+               BlueprintIdentifier = "EF3760592C65E8B6006F3EA2"
                BuildableName = "GabTextViewUITests.xctest"
                BlueprintName = "GabTextViewUITests"
                ReferencedContainer = "container:GabTextView.xcodeproj">

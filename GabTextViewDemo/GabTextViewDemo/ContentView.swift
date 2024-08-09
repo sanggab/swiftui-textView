@@ -15,29 +15,29 @@ struct ContentView: View {
     
     var body: some View {
         Text("키보드 내려")
+            .accessibilityLabel("보이스 기능 입니다. 키보드 내려")
+            .accessibilityIdentifier("키보드 내려")
             .onTapGesture {
                 keyboardState = false
             }
-//        
-//        TextView(text: $text)
-//            .changeBackgroundColor(.gray.opacity(0.5))
-//            .isEditable(true)
-//            .isSelectable(true)
-//            .setInputModel(model: .default)
-//            .limitCountAndLine(10, 5)
-//            .overlayPlaceHolder(.topLeading) {
-//                Text("Input Message")
-//            }
-//            .frame(height: 50)
-//            .frame(maxWidth: .infinity)
-//            .focused($keyboardState)
         
+//        Button("키보드 내려") {
+//            keyboardState = false
+//        }
+//
         TextView(text: $text)
-            .changeBackgroundColor(.gray)
+            .changeBackgroundColor(.gray.opacity(0.5))
+            .isEditable(true)
+            .isSelectable(true)
+            .setInputModel(model: .default)
+            .limitCountAndLine(10, 5)
             .overlayPlaceHolder(.topLeading) {
-                Text("Input Message!")
+                Text("Input Message")
             }
             .frame(height: 50)
+            .frame(maxWidth: .infinity)
+            .accessibilityIdentifier("GabTextView")
+            .focused($keyboardState)
         
     }
 }

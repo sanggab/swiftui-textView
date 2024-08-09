@@ -91,6 +91,8 @@ final class GabTextViewTests: XCTestCase {
         
         self.text = "GabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGab"
         
+        let _ = self.textView.limitCount(150)
+        
         XCTAssertLessThan(self.text.count, self.textView.viewModel(\.limitCount))
     }
     
