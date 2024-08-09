@@ -112,7 +112,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```swift
   TextView(text: $text)
       .setFocusAppearance(TextAppearance(font: .boldSystemFont(ofSize: 15),
-                                               color: .blue))
+                                         color: .blue))
   ```
   <br>
   
@@ -123,7 +123,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```swift
   TextView(text: $text)
       .setNoneFocusAppearance(TextAppearance(font: .boldSystemFont(ofSize: 15),
-                                               color: .orange))
+                                             color: .orange))
   ```
 
   <br>
