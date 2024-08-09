@@ -20,6 +20,48 @@
                ReferencedContainer = "container:GabTextView.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EF4C21EC2C538FDB00688997"
+               BuildableName = "GabTextViewTests.xctest"
+               BlueprintName = "GabTextViewTests"
+               ReferencedContainer = "container:GabTextView.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EF4C22092C53905700688997"
+               BuildableName = "GabTextViewDemo.app"
+               BlueprintName = "GabTextViewDemo"
+               ReferencedContainer = "container:GabTextViewDemo/GabTextViewDemo.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EF4C22192C53905900688997"
+               BuildableName = "GabTextViewDemoTests.xctest"
+               BlueprintName = "GabTextViewDemoTests"
+               ReferencedContainer = "container:GabTextViewDemo/GabTextViewDemo.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
