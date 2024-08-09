@@ -7,9 +7,16 @@
 
 import SwiftUI
 
-public struct TextStyle: Equatable {
-    public static let noneFocus = TextStyle(font: .boldSystemFont(ofSize: 15), color: .gray)
-    public static let focus = TextStyle(font: .boldSystemFont(ofSize: 15), color: .black)
+@frozen
+public enum TextAppearanceType {
+    case focus
+    case noneFocus
+}
+
+@frozen
+public struct TextAppearance: Equatable {
+    public static let noneFocus = TextAppearance(font: .boldSystemFont(ofSize: 15), color: .gray)
+    public static let focus = TextAppearance(font: .boldSystemFont(ofSize: 15), color: .black)
     
     public var font: UIFont
     public var color: Color
@@ -20,14 +27,15 @@ public struct TextStyle: Equatable {
     }
 }
 
-public struct TextViewInputModel: Equatable {
-    public static let `default` = TextViewInputModel(noneFocus: .noneFocus, focus: .focus)
+@frozen
+public struct TextViewAppearanceModel: Equatable {
+    public static let `default` = TextViewAppearanceModel(noneFocus: .noneFocus, focus: .focus)
     
-    public var noneFocus: TextStyle
-    public var focus: TextStyle
+    public var noneFocus: TextAppearance
+    public var focus: TextAppearance
     
-    public init(noneFocus: TextStyle,
-                focus: TextStyle) {
+    public init(noneFocus: TextAppearance,
+                focus: TextAppearance) {
         self.noneFocus = noneFocus
         self.focus = focus
     }

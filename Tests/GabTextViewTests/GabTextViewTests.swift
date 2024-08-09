@@ -65,19 +65,19 @@ final class GabTextViewTests: XCTestCase {
     func testInputModel() {
         XCTAssertNotNil(self.textView)
         
-        XCTAssertEqual(TextViewInputModel.default, self.textView.viewModel(\.inputModel))
+        XCTAssertEqual(TextViewAppearanceModel.default, self.textView.viewModel(\.appearance))
         
-        let focusStyle: TextStyle = TextStyle(font: .boldSystemFont(ofSize: 16),
+        let focusStyle: TextAppearance = TextAppearance(font: .boldSystemFont(ofSize: 16),
                                               color: .red)
         
-        let noneFocusStyle: TextStyle = TextStyle(font: .boldSystemFont(ofSize: 16),
+        let noneFocusStyle: TextAppearance = TextAppearance(font: .boldSystemFont(ofSize: 16),
                                                   color: .orange)
         
-        let _ = self.textView.setInputModel(model: TextViewInputModel(noneFocus: noneFocusStyle,
-                                                                      focus: focusStyle))
+        let _ = self.textView.setTextViewAppearanceModel(TextViewAppearanceModel(noneFocus: noneFocusStyle,
+                                                                                 focus: focusStyle))
         
-        XCTAssertEqual(noneFocusStyle, self.textView.viewModel(\.inputModel).noneFocus)
-        XCTAssertEqual(focusStyle, self.textView.viewModel(\.inputModel).focus)
+        XCTAssertEqual(noneFocusStyle, self.textView.viewModel(\.appearance).noneFocus)
+        XCTAssertEqual(focusStyle, self.textView.viewModel(\.appearance).focus)
     }
     
     func testLimtCount() {

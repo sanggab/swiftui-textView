@@ -29,7 +29,7 @@ struct ContentView: View {
             .changeBackgroundColor(.gray.opacity(0.5))
             .isEditable(true)
             .isSelectable(true)
-            .setInputModel(model: .default)
+            .setTextViewAppearanceModel(.default)
             .limitCountAndLine(10, 5)
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")

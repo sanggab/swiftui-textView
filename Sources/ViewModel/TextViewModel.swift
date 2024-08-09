@@ -25,7 +25,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var isEditable: Bool = true
         var isSelectable: Bool = true
         var backgroundColor: Color = .white
-        var inputModel: TextViewInputModel = .default
+        var appearance: TextViewAppearanceModel = .default
         var limitCount: Int = 999999
         var limitLine: Int = 999999
     }
@@ -44,7 +44,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     }
     
     enum StyleAction: Equatable {
-        case updateInputModel(TextViewInputModel)
+        case updateTextViewAppearanceModel(TextViewAppearanceModel)
+        case updateTextAppearance(TextAppearanceType, TextAppearance)
         
         case updateLimitCount(Int)
         case updateLimitLine(Int)
@@ -88,8 +89,16 @@ private extension TextViewModel {
 private extension TextViewModel {
     func styleAction(_ action: StyleAction) {
         switch action {
-        case .updateInputModel(let model):
-            update(\.inputModel, value: model)
+        case .updateTextViewAppearanceModel(let appearance):
+            update(\.appearance, value: appearance)
+            
+        case .updateTextAppearance(let type, let appearance):
+            switch type {
+            case .focus:
+                update(\.appearance.focus, value: appearance)
+            case .noneFocus:
+                update(\.appearance.noneFocus, value: appearance)
+            }
             
         case .updateLimitCount(let count):
             update(\.limitCount, value: count)
