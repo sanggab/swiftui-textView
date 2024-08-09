@@ -15,7 +15,7 @@
     * [Editable](#iseditable)
     * [Selectable](#isselectable)
   * [Style](#style)
-    * [InputModel](#setinputModel)
+    * [Appearance](#appearance)
     * [Limit](#limit)
       * [TextCount](#textcountlimit)
       * [TextLine](#textlintlimit)
@@ -91,20 +91,44 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
 <a name="style"></a>
 ## Style
 
-<a name="setinputModel"></a>
-* `func setInputModel(model: TextViewInputModel) -> TextView`   
+<a name="appearance"></a>
+* `func setTextViewAppearanceModel(_ config: TextViewAppearanceModel = .default) -> TextView`   
   TextView의 keyboard focus / noneFocus일 때 font하고 textColor를 설정합니다.
 
   ##### Usage examples:
   ```swift
   TextView(text: $text)
-      .setInputModel(model: TextViewInputModel(noneFocus: TextStyle(font: .boldSystemFont(ofSize: 15),
-                                                                    color: .orange),
-                                               focus: TextStyle(font: .boldSystemFont(ofSize: 15),
-                                                                color: .blue)))
+      .setTextViewAppearanceModel(TextViewAppearanceModel(noneFocus: TextAppearance(font: .boldSystemFont(ofSize: 15),
+                                                                                    color: .orange),
+                                                          focus: TextAppearance(font: .boldSystemFont(ofSize: 15),
+                                                          color: .blue)))
   ```
   <br>
 
+* `func setFocusAppearance(_ config: TextAppearance = .focus) -> TextView`   
+  TextView의 focus의 font하고 textColor를 설정합니다.
+
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .setFocusAppearance(TextAppearance(font: .boldSystemFont(ofSize: 15),
+                                               color: .blue))
+  ```
+  <br>
+  
+* `func setNoneFocusAppearance(_ config: TextAppearance = .noneFocus) -> TextView`
+  TextView의 noneFocus의 font하고 textColor를 설정합니다.
+  
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .setNoneFocusAppearance(TextAppearance(font: .boldSystemFont(ofSize: 15),
+                                               color: .orange))
+  ```
+
+  <br>
+
+  
 <a name="limit"></a>
 
 <a name="textcountlimit"></a>
