@@ -93,7 +93,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
 <a name="appearance"></a>
 ### Appearance
 * `func setTextViewAppearanceModel(_ config: TextViewAppearanceModel = .default) -> TextView`   
-  TextView의 keyboard focus / noneFocus일 때 font하고 textColor를 설정합니다.
+  TextView의 keyboard focus / noneFocus일 때 font하고 textColor를 설정합니다.   
 
   ##### Usage examples:
   ```swift
@@ -106,7 +106,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   <br>
 
 * `func setFocusAppearance(_ config: TextAppearance = .focus) -> TextView`   
-  TextView의 focus의 font하고 textColor를 설정합니다.
+  TextView의 focus의 font하고 textColor를 설정합니다.   
 
   ##### Usage examples:
   ```swift
@@ -145,7 +145,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   <br>
   
 <a name="textlintlimit"></a>
-* `func limitLine(_ line: Int) -> TextView`
+* `func limitLine(_ line: Int) -> TextView`   
   TextView의 line을 제한합니다.   
   default값은 999,999입니다.
 
@@ -157,7 +157,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   <br>
   
 
-* `func limitCountAndLine(_ count: Int, _ line: Int) -> TextView`
+* `func limitCountAndLine(_ count: Int, _ line: Int) -> TextView`    
   TextView의 textCount와 line을 제한합니다.   
   default값은 둘 다 999,999입니다.
 
