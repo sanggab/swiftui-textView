@@ -116,8 +116,8 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
   <br>
   
-* `func setNoneFocusAppearance(_ config: TextAppearance = .noneFocus) -> TextView`
-  TextView의 noneFocus의 font하고 textColor를 설정합니다.
+* `func setNoneFocusAppearance(_ config: TextAppearance = .noneFocus) -> TextView`   
+  TextView의 noneFocus의 font하고 textColor를 설정합니다.   
   
   ##### Usage examples:
   ```swift
