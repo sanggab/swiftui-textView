@@ -8,41 +8,6 @@
 import UIKit
 import SwiftUI
 
-
-// MARK: - View Option
-public extension TextView {
-    /// TextView의 BackgroundColor를 변경합니다.
-    func changeBackgroundColor(_ color: Color) -> TextView {
-        let view: TextView = self
-        view.viewModel.action(.viewOption(.updateColor(color)))
-        return view
-    }
-    /// TextView의 isScrollEnabled의 옵션을 설정합니다.
-    func isScrollEnabled(_ state: Bool) -> TextView {
-        let view: TextView = self
-        view.viewModel.action(.viewOption(.updateScrollEnabled(state)))
-        return view
-    }
-    /// TextView의 isEditable의 옵션을 설정합니다.
-    func isEditable(_ state: Bool) -> TextView {
-        let view: TextView = self
-        view.viewModel.action(.viewOption(.updateEditable(state)))
-        return view
-    }
-    /// TextView의 isSelectable의 옵션을 설정합니다.
-    func isSelectable(_ state: Bool) -> TextView {
-        let view: TextView = self
-        view.viewModel.action(.viewOption(.updateSelectable(state)))
-        return view
-    }
-    
-    func setContentCompressionResistancePriority(_ priority: UILayoutPriority, for axis: NSLayoutConstraint.Axis) -> TextView {
-        let view: TextView = self
-        view.viewModel.action(.viewOption(.updateSetContentCompressionResistancePriority(priority, axis)))
-        return view
-    }
-}
-
 // MARK: - Style
 public extension TextView {
     /// TextView가 키보드가 focus / noneFocus 시에 font랑 Color를 지정합니다.

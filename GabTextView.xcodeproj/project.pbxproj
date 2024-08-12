@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF44A2312C69A1D100687479 /* GabTextView + ViewOptionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2302C69A1D100687479 /* GabTextView + ViewOptionModifier.swift */; };
 		EF4C21EE2C538FDB00688997 /* GabTextView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4C21E42C538FDB00688997 /* GabTextView.framework */; };
 		EF4C21F32C538FDB00688997 /* GabTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */; };
 		EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21FB2C538FEB00688997 /* GabTextView.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EF44A2302C69A1D100687479 /* GabTextView + ViewOptionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ViewOptionModifier.swift"; sourceTree = "<group>"; };
 		EF4C21E42C538FDB00688997 /* GabTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GabTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C21ED2C538FDB00688997 /* GabTextViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GabTextViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewTests.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			children = (
 				EF4C21FB2C538FEB00688997 /* GabTextView.swift */,
 				EF6D3B6E2C6608FF00D70E66 /* GabTextView + Modifier.swift */,
+				EF44A2302C69A1D100687479 /* GabTextView + ViewOptionModifier.swift */,
 			);
 			path = GabTextView;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */,
 				EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */,
 				EF6D3B6F2C6608FF00D70E66 /* GabTextView + Modifier.swift in Sources */,
+				EF44A2312C69A1D100687479 /* GabTextView + ViewOptionModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

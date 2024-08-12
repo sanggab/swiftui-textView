@@ -26,6 +26,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var isSelectable: Bool = true
         var backgroundColor: Color = .white
         var contentPriority: TextViewContentPriority = .default
+        var textContainerInset: UIEdgeInsets = .zero
     }
     
     struct ViewStyleState: Equatable {
@@ -40,6 +41,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateEditable(Bool)
         case updateSelectable(Bool)
         case updateSetContentCompressionResistancePriority(UILayoutPriority, NSLayoutConstraint.Axis)
+        case updateTextContainerInset(UIEdgeInsets)
     }
     
     enum ViewStyleAction: Equatable {
@@ -94,6 +96,9 @@ private extension TextViewModel {
             
         case .updateSetContentCompressionResistancePriority(let priority, let axis):
             update(\.viewOptionState.contentPriority, value: TextViewContentPriority(priority: priority, axis: axis))
+            
+        case .updateTextContainerInset(let edgeInsets):
+            update(\.viewOptionState.textContainerInset, value: edgeInsets)
         }
     }
     

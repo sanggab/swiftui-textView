@@ -36,6 +36,7 @@ public struct TextView: UIViewRepresentable {
         textView.textContainer.lineFragmentPadding = 0
         textView.setContentCompressionResistancePriority(viewModel(\.viewOptionState.contentPriority).priority, for: viewModel(\.viewOptionState.contentPriority).axis)
         
+        
         if text.count > viewModel(\.viewStyleState.limitCount) {
             let prefixText = textView.text.prefix(viewModel(\.viewStyleState.limitCount))
             textView.text = String(prefixText)
