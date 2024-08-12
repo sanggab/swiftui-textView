@@ -21,23 +21,23 @@ public struct TextView: UIViewRepresentable {
     public func makeUIView(context: Context) -> UIViewType {
         let textView: UITextView = UITextView()
         
-        let noneFocusModel: TextAppearance = viewModel(\.appearance).noneFocus
+        let noneFocusModel: TextAppearance = viewModel(\.viewStyleState.appearance).noneFocus
         textView.font = noneFocusModel.font
         textView.textColor = UIColor(noneFocusModel.color)
         textView.text = text
         
-        textView.backgroundColor = UIColor(viewModel(\.backgroundColor))
+        textView.backgroundColor = UIColor(viewModel(\.viewOptionState.backgroundColor))
         textView.delegate = context.coordinator
         textView.showsVerticalScrollIndicator = false
-        textView.isEditable = viewModel(\.isEditable)
-        textView.isSelectable = viewModel(\.isSelectable)
-        textView.isScrollEnabled = viewModel(\.isScrollEnabled)
+        textView.isEditable = viewModel(\.viewOptionState.isEditable)
+        textView.isSelectable = viewModel(\.viewOptionState.isSelectable)
+        textView.isScrollEnabled = viewModel(\.viewOptionState.isScrollEnabled)
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
-        textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        textView.setContentCompressionResistancePriority(viewModel(\.viewOptionState.contentPriority).priority, for: viewModel(\.viewOptionState.contentPriority).axis)
         
-        if text.count > viewModel(\.limitCount) {
-            let prefixText = textView.text.prefix(viewModel(\.limitCount))
+        if text.count > viewModel(\.viewStyleState.limitCount) {
+            let prefixText = textView.text.prefix(viewModel(\.viewStyleState.limitCount))
             textView.text = String(prefixText)
             text = String(prefixText)
         }
@@ -63,7 +63,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidBeginEditing(_ textView: UITextView) {
-        let focusAppearance: TextAppearance = parent.viewModel(\.appearance).focus
+        let focusAppearance: TextAppearance = parent.viewModel(\.viewStyleState.appearance).focus
         textView.font = focusAppearance.font
         textView.textColor = UIColor(focusAppearance.color)
     }
@@ -73,7 +73,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidEndEditing(_ textView: UITextView) {
-        let noneFocusAppearance: TextAppearance = parent.viewModel(\.appearance).noneFocus
+        let noneFocusAppearance: TextAppearance = parent.viewModel(\.viewStyleState.appearance).noneFocus
         textView.font = noneFocusAppearance.font
         textView.textColor = UIColor(noneFocusAppearance.color)
     }
@@ -89,12 +89,12 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         
         let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
         
-        if lines > parent.viewModel(\.limitLine) {
+        if lines > parent.viewModel(\.viewStyleState.limitLine) {
             return false
         }
         
-        if newText.count > parent.viewModel(\.limitCount) {
-            let prefixCount = parent.viewModel(\.limitCount) - textView.text.count
+        if newText.count > parent.viewModel(\.viewStyleState.limitCount) {
+            let prefixCount = parent.viewModel(\.viewStyleState.limitCount) - textView.text.count
             
             guard prefixCount > 0 else {
                 return false
@@ -104,7 +104,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             textView.text.append(contentsOf: prefixText)
             parent.text = textView.text
             
-            textView.selectedRange = NSRange(location: parent.viewModel(\.limitCount), length: 0)
+            textView.selectedRange = NSRange(location: parent.viewModel(\.viewStyleState.limitCount), length: 0)
         }
         
         return true

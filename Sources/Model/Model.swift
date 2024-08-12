@@ -41,3 +41,25 @@ public struct TextViewAppearanceModel: Equatable {
     }
 }
 
+@frozen
+public struct TextViewContentPriority: Equatable {
+    public static let `default` = TextViewContentPriority(priority: .defaultLow, axis: .horizontal)
+    
+    public var priority: UILayoutPriority
+    public var axis: NSLayoutConstraint.Axis
+    
+    public init(priority: UILayoutPriority,
+                axis: NSLayoutConstraint.Axis) {
+        self.priority = priority
+        self.axis = axis
+    }
+}
+
+@frozen
+public struct TextViewOptionModel: Equatable {
+    public var isScrollEnabld: Bool = true
+    public var isEditable: Bool = true
+    public var isSelectable: Bool = true
+    public var backgroundColor: Color = .white
+    public var contentPriority: TextViewContentPriority = .default
+}

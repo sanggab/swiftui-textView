@@ -20,20 +20,18 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     typealias State = TextState
     typealias Action = TextAction
     
-    struct TextState: Equatable {
+    struct ViewOptionState: Equatable {
         var isScrollEnabled: Bool = true
         var isEditable: Bool = true
         var isSelectable: Bool = true
         var backgroundColor: Color = .white
+        var contentPriority: TextViewContentPriority = .default
+    }
+    
+    struct ViewStyleState: Equatable {
         var appearance: TextViewAppearanceModel = .default
         var limitCount: Int = 999999
         var limitLine: Int = 999999
-    }
-    
-    enum TextAction: Equatable {
-        case viewOption(ViewOptionAction)
-        
-        case style(StyleAction)
     }
     
     enum ViewOptionAction: Equatable {
@@ -41,14 +39,26 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateScrollEnabled(Bool)
         case updateEditable(Bool)
         case updateSelectable(Bool)
+        case updateSetContentCompressionResistancePriority(UILayoutPriority, NSLayoutConstraint.Axis)
     }
     
-    enum StyleAction: Equatable {
+    enum ViewStyleAction: Equatable {
         case updateTextViewAppearanceModel(TextViewAppearanceModel)
         case updateTextAppearance(TextAppearanceType, TextAppearance)
         
         case updateLimitCount(Int)
         case updateLimitLine(Int)
+    }
+    
+    struct TextState: Equatable {
+        var viewOptionState: ViewOptionState = .init()
+        var viewStyleState: ViewStyleState = .init()
+    }
+    
+    enum TextAction: Equatable {
+        case viewOption(ViewOptionAction)
+        
+        case style(ViewStyleAction)
     }
     
     @Published private var state: TextState = .init()
@@ -71,40 +81,43 @@ private extension TextViewModel {
     func optionAction(_ action: ViewOptionAction) {
         switch action {
         case .updateColor(let color):
-            update(\.backgroundColor, value: color)
+            update(\.viewOptionState.backgroundColor, value: color)
             
         case .updateScrollEnabled(let state):
-            update(\.isScrollEnabled, value: state)
+            update(\.viewOptionState.isScrollEnabled, value: state)
             
         case .updateEditable(let state):
-            update(\.isEditable, value: state)
+            update(\.viewOptionState.isEditable, value: state)
             
         case .updateSelectable(let state):
-            update(\.isSelectable, value: state)
+            update(\.viewOptionState.isSelectable, value: state)
+            
+        case .updateSetContentCompressionResistancePriority(let priority, let axis):
+            update(\.viewOptionState.contentPriority, value: TextViewContentPriority(priority: priority, axis: axis))
         }
     }
     
 }
 
 private extension TextViewModel {
-    func styleAction(_ action: StyleAction) {
+    func styleAction(_ action: ViewStyleAction) {
         switch action {
         case .updateTextViewAppearanceModel(let appearance):
-            update(\.appearance, value: appearance)
+            update(\.viewStyleState.appearance, value: appearance)
             
         case .updateTextAppearance(let type, let appearance):
             switch type {
             case .focus:
-                update(\.appearance.focus, value: appearance)
+                update(\.viewStyleState.appearance.focus, value: appearance)
             case .noneFocus:
-                update(\.appearance.noneFocus, value: appearance)
+                update(\.viewStyleState.appearance.noneFocus, value: appearance)
             }
             
         case .updateLimitCount(let count):
-            update(\.limitCount, value: count)
+            update(\.viewStyleState.limitCount, value: count)
             
         case .updateLimitLine(let line):
-            update(\.limitLine, value: line)
+            update(\.viewStyleState.limitLine, value: line)
         }
     }
 }

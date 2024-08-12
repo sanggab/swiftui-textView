@@ -5,6 +5,7 @@
 //  Created by Gab on 2024/08/09.
 //
 
+import UIKit
 import SwiftUI
 
 
@@ -32,6 +33,12 @@ public extension TextView {
     func isSelectable(_ state: Bool) -> TextView {
         let view: TextView = self
         view.viewModel.action(.viewOption(.updateSelectable(state)))
+        return view
+    }
+    
+    func setContentCompressionResistancePriority(_ priority: UILayoutPriority, for axis: NSLayoutConstraint.Axis) -> TextView {
+        let view: TextView = self
+        view.viewModel.action(.viewOption(.updateSetContentCompressionResistancePriority(priority, axis)))
         return view
     }
 }

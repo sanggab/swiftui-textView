@@ -43,7 +43,7 @@ final class GabTextViewTests: XCTestCase {
         
         let _ = self.textView.isScrollEnabled(false)
         
-        XCTAssertFalse(self.textView.viewModel(\.isScrollEnabled))
+        XCTAssertFalse(self.textView.viewModel(\.viewOptionState.isScrollEnabled))
     }
     
     func testEditable() {
@@ -51,7 +51,7 @@ final class GabTextViewTests: XCTestCase {
         
         let _ = self.textView.isEditable(false)
         
-        XCTAssertFalse(self.textView.viewModel(\.isEditable))
+        XCTAssertFalse(self.textView.viewModel(\.viewOptionState.isEditable))
     }
     
     func testSelectable() {
@@ -59,13 +59,13 @@ final class GabTextViewTests: XCTestCase {
         
         let _ = self.textView.isSelectable(false)
         
-        XCTAssertFalse(self.textView.viewModel(\.isSelectable))
+        XCTAssertFalse(self.textView.viewModel(\.viewOptionState.isSelectable))
     }
     
     func testInputModel() {
         XCTAssertNotNil(self.textView)
         
-        XCTAssertEqual(TextViewAppearanceModel.default, self.textView.viewModel(\.appearance))
+        XCTAssertEqual(TextViewAppearanceModel.default, self.textView.viewModel(\.viewStyleState.appearance))
         
         let focusStyle: TextAppearance = TextAppearance(font: .boldSystemFont(ofSize: 16),
                                               color: .red)
@@ -76,8 +76,8 @@ final class GabTextViewTests: XCTestCase {
         let _ = self.textView.setTextViewAppearanceModel(TextViewAppearanceModel(noneFocus: noneFocusStyle,
                                                                                  focus: focusStyle))
         
-        XCTAssertEqual(noneFocusStyle, self.textView.viewModel(\.appearance).noneFocus)
-        XCTAssertEqual(focusStyle, self.textView.viewModel(\.appearance).focus)
+        XCTAssertEqual(noneFocusStyle, self.textView.viewModel(\.viewStyleState.appearance).noneFocus)
+        XCTAssertEqual(focusStyle, self.textView.viewModel(\.viewStyleState.appearance).focus)
     }
     
     func testLimtCount() {
@@ -87,13 +87,13 @@ final class GabTextViewTests: XCTestCase {
         
         let _ = self.textView.limitCount(100)
         
-        XCTAssertLessThan(self.text.count, self.textView.viewModel(\.limitCount))
+        XCTAssertLessThan(self.text.count, self.textView.viewModel(\.viewStyleState.limitCount))
         
         self.text = "GabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGabGab"
         
         let _ = self.textView.limitCount(150)
         
-        XCTAssertLessThan(self.text.count, self.textView.viewModel(\.limitCount))
+        XCTAssertLessThan(self.text.count, self.textView.viewModel(\.viewStyleState.limitCount))
     }
     
     
