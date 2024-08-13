@@ -69,7 +69,10 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     }
     
     enum ViewContentPriorityAction: Equatable {
-        case update(ContentPriorityType, ContentPriorityModel)
+        case updateContentHuggingPriority(NSLayoutConstraint.Axis)
+        case updateSetContentHuggingPriority(ContentPriorityModel)
+        case updateContentCompressionResistancePriority(NSLayoutConstraint.Axis)
+        case updateSetContentCompressionResistancePriority(ContentPriorityModel)
     }
     // ------------------------------------------------------------------------------------ //
     
@@ -172,17 +175,17 @@ private extension TextViewModel {
 private extension TextViewModel {
     func contentPriorityAction(_ action: ViewContentPriorityAction) {
         switch action {
-        case .update(let type, let model):
-            switch type {
-            case .hugging:
-                update(\.viewContentPriorityState.contentPriority.hugging, value: model)
-            case .setHugging:
-                update(\.viewContentPriorityState.contentPriority.setHugging, value: model)
-            case .compressionResistance:
-                update(\.viewContentPriorityState.contentPriority.compressionResistance, value: model)
-            case .setCompressionResistance:
-                update(\.viewContentPriorityState.contentPriority.setCompressionResistance, value: model)
-            }
+        case .updateContentHuggingPriority(let axis):
+            update(\.viewContentPriorityState.contentPriority.hugging, value: ContentPriorityModel(axis: axis))
+            
+        case .updateSetContentHuggingPriority(let model):
+            update(\.viewContentPriorityState.contentPriority.setHugging, value: model)
+            
+        case .updateContentCompressionResistancePriority(let axis):
+            update(\.viewContentPriorityState.contentPriority.compressionResistance, value: ContentPriorityModel(axis: axis))
+            
+        case .updateSetContentCompressionResistancePriority(let model):
+            update(\.viewContentPriorityState.contentPriority.setCompressionResistance, value: model)
         }
     }
 }

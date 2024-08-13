@@ -331,8 +331,7 @@ public extension TextView {
     /// The constraint-based layout system uses these priorities when determining the best layout for views that are encountering constraints that would require them to be larger than their intrinsic size.
     func contentHuggingPriority(for axis: NSLayoutConstraint.Axis) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.contentPriority(.update(.hugging, ContentPriorityModel(priority: nil,
-                                                                                                       axis: axis))))
+        view.viewModel.action(.contentPriority(.updateContentHuggingPriority(axis)))
         return view
     }
     /// Returns the priority with which a view resists being made smaller than its intrinsic size.
@@ -346,8 +345,7 @@ public extension TextView {
     /// Subclasses should not override this method.
     func setContentHuggingPriority(_ priority: UILayoutPriority, for axis: NSLayoutConstraint.Axis) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.contentPriority(.update(.setHugging, ContentPriorityModel(priority: priority,
-                                                                                                       axis: axis))))
+        view.viewModel.action(.contentPriority(.updateSetContentHuggingPriority(ContentPriorityModel(priority: priority, axis: axis))))
         return view
     }
     /// Returns the priority with which a view resists being made smaller than its intrinsic size.
@@ -361,8 +359,7 @@ public extension TextView {
     /// Subclasses should not override this method. Instead, custom views should set default values for their content on creation, typically to UILayoutPriorityDefaultLow or UILayoutPriorityDefaultHigh.
     func contentCompressionResistancePriority(for axis: NSLayoutConstraint.Axis) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.contentPriority(.update(.compressionResistance, ContentPriorityModel(priority: nil,
-                                                                                                       axis: axis))))
+        view.viewModel.action(.contentPriority(.updateContentCompressionResistancePriority(axis)))
         return view
     }
     /// Sets the priority with which a view resists being made smaller than its intrinsic size.
@@ -376,8 +373,7 @@ public extension TextView {
     /// Subclasses should not override this method.
     func setContentCompressionResistancePriority(_ priority: UILayoutPriority, for axis: NSLayoutConstraint.Axis) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.contentPriority(.update(.setCompressionResistance, ContentPriorityModel(priority: priority,
-                                                                                                       axis: axis))))
+        view.viewModel.action(.contentPriority(.updateSetContentCompressionResistancePriority(ContentPriorityModel(priority: priority, axis: axis))))
         return view
     }
 }
