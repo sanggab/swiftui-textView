@@ -47,9 +47,10 @@ public extension TextView {
     /// The types of data that convert to tappable URLs in the text view.
     ///
     /// You can use this property to specify the types of data (phone numbers, http links, and so on) that should be automatically converted to URLs in the text view. When tapped, the text view opens the application responsible for handling the URL type and passes it the URL. Note that data detection does not occur if the text view's ``isEditable(_:)`` property is set to true.
-    func dataDetectorTypes(_ dateType: UIDataDetectorTypes) -> TextView {
-        let view: TextView = self
-     /// SSG 요거 https://withthemilkyway.tistory.com/31 이거 보면서 구현하기
+    func dataDetectorTypes(_ dataType: UIDataDetectorTypes, _ closure: @escaping ((URL) -> Void)) -> TextView {
+        var view: TextView = self
+        view.viewModel.action(.viewOption(.updateDataDetectorTypes(dataType)))
+        view.dataDetectorTypesLinkUrl = closure
         return view
     }
     /// The inset of the text container's layout area within the text view's content area.
@@ -330,7 +331,8 @@ public extension TextView {
     /// The constraint-based layout system uses these priorities when determining the best layout for views that are encountering constraints that would require them to be larger than their intrinsic size.
     func contentHuggingPriority(for axis: NSLayoutConstraint.Axis) -> TextView {
         let view: TextView = self
-        
+        view.viewModel.action(.contentPriority(.update(.hugging, ContentPriorityModel(priority: nil,
+                                                                                                       axis: axis))))
         return view
     }
     /// Returns the priority with which a view resists being made smaller than its intrinsic size.
@@ -344,7 +346,8 @@ public extension TextView {
     /// Subclasses should not override this method.
     func setContentHuggingPriority(_ priority: UILayoutPriority, for axis: NSLayoutConstraint.Axis) -> TextView {
         let view: TextView = self
-        
+        view.viewModel.action(.contentPriority(.update(.setHugging, ContentPriorityModel(priority: priority,
+                                                                                                       axis: axis))))
         return view
     }
     /// Returns the priority with which a view resists being made smaller than its intrinsic size.
@@ -358,7 +361,8 @@ public extension TextView {
     /// Subclasses should not override this method. Instead, custom views should set default values for their content on creation, typically to UILayoutPriorityDefaultLow or UILayoutPriorityDefaultHigh.
     func contentCompressionResistancePriority(for axis: NSLayoutConstraint.Axis) -> TextView {
         let view: TextView = self
-        
+        view.viewModel.action(.contentPriority(.update(.compressionResistance, ContentPriorityModel(priority: nil,
+                                                                                                       axis: axis))))
         return view
     }
     /// Sets the priority with which a view resists being made smaller than its intrinsic size.
@@ -372,7 +376,8 @@ public extension TextView {
     /// Subclasses should not override this method.
     func setContentCompressionResistancePriority(_ priority: UILayoutPriority, for axis: NSLayoutConstraint.Axis) -> TextView {
         let view: TextView = self
-//        view.viewModel.action(.viewOption(.updateSetContentCompressionResistancePriority(priority, axis)))
+        view.viewModel.action(.contentPriority(.update(.setCompressionResistance, ContentPriorityModel(priority: priority,
+                                                                                                       axis: axis))))
         return view
     }
 }

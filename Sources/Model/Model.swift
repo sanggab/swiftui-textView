@@ -53,11 +53,11 @@ public enum ContentPriorityType {
 public struct ContentPriorityModel: Equatable {
     public static let `default` = ContentPriorityModel(priority: .defaultLow, axis: .horizontal)
     
-    public var priority: UILayoutPriority
-    public var axis: NSLayoutConstraint.Axis
+    public var priority: UILayoutPriority?
+    public var axis: NSLayoutConstraint.Axis?
     
-    public init(priority: UILayoutPriority,
-                axis: NSLayoutConstraint.Axis) {
+    public init(priority: UILayoutPriority? = nil,
+                axis: NSLayoutConstraint.Axis? = nil) {
         self.priority = priority
         self.axis = axis
     }
