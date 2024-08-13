@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SafariServices
 
 public struct TextView: UIViewRepresentable {
     public typealias UIViewType = UITextView
@@ -14,6 +15,8 @@ public struct TextView: UIViewRepresentable {
     
     @Binding public var text: String
     
+    var dataDetectorTypesLinkUrl: ((URL) -> Void)?
+    
     public init(text: Binding<String>) {
         self._text = text
     }
@@ -21,24 +24,23 @@ public struct TextView: UIViewRepresentable {
     public func makeUIView(context: Context) -> UIViewType {
         let textView: UITextView = UITextView()
         
-        let noneFocusModel: TextAppearance = viewModel(\.viewStyleState.appearance).noneFocus
+        let noneFocusModel: TextAppearance = viewModel(\.viewStyle.appearance).noneFocus
         textView.font = noneFocusModel.font
         textView.textColor = UIColor(noneFocusModel.color)
         textView.text = text
-        
-        textView.backgroundColor = UIColor(viewModel(\.viewOptionState.backgroundColor))
+        textView.backgroundColor = UIColor(viewModel(\.viewOption.backgroundColor))
         textView.delegate = context.coordinator
         textView.showsVerticalScrollIndicator = false
-        textView.isEditable = viewModel(\.viewOptionState.isEditable)
-        textView.isSelectable = viewModel(\.viewOptionState.isSelectable)
-        textView.isScrollEnabled = viewModel(\.viewOptionState.isScrollEnabled)
+        textView.isEditable = viewModel(\.viewOption.isEditable)
+        textView.isSelectable = viewModel(\.viewOption.isSelectable)
+        textView.isScrollEnabled = viewModel(\.viewScrollOption.isScrollEnabled)
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
-        textView.setContentCompressionResistancePriority(viewModel(\.viewOptionState.contentPriority).priority, for: viewModel(\.viewOptionState.contentPriority).axis)
+//        textView.setContentCompressionResistancePriority(viewModel(\.viewContentPriorityState.contentPriority).priority, for: viewModel(\.viewContentPriorityState.contentPriority).axis)
         
         
-        if text.count > viewModel(\.viewStyleState.limitCount) {
-            let prefixText = textView.text.prefix(viewModel(\.viewStyleState.limitCount))
+        if text.count > viewModel(\.viewStyle.limitCount) {
+            let prefixText = textView.text.prefix(viewModel(\.viewStyle.limitCount))
             textView.text = String(prefixText)
             text = String(prefixText)
         }
@@ -64,7 +66,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidBeginEditing(_ textView: UITextView) {
-        let focusAppearance: TextAppearance = parent.viewModel(\.viewStyleState.appearance).focus
+        let focusAppearance: TextAppearance = parent.viewModel(\.viewStyle.appearance).focus
         textView.font = focusAppearance.font
         textView.textColor = UIColor(focusAppearance.color)
     }
@@ -74,7 +76,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidEndEditing(_ textView: UITextView) {
-        let noneFocusAppearance: TextAppearance = parent.viewModel(\.viewStyleState.appearance).noneFocus
+        let noneFocusAppearance: TextAppearance = parent.viewModel(\.viewStyle.appearance).noneFocus
         textView.font = noneFocusAppearance.font
         textView.textColor = UIColor(noneFocusAppearance.color)
     }
@@ -90,12 +92,12 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         
         let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
         
-        if lines > parent.viewModel(\.viewStyleState.limitLine) {
+        if lines > parent.viewModel(\.viewStyle.limitLine) {
             return false
         }
         
-        if newText.count > parent.viewModel(\.viewStyleState.limitCount) {
-            let prefixCount = parent.viewModel(\.viewStyleState.limitCount) - textView.text.count
+        if newText.count > parent.viewModel(\.viewStyle.limitCount) {
+            let prefixCount = parent.viewModel(\.viewStyle.limitCount) - textView.text.count
             
             guard prefixCount > 0 else {
                 return false
@@ -105,9 +107,18 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             textView.text.append(contentsOf: prefixText)
             parent.text = textView.text
             
-            textView.selectedRange = NSRange(location: parent.viewModel(\.viewStyleState.limitCount), length: 0)
+            textView.selectedRange = NSRange(location: parent.viewModel(\.viewStyle.limitCount), length: 0)
         }
         
         return true
+    }
+    
+    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        
+        if let closure = parent.dataDetectorTypesLinkUrl {
+            closure(url)
+        }
+            
+         return false
     }
 }

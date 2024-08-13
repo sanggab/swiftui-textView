@@ -42,8 +42,16 @@ public struct TextViewAppearanceModel: Equatable {
 }
 
 @frozen
-public struct TextViewContentPriority: Equatable {
-    public static let `default` = TextViewContentPriority(priority: .defaultLow, axis: .horizontal)
+public enum ContentPriorityType {
+    case hugging
+    case setHugging
+    case compressionResistance
+    case setCompressionResistance
+}
+
+@frozen
+public struct ContentPriorityModel: Equatable {
+    public static let `default` = ContentPriorityModel(priority: .defaultLow, axis: .horizontal)
     
     public var priority: UILayoutPriority
     public var axis: NSLayoutConstraint.Axis
@@ -56,10 +64,28 @@ public struct TextViewContentPriority: Equatable {
 }
 
 @frozen
-public struct TextViewOptionModel: Equatable {
-    public var isScrollEnabld: Bool = true
-    public var isEditable: Bool = true
-    public var isSelectable: Bool = true
-    public var backgroundColor: Color = .white
-    public var contentPriority: TextViewContentPriority = .default
+public struct TextViewContentPriority: Equatable {
+    public var hugging: ContentPriorityModel?
+    public var setHugging: ContentPriorityModel?
+    public var compressionResistance: ContentPriorityModel?
+    public var setCompressionResistance: ContentPriorityModel?
+    
+    public init(hugging: ContentPriorityModel? = nil,
+                setHugging: ContentPriorityModel? = nil,
+                compressionResistance: ContentPriorityModel? = nil,
+                setCompressionResistance: ContentPriorityModel? = nil) {
+        self.hugging = hugging
+        self.setHugging = setHugging
+        self.compressionResistance = compressionResistance
+        self.setCompressionResistance = setCompressionResistance
+    }
 }
+//
+//@frozen
+//public struct TextViewOptionModel: Equatable {
+//    public var isScrollEnabld: Bool = true
+//    public var isEditable: Bool = true
+//    public var isSelectable: Bool = true
+//    public var backgroundColor: Color = .white
+//    public var contentPriority: TextViewContentPriority = .default
+//}

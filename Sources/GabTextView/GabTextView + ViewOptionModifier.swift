@@ -11,6 +11,8 @@ import SwiftUI
 // MARK: - View Option
 public extension TextView {
     /// TextView의 BackgroundColor를 변경합니다.
+    ///
+    /// 초기 값은 White입니다.
     func changeBackgroundColor(_ color: Color) -> TextView {
         let view: TextView = self
         view.viewModel.action(.viewOption(.updateColor(color)))
@@ -23,7 +25,7 @@ public extension TextView {
     /// Assigning a new value to this property causes the new text alignment to be applied to the entire contents of the text view. If you want to apply the alignment to only a portion of the text, you must create a new attributed string with the desired style information and assign it to the attributedText property.
     func textAlignment(_ alignment: NSTextAlignment) -> TextView {
         let view: TextView = self
-        
+        view.viewModel.action(.viewOption(.updateTextAlignment(alignment)))
         return view
     }
     /// A Boolean value that indicates whether the text view is editable.
@@ -31,7 +33,7 @@ public extension TextView {
     /// The default value of this property is true.
     func isEditable(_ state: Bool) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.viewOption(.updateEditable(state)))
+        view.viewModel.action(.viewOption(.updateIsEditable(state)))
         return view
     }
     /// A Boolean value that indicates whether the text view is selectable.
@@ -39,7 +41,7 @@ public extension TextView {
     /// This property controls the ability of the user to select content and interact with URLs and text attachments. The default value is true.
     func isSelectable(_ state: Bool) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.viewOption(.updateSelectable(state)))
+        view.viewModel.action(.viewOption(.updateIsSelectable(state)))
         return view
     }
     /// The types of data that convert to tappable URLs in the text view.
@@ -47,59 +49,7 @@ public extension TextView {
     /// You can use this property to specify the types of data (phone numbers, http links, and so on) that should be automatically converted to URLs in the text view. When tapped, the text view opens the application responsible for handling the URL type and passes it the URL. Note that data detection does not occur if the text view's ``isEditable(_:)`` property is set to true.
     func dataDetectorTypes(_ dateType: UIDataDetectorTypes) -> TextView {
         let view: TextView = self
-        
-        return view
-    }
-    /// A Boolean value that indicates whether the text view allows the user to edit style information.
-    ///
-    /// When set to true, the text view allows the user to change the basic styling of the currently selected text. The available style options are listed in the edit menu and only apply to the selection.
-    ///
-    /// The default value of this property is false.
-    func allowsEditingTextAttributes(_ state: Bool) -> TextView {
-        let view: TextView = self
-        
-        return view
-    }
-    /// The styled text that the text view displays.
-    ///
-    /// Assigning a new value to this property also replaces the value of the text property with the same string data, albeit without any formatting information. In addition, the font, textColor, and textAlignment properties are updated to reflect the typing attributes of the text view.
-    func attributedText(_ text: NSAttributedString) -> TextView {
-        let view: TextView = self
-        
-        return view
-    }
-    /// The attributes to apply to new text that the user enters.
-    ///
-    /// This dictionary contains the attribute keys (and corresponding values) to apply to newly typed text. When the text view’s selection changes, the contents of the dictionary are cleared automatically.
-    func typingAttributes(_ attributes: [NSAttributedString.Key : Any]) -> TextView {
-        let view: TextView = self
-        
-        return view
-    }
-    /// The custom input view to display when the text view becomes the first responder.
-    ///
-    /// If the value in this property is nil, the text view displays the standard system keyboard when it becomes first responder. Assigning a custom view to this property causes that view to be presented instead.
-    ///
-    /// The default value of this property is nil.
-    func inputView(_ view: UIView?) -> TextView {
-        let view: TextView = self
-        
-        return view
-    }
-    /// The custom accessory view to display when the text view becomes the first responder.
-    ///
-    /// The default value of this property is nil. Assigning a view to this property causes that view to be displayed above the standard system keyboard (or above the custom input view if one is provided) when the text view becomes the first responder. For example, you could use this property to attach a custom toolbar to the keyboard.
-    func inputAccessoryView(_ view: UIView?) -> TextView {
-        let view: TextView = self
-        
-        return view
-    }
-    /// A Boolean value that indicates whether inserting text replaces the previous contents.
-    ///
-    /// The default value of this property is false. When the value of this property is true and the text view is in editing mode, the selection UI is hidden and inserting new text clears the contents of the text view and sets the value of this property back to false.
-    func clearsOnInsertion(_ state: Bool) -> TextView {
-        let view: TextView = self
-        
+     /// SSG 요거 https://withthemilkyway.tistory.com/31 이거 보면서 구현하기
         return view
     }
     /// The inset of the text container's layout area within the text view's content area.
@@ -121,20 +71,14 @@ public extension TextView {
     /// The default value of this property is false.
     func usesStandardTextScaling(_ state: Bool) -> TextView {
         let view: TextView = self
-        
+        view.viewModel.action(.viewOption(.updateUsesStandardTextScaling(state)))
         return view
     }
     /// A Boolean value that enables a text view’s built-in find interaction.
     @available(iOS 16.0, *)
     func isFindInteractionEnabled(_ state: Bool) -> TextView {
         let view: TextView = self
-        
-        return view
-    }
-    @available(iOS 17.0, *)
-    func borderStyle(_ style: UITextView.BorderStyle) -> TextView {
-        let view: TextView = self
-        
+        view.viewModel.action(.viewOption(.updateIsFindInteractionEnabled(state)))
         return view
     }
 }
@@ -171,7 +115,7 @@ public extension TextView {
     /// When scrolling is disabled, the scroll view doesn’t accept touch events; it forwards them up the responder chain.
     func isScrollEnabled(_ state: Bool) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.viewOption(.updateScrollEnabled(state)))
+        view.viewModel.action(.scrollOption(.updateIsScrollEnabled(state)))
         return view
     }
     /// The behavior for determining the adjusted content offsets.
@@ -428,7 +372,7 @@ public extension TextView {
     /// Subclasses should not override this method.
     func setContentCompressionResistancePriority(_ priority: UILayoutPriority, for axis: NSLayoutConstraint.Axis) -> TextView {
         let view: TextView = self
-        view.viewModel.action(.viewOption(.updateSetContentCompressionResistancePriority(priority, axis)))
+//        view.viewModel.action(.viewOption(.updateSetContentCompressionResistancePriority(priority, axis)))
         return view
     }
 }
