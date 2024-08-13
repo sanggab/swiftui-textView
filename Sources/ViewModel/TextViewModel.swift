@@ -52,11 +52,65 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     
     // ------------------------------------------------------------------------------------ //
     struct ViewScrollOptionState: Equatable {
+        var contentOffset: CGPoint = .zero
+        var contentSize: CGSize = .zero
+        var contentInset: UIEdgeInsets = .zero
         var isScrollEnabled: Bool = true
+        var contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior = .automatic
+        var automaticallyAdjustsScrollIndicatorInsets: Bool = true
+        var isDirectionalLockEnabled: Bool = false
+        var bounces: Bool = true
+        var alwaysBounceVertical: Bool = false
+        var alwaysBounceHorizontal: Bool = false
+        var isPagingEnabled: Bool = false
+        var showsVerticalScrollIndicator: Bool = true
+        var showsHorizontalScrollIndicator: Bool = true
+        var indicatorStyle: UIScrollView.IndicatorStyle = .default
+        var verticalScrollIndicatorInsets: UIEdgeInsets = .zero
+        var horizontalScrollIndicatorInsets: UIEdgeInsets = .zero
+        var decelerationRate: UIScrollView.DecelerationRate = .normal
+        var indexDisplayMode: UIScrollView.IndexDisplayMode?
+        var delaysContentTouches: Bool = true
+        var canCancelContentTouches: Bool = true
+        var minimumZoomScale: CGFloat = 1.0
+        var maximumZoomScale: CGFloat = 1.0
+        var zoomScale: CGFloat = 1.0
+        var bouncesZoom: Bool = true
+        var scrollsToTop: Bool = true
+        var keyboardDismissMode: UIScrollView.KeyboardDismissMode = .none
+        var refreshControl: UIRefreshControl?
+        var allowsKeyboardScrolling: Bool = true
     }
     
     enum ViewScrollOptionAction: Equatable {
+        case updateContentOffset(CGPoint)
+        case updateContentSize(CGSize)
+        case updateContentInset(UIEdgeInsets)
         case updateIsScrollEnabled(Bool)
+        case updateContentInsetAdjustmentBehavior(UIScrollView.ContentInsetAdjustmentBehavior)
+        case updateAutomaticallyAdjustsScrollIndicatorInsets(Bool)
+        case updateIsDirectionalLockEnabled(Bool)
+        case updateBounces(Bool)
+        case updateAlwaysBounceVertical(Bool)
+        case updateAlwaysBounceHorizontal(Bool)
+        case updateIsPagingEnabled(Bool)
+        case updateShowsVerticalScrollIndicator(Bool)
+        case updateShowsHorizontalScrollIndicator(Bool)
+        case updateIndicatorStyle(UIScrollView.IndicatorStyle)
+        case updateVerticalScrollIndicatorInsets(UIEdgeInsets)
+        case updateHorizontalScrollIndicatorInsets(UIEdgeInsets)
+        case updateDecelerationRate(UIScrollView.DecelerationRate)
+        case updateIndexDisplayMode(UIScrollView.IndexDisplayMode)
+        case updateDelaysContentTouches(Bool)
+        case updateCanCancelContentTouches(Bool)
+        case updateMinimumZoomScale(CGFloat)
+        case updateMaximumZoomScale(CGFloat)
+        case updateZoomScale(CGFloat)
+        case updateBouncesZoom(Bool)
+        case updateScrollsToTop(Bool)
+        case updateKeyboardDismissMode(UIScrollView.KeyboardDismissMode)
+        case updateRefreshControl(UIRefreshControl)
+        case updateAllowsKeyboardScrolling(Bool)
     }
     
     // ------------------------------------------------------------------------------------ //
@@ -166,8 +220,89 @@ private extension TextViewModel {
 private extension TextViewModel {
     func scrollAction(_ action: ViewScrollOptionAction) {
         switch action {
+        case .updateContentOffset(let point):
+            update(\.viewScrollOption.contentOffset, value: point)
+            
+        case .updateContentSize(let size):
+            update(\.viewScrollOption.contentSize, value: size)
+            
+        case .updateContentInset(let edgeInsets):
+            update(\.viewScrollOption.contentInset, value: edgeInsets)
+            
         case .updateIsScrollEnabled(let state):
             update(\.viewScrollOption.isScrollEnabled, value: state)
+            
+        case .updateContentInsetAdjustmentBehavior(let behavior):
+            update(\.viewScrollOption.contentInsetAdjustmentBehavior, value: behavior)
+            
+        case .updateAutomaticallyAdjustsScrollIndicatorInsets(let state):
+            update(\.viewScrollOption.automaticallyAdjustsScrollIndicatorInsets, value: state)
+            
+        case .updateIsDirectionalLockEnabled(let state):
+            update(\.viewScrollOption.isDirectionalLockEnabled, value: state)
+            
+        case .updateBounces(let state):
+            update(\.viewScrollOption.bounces, value: state)
+            
+        case .updateAlwaysBounceVertical(let state):
+            update(\.viewScrollOption.alwaysBounceVertical, value: state)
+            
+        case .updateAlwaysBounceHorizontal(let state):
+            update(\.viewScrollOption.alwaysBounceHorizontal, value: state)
+            
+        case .updateIsPagingEnabled(let state):
+            update(\.viewScrollOption.isPagingEnabled, value: state)
+            
+        case .updateShowsVerticalScrollIndicator(let state):
+            update(\.viewScrollOption.showsVerticalScrollIndicator, value: state)
+            
+        case .updateShowsHorizontalScrollIndicator(let state):
+            update(\.viewScrollOption.showsHorizontalScrollIndicator, value: state)
+            
+        case .updateIndicatorStyle(let style):
+            update(\.viewScrollOption.indicatorStyle, value: style)
+            
+        case .updateVerticalScrollIndicatorInsets(let edgeInsets):
+            update(\.viewScrollOption.verticalScrollIndicatorInsets, value: edgeInsets)
+            
+        case .updateHorizontalScrollIndicatorInsets(let edgeInsets):
+            update(\.viewScrollOption.horizontalScrollIndicatorInsets, value: edgeInsets)
+            
+        case .updateDecelerationRate(let rate):
+            update(\.viewScrollOption.decelerationRate, value: rate)
+            
+        case .updateIndexDisplayMode(let mode):
+            update(\.viewScrollOption.indexDisplayMode, value: mode)
+            
+        case .updateDelaysContentTouches(let state):
+            update(\.viewScrollOption.delaysContentTouches, value: state)
+            
+        case .updateCanCancelContentTouches(let state):
+            update(\.viewScrollOption.canCancelContentTouches, value: state)
+            
+        case .updateMinimumZoomScale(let scale):
+            update(\.viewScrollOption.minimumZoomScale, value: scale)
+            
+        case .updateMaximumZoomScale(let scale):
+            update(\.viewScrollOption.maximumZoomScale, value: scale)
+            
+        case .updateZoomScale(let scale):
+            update(\.viewScrollOption.zoomScale, value: scale)
+            
+        case .updateBouncesZoom(let state):
+            update(\.viewScrollOption.bouncesZoom, value: state)
+            
+        case .updateScrollsToTop(let state):
+            update(\.viewScrollOption.scrollsToTop, value: state)
+            
+        case .updateKeyboardDismissMode(let mode):
+            update(\.viewScrollOption.keyboardDismissMode, value: mode)
+            
+        case .updateRefreshControl(let control):
+            update(\.viewScrollOption.refreshControl, value: control)
+            
+        case .updateAllowsKeyboardScrolling(let state):
+            update(\.viewScrollOption.allowsKeyboardScrolling, value: state)
         }
     }
 }
