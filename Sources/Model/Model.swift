@@ -44,20 +44,18 @@ public struct TextViewAppearanceModel: Equatable {
 @frozen
 public enum ContentPriorityType {
     case hugging
-    case setHugging
     case compressionResistance
-    case setCompressionResistance
 }
 
 @frozen
 public struct ContentPriorityModel: Equatable {
-    public static let `default` = ContentPriorityModel(priority: .defaultLow, axis: .horizontal)
+    public static let `default` = ContentPriorityModel(priority: .defaultHigh, axis: .horizontal)
     
-    public var priority: UILayoutPriority?
-    public var axis: NSLayoutConstraint.Axis?
+    public var priority: UILayoutPriority
+    public var axis: NSLayoutConstraint.Axis
     
-    public init(priority: UILayoutPriority? = nil,
-                axis: NSLayoutConstraint.Axis? = nil) {
+    public init(priority: UILayoutPriority,
+                axis: NSLayoutConstraint.Axis) {
         self.priority = priority
         self.axis = axis
     }
@@ -66,18 +64,12 @@ public struct ContentPriorityModel: Equatable {
 @frozen
 public struct TextViewContentPriority: Equatable {
     public var hugging: ContentPriorityModel?
-    public var setHugging: ContentPriorityModel?
     public var compressionResistance: ContentPriorityModel?
-    public var setCompressionResistance: ContentPriorityModel?
     
     public init(hugging: ContentPriorityModel? = nil,
-                setHugging: ContentPriorityModel? = nil,
-                compressionResistance: ContentPriorityModel? = nil,
-                setCompressionResistance: ContentPriorityModel? = nil) {
+                compressionResistance: ContentPriorityModel? = nil) {
         self.hugging = hugging
-        self.setHugging = setHugging
         self.compressionResistance = compressionResistance
-        self.setCompressionResistance = setCompressionResistance
     }
 }
 //

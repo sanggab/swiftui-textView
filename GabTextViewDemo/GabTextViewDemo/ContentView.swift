@@ -31,6 +31,8 @@ struct ContentView: View {
             .isSelectable(true)
             .setTextViewAppearanceModel(.default)
             .limitCountAndLine(10, 5)
+            .textContainerInset(.zero)
+            .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
             }
@@ -38,6 +40,7 @@ struct ContentView: View {
             .frame(maxWidth: .infinity)
             .accessibilityIdentifier("GabTextView")
             .focused($keyboardState)
+            .accessibilityIdentifier(/*@START_MENU_TOKEN@*/"Identifier"/*@END_MENU_TOKEN@*/)
         
     }
 }

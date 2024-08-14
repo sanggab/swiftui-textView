@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EF44A2312C69A1D100687479 /* GabTextView + ViewOptionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2302C69A1D100687479 /* GabTextView + ViewOptionModifier.swift */; };
+		EF44A2312C69A1D100687479 /* GabTextView + ViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */; };
+		EF44A2332C6B3F9700687479 /* GabTextView + coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2322C6B3F9700687479 /* GabTextView + coordinator.swift */; };
+		EF44A2352C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */; };
+		EF44A2372C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2362C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift */; };
+		EF44A2392C6B450700687479 /* GabTextView + StyleStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2382C6B450700687479 /* GabTextView + StyleStateModifier.swift */; };
 		EF4C21EE2C538FDB00688997 /* GabTextView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4C21E42C538FDB00688997 /* GabTextView.framework */; };
 		EF4C21F32C538FDB00688997 /* GabTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */; };
 		EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21FB2C538FEB00688997 /* GabTextView.swift */; };
@@ -27,7 +31,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EF44A2302C69A1D100687479 /* GabTextView + ViewOptionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ViewOptionModifier.swift"; sourceTree = "<group>"; };
+		EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ViewStateModifier.swift"; sourceTree = "<group>"; };
+		EF44A2322C6B3F9700687479 /* GabTextView + coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + coordinator.swift"; sourceTree = "<group>"; };
+		EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ScrollViewStateModifier.swift"; sourceTree = "<group>"; };
+		EF44A2362C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ContentPriorityStateModifier.swift"; sourceTree = "<group>"; };
+		EF44A2382C6B450700687479 /* GabTextView + StyleStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + StyleStateModifier.swift"; sourceTree = "<group>"; };
 		EF4C21E42C538FDB00688997 /* GabTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GabTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C21ED2C538FDB00688997 /* GabTextViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GabTextViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewTests.swift; sourceTree = "<group>"; };
@@ -88,8 +96,12 @@
 			isa = PBXGroup;
 			children = (
 				EF4C21FB2C538FEB00688997 /* GabTextView.swift */,
+				EF44A2322C6B3F9700687479 /* GabTextView + coordinator.swift */,
 				EF6D3B6E2C6608FF00D70E66 /* GabTextView + Modifier.swift */,
-				EF44A2302C69A1D100687479 /* GabTextView + ViewOptionModifier.swift */,
+				EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */,
+				EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */,
+				EF44A2362C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift */,
+				EF44A2382C6B450700687479 /* GabTextView + StyleStateModifier.swift */,
 			);
 			path = GabTextView;
 			sourceTree = "<group>";
@@ -239,7 +251,11 @@
 				EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */,
 				EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */,
 				EF6D3B6F2C6608FF00D70E66 /* GabTextView + Modifier.swift in Sources */,
-				EF44A2312C69A1D100687479 /* GabTextView + ViewOptionModifier.swift in Sources */,
+				EF44A2312C69A1D100687479 /* GabTextView + ViewStateModifier.swift in Sources */,
+				EF44A2392C6B450700687479 /* GabTextView + StyleStateModifier.swift in Sources */,
+				EF44A2352C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift in Sources */,
+				EF44A2332C6B3F9700687479 /* GabTextView + coordinator.swift in Sources */,
+				EF44A2372C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

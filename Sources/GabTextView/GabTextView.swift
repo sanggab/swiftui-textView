@@ -23,27 +23,11 @@ public struct TextView: UIViewRepresentable {
     
     public func makeUIView(context: Context) -> UIViewType {
         let textView: UITextView = UITextView()
-        
-        let noneFocusModel: TextAppearance = viewModel(\.viewStyle.appearance).noneFocus
-        textView.font = noneFocusModel.font
-        textView.textColor = UIColor(noneFocusModel.color)
         textView.text = text
-        textView.backgroundColor = UIColor(viewModel(\.viewOption.backgroundColor))
         textView.delegate = context.coordinator
-        textView.showsVerticalScrollIndicator = false
-        textView.isEditable = viewModel(\.viewOption.isEditable)
-        textView.isSelectable = viewModel(\.viewOption.isSelectable)
-        textView.isScrollEnabled = viewModel(\.viewScrollOption.isScrollEnabled)
-        textView.textContainerInset = .zero
-        textView.textContainer.lineFragmentPadding = 0
-//        textView.setContentCompressionResistancePriority(viewModel(\.viewContentPriorityState.contentPriority).priority, for: viewModel(\.viewContentPriorityState.contentPriority).axis)
+//        textView.textContainer.lineFragmentPadding = 0
+        bindTextView(textView)
         
-        
-        if text.count > viewModel(\.viewStyle.limitCount) {
-            let prefixText = textView.text.prefix(viewModel(\.viewStyle.limitCount))
-            textView.text = String(prefixText)
-            text = String(prefixText)
-        }
         
         return textView
     }
@@ -57,68 +41,122 @@ public struct TextView: UIViewRepresentable {
     }
 }
 
-public final class TextViewCoordinator: NSObject, UITextViewDelegate {
-    
-    private var parent: TextView
-    
-    fileprivate init(parent: TextView) {
-        self.parent = parent
+// MARK: - Bind
+private extension TextView {
+    func bindTextView(_ textView: UITextView) {
+        bindViewState(textView)
+        bindScrollViewState(textView)
+        bindContentPriorityState(textView)
+        bindStyleState(textView)
     }
-    
-    public func textViewDidBeginEditing(_ textView: UITextView) {
-        let focusAppearance: TextAppearance = parent.viewModel(\.viewStyle.appearance).focus
-        textView.font = focusAppearance.font
-        textView.textColor = UIColor(focusAppearance.color)
-    }
-    
-    public func textViewDidChange(_ textView: UITextView) {
-        parent.text = textView.text
-    }
-    
-    public func textViewDidEndEditing(_ textView: UITextView) {
-        let noneFocusAppearance: TextAppearance = parent.viewModel(\.viewStyle.appearance).noneFocus
-        textView.font = noneFocusAppearance.font
-        textView.textColor = UIColor(noneFocusAppearance.color)
-    }
-    
-    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+}
+
+// MARK: - View Bind
+private extension TextView {
+    func bindViewState(_ textView: UITextView) {
+        let viewState = viewModel(\.viewState)
         
-        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        textView.backgroundColor = UIColor(viewState.backgroundColor)
+        textView.textAlignment = viewState.textAlignment
+        textView.isEditable = viewState.isEditable
+        textView.isSelectable = viewState.isSelectable
         
-        let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
-                                                  options: .usesLineFragmentOrigin,
-                                                  attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
-                                                  context: nil).height
-        
-        let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
-        
-        if lines > parent.viewModel(\.viewStyle.limitLine) {
-            return false
+        if let dataDetectorTypes = viewState.dataDetectorTypes {
+            textView.dataDetectorTypes = dataDetectorTypes
         }
         
-        if newText.count > parent.viewModel(\.viewStyle.limitCount) {
-            let prefixCount = parent.viewModel(\.viewStyle.limitCount) - textView.text.count
-            
-            guard prefixCount > 0 else {
-                return false
-            }
-            
-            let prefixText = text.prefix(prefixCount)
-            textView.text.append(contentsOf: prefixText)
-            parent.text = textView.text
-            
-            textView.selectedRange = NSRange(location: parent.viewModel(\.viewStyle.limitCount), length: 0)
-        }
+        textView.textContainerInset = viewState.textContainerInset
+        textView.usesStandardTextScaling = viewState.usesStandardTextScaling
         
-        return true
+        if #available(iOS 16.0, *) {
+            textView.isFindInteractionEnabled = viewState.isFindInteractionEnabled
+        }
     }
-    
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+}
+
+// MARK: - Scroll Bind
+private extension TextView {
+    func bindScrollViewState(_ textView: UITextView) {
+        let scrollViewState = viewModel(\.scrollViewState)
         
-        if let closure = parent.dataDetectorTypesLinkUrl {
-            closure(url)
+        if scrollViewState.contentOffset != .zero {
+            textView.contentOffset = scrollViewState.contentOffset
         }
-            
-         return false
+        
+        if scrollViewState.contentSize != .zero {
+            textView.contentSize = scrollViewState.contentSize
+        }
+        
+        if scrollViewState.contentInset != .zero {
+            textView.contentInset = scrollViewState.contentInset
+        }
+        
+        textView.isScrollEnabled = scrollViewState.isScrollEnabled
+        textView.contentInsetAdjustmentBehavior = scrollViewState.contentInsetAdjustmentBehavior
+        textView.automaticallyAdjustsScrollIndicatorInsets = scrollViewState.automaticallyAdjustsScrollIndicatorInsets
+        textView.isDirectionalLockEnabled = scrollViewState.isDirectionalLockEnabled
+        textView.bounces = scrollViewState.bounces
+        textView.alwaysBounceVertical = scrollViewState.alwaysBounceVertical
+        textView.alwaysBounceHorizontal = scrollViewState.alwaysBounceHorizontal
+        textView.isPagingEnabled = scrollViewState.isPagingEnabled
+        textView.showsVerticalScrollIndicator = scrollViewState.showsVerticalScrollIndicator
+        textView.showsHorizontalScrollIndicator = scrollViewState.showsHorizontalScrollIndicator
+        textView.indicatorStyle = scrollViewState.indicatorStyle
+        textView.verticalScrollIndicatorInsets = scrollViewState.verticalScrollIndicatorInsets
+        textView.horizontalScrollIndicatorInsets = scrollViewState.horizontalScrollIndicatorInsets
+        textView.decelerationRate = scrollViewState.decelerationRate
+        
+        if let indexDisplayMode = scrollViewState.indexDisplayMode {
+            textView.indexDisplayMode = indexDisplayMode
+        }
+        
+        textView.delaysContentTouches = scrollViewState.delaysContentTouches
+        textView.canCancelContentTouches = scrollViewState.canCancelContentTouches
+        textView.minimumZoomScale = scrollViewState.minimumZoomScale
+        textView.maximumZoomScale = scrollViewState.maximumZoomScale
+        textView.zoomScale = scrollViewState.zoomScale
+        textView.bouncesZoom = scrollViewState.bouncesZoom
+        textView.scrollsToTop = scrollViewState.scrollsToTop
+        textView.keyboardDismissMode = scrollViewState.keyboardDismissMode
+        
+        if let refreshControl = scrollViewState.refreshControl {
+            textView.refreshControl = refreshControl
+        }
+        
+        if #available(iOS 17.0, *) {
+            textView.allowsKeyboardScrolling = scrollViewState.allowsKeyboardScrolling
+        }
+    }
+}
+
+// MARK: - ContentPriority Bind
+private extension TextView {
+    func bindContentPriorityState(_ textView: UITextView) {
+        let contentPriorityState = viewModel(\.contentPriorityState).contentPriority
+        
+        if let hugging = contentPriorityState.hugging {
+            textView.setContentHuggingPriority(hugging.priority, for: hugging.axis)
+        }
+        
+        if let compressionResistance = contentPriorityState.compressionResistance {
+            textView.setContentCompressionResistancePriority(compressionResistance.priority, for: compressionResistance.axis)
+        }
+    }
+}
+
+// MARK: - Style Bind
+private extension TextView {
+    func bindStyleState(_ textView: UITextView) {
+        let styleState = viewModel(\.styleState)
+        
+        let noneFocusModel = styleState.appearance.noneFocus
+        textView.font = noneFocusModel.font
+        textView.textColor = UIColor(noneFocusModel.color)
+        
+        if text.count > styleState.limitCount {
+            let prefixText = textView.text.prefix(styleState.limitCount)
+            textView.text = String(prefixText)
+            text = String(prefixText)
+        }
     }
 }
