@@ -10,7 +10,7 @@ import SwiftUI
 import GabTextView
 
 struct ContentView: View {
-    @State private var text: String = ""
+    @State private var text: String = "dddddsadasdasdasdsdsadsasdas\nsdfsdfssdfsfssd"
     @FocusState private var keyboardState
     
     var body: some View {
@@ -30,8 +30,9 @@ struct ContentView: View {
             .isEditable(true)
             .isSelectable(true)
             .setTextViewAppearanceModel(.default)
-            .limitCountAndLine(10, 5)
+            .limitCountAndLine(100, 5)
             .textContainerInset(.zero)
+            .lineFragmentPadding(.zero)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
@@ -40,7 +41,6 @@ struct ContentView: View {
             .frame(maxWidth: .infinity)
             .accessibilityIdentifier("GabTextView")
             .focused($keyboardState)
-            .accessibilityIdentifier(/*@START_MENU_TOKEN@*/"Identifier"/*@END_MENU_TOKEN@*/)
         
     }
 }

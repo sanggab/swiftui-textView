@@ -25,15 +25,14 @@ public struct TextView: UIViewRepresentable {
         let textView: UITextView = UITextView()
         textView.text = text
         textView.delegate = context.coordinator
-//        textView.textContainer.lineFragmentPadding = 0
-        bindTextView(textView)
         
+        bindTextView(textView)
         
         return textView
     }
     
     public func updateUIView(_ textView: UIViewType, context: Context) {
-//        print(#function)
+        print(#function)
     }
     
     public func makeCoordinator() -> TextViewCoordinator {
@@ -48,6 +47,7 @@ private extension TextView {
         bindScrollViewState(textView)
         bindContentPriorityState(textView)
         bindStyleState(textView)
+        bindTextContainerState(textView)
     }
 }
 
@@ -158,5 +158,18 @@ private extension TextView {
             textView.text = String(prefixText)
             text = String(prefixText)
         }
+    }
+}
+
+// MARK: - TextContainer Bind
+private extension TextView {
+    func bindTextContainerState(_ textView: UITextView) {
+        let textContainerState = viewModel(\.textContainerState)
+        
+        textView.textContainer.lineFragmentPadding = textContainerState.lineFragmentPadding
+        textView.textContainer.lineBreakMode = textContainerState.lineBreakMode
+        textView.textContainer.maximumNumberOfLines = textContainerState.maximumNumberOfLines
+        textView.textContainer.widthTracksTextView = textContainerState.widthTracksTextView
+        textView.textContainer.heightTracksTextView = textContainerState.heightTracksTextView
     }
 }

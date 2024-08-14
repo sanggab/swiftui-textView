@@ -147,6 +147,24 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     // ------------------------------------------------------------------------------------ //
     
     
+    // ------------------------------------------------------------------------------------ //
+    struct TextContainerState: Equatable {
+        var lineFragmentPadding: CGFloat = 5.0
+        var lineBreakMode: NSLineBreakMode = .byWordWrapping
+        var maximumNumberOfLines: Int = .zero
+        var widthTracksTextView: Bool = false
+        var heightTracksTextView: Bool = false
+    }
+    
+    enum TextContainerAction: Equatable {
+        case updateLlineFragmentPadding(CGFloat)
+        case updateLineBreakMode(NSLineBreakMode)
+        case updateMaximumNumberOfLines(Int)
+        case updateWidthTracksTextView(Bool)
+        case updateHeightTracksTextView(Bool)
+    }
+    // ------------------------------------------------------------------------------------ //
+    
     
     // ------------------------------------------------------------------------------------ //
     struct MainState: Equatable {
@@ -154,6 +172,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var scrollViewState: ScrollViewState = .init()
         var contentPriorityState: ContentPriorityState = .init()
         var styleState: StyleState = .init()
+        var textContainerState: TextContainerState = .init()
     }
     
     enum MainAction: Equatable {
@@ -161,6 +180,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateScrollViewState(ScrollViewAction)
         case updateContentPriorityState(ContentPriorityAction)
         case updateStyleState(StyleAction)
+        case updateTextContainerState(TextContainerAction)
     }
     // ------------------------------------------------------------------------------------ //
     
@@ -180,6 +200,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             contentPriorityAction(action)
         case .updateStyleState(let action):
             styleAction(action)
+        case .updateTextContainerState(let action):
+            textContainerAction(action)
         }
     }
 }
@@ -336,6 +358,23 @@ private extension TextViewModel {
             
         case .updateLimitLine(let line):
             update(\.styleState.limitLine, value: line)
+        }
+    }
+}
+
+private extension TextViewModel {
+    func textContainerAction(_ action: TextContainerAction) {
+        switch action {
+        case .updateLlineFragmentPadding(let padding):
+            update(\.textContainerState.lineFragmentPadding, value: padding)
+        case .updateLineBreakMode(let mode):
+            update(\.textContainerState.lineBreakMode, value: mode)
+        case .updateMaximumNumberOfLines(let line):
+            update(\.textContainerState.maximumNumberOfLines, value: line)
+        case .updateWidthTracksTextView(let state):
+            update(\.textContainerState.widthTracksTextView, value: state)
+        case .updateHeightTracksTextView(let state):
+            update(\.textContainerState.heightTracksTextView, value: state)
         }
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF36A5922C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A5912C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift */; };
 		EF44A2312C69A1D100687479 /* GabTextView + ViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */; };
 		EF44A2332C6B3F9700687479 /* GabTextView + coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2322C6B3F9700687479 /* GabTextView + coordinator.swift */; };
 		EF44A2352C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EF36A5912C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + TextContainerModifier.swift"; sourceTree = "<group>"; };
 		EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ViewStateModifier.swift"; sourceTree = "<group>"; };
 		EF44A2322C6B3F9700687479 /* GabTextView + coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + coordinator.swift"; sourceTree = "<group>"; };
 		EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ScrollViewStateModifier.swift"; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */,
 				EF44A2362C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift */,
 				EF44A2382C6B450700687479 /* GabTextView + StyleStateModifier.swift */,
+				EF36A5912C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift */,
 			);
 			path = GabTextView;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF36A5922C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift in Sources */,
 				EFC4CA662C58D15D00C1C86D /* Model.swift in Sources */,
 				EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */,
 				EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */,

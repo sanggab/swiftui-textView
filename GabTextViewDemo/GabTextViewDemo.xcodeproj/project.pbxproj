@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF36A5942C6C4162006CF215 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A5932C6C4162006CF215 /* ContentView.swift */; };
 		EF4C220E2C53905700688997 /* GabTextViewDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C220D2C53905700688997 /* GabTextViewDemoApp.swift */; };
 		EF4C22122C53905800688997 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF4C22112C53905800688997 /* Assets.xcassets */; };
 		EF4C22152C53905800688997 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF4C22142C53905800688997 /* Preview Assets.xcassets */; };
 		EF4C221F2C53905900688997 /* GabTextViewDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C221E2C53905900688997 /* GabTextViewDemoTests.swift */; };
 		EF4C22292C53905900688997 /* GabTextViewDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C22282C53905900688997 /* GabTextViewDemoUITests.swift */; };
 		EF4C222B2C53905900688997 /* GabTextViewDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C222A2C53905900688997 /* GabTextViewDemoUITestsLaunchTests.swift */; };
-		EF9209232C5CCCF000FF3F68 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9209222C5CCCF000FF3F68 /* ContentView.swift */; };
 		EFC4CA5E2C58AF7100C1C86D /* GabTextView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFC4CA5D2C58AF7100C1C86D /* GabTextView.framework */; };
 		EFC4CA5F2C58AF7100C1C86D /* GabTextView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EFC4CA5D2C58AF7100C1C86D /* GabTextView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -50,6 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EF36A5932C6C4162006CF215 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EF4C220A2C53905700688997 /* GabTextViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GabTextViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C220D2C53905700688997 /* GabTextViewDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewDemoApp.swift; sourceTree = "<group>"; };
 		EF4C22112C53905800688997 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,7 +60,6 @@
 		EF4C22242C53905900688997 /* GabTextViewDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GabTextViewDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C22282C53905900688997 /* GabTextViewDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewDemoUITests.swift; sourceTree = "<group>"; };
 		EF4C222A2C53905900688997 /* GabTextViewDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		EF9209222C5CCCF000FF3F68 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EFC4CA5D2C58AF7100C1C86D /* GabTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GabTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,7 +113,7 @@
 		EF4C220C2C53905700688997 /* GabTextViewDemo */ = {
 			isa = PBXGroup;
 			children = (
-				EF9209222C5CCCF000FF3F68 /* ContentView.swift */,
+				EF36A5932C6C4162006CF215 /* ContentView.swift */,
 				EF4C220D2C53905700688997 /* GabTextViewDemoApp.swift */,
 				EF4C22112C53905800688997 /* Assets.xcassets */,
 				EF4C22132C53905800688997 /* Preview Content */,
@@ -285,7 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF9209232C5CCCF000FF3F68 /* ContentView.swift in Sources */,
+				EF36A5942C6C4162006CF215 /* ContentView.swift in Sources */,
 				EF4C220E2C53905700688997 /* GabTextViewDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
