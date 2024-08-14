@@ -45,6 +45,30 @@ final class GabTextViewDemoUITests: XCTestCase {
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
+    
+    func testTextConfiguration() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let textView = app.textViews["GabTextView"].firstMatch
+        
+        XCTAssertNotNil(textView)
+        
+        textView.tap()
+        textView.typeText("속성 테스트 컬러 변경")
+        
+        let hideText = app.staticTexts["키보드 내려"].firstMatch
+        
+        XCTAssertNotNil(hideText)
+        
+        hideText.tap()
+        
+        let changeText = app.staticTexts["속성 변경"].firstMatch
+        
+        XCTAssertNotNil(changeText)
+        
+        changeText.tap()
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {

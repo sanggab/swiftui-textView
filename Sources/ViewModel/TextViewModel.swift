@@ -184,7 +184,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     }
     // ------------------------------------------------------------------------------------ //
     
-    @Published private var state: MainState = .init()
+    @Published var state: MainState = .init()
     
     func callAsFunction<V>(_ keyPath: KeyPath<MainState, V>) -> V where V : Equatable {
         return state[keyPath: keyPath]
@@ -219,7 +219,7 @@ private extension TextViewModel {
             update(\.viewState.isEditable, value: state)
             
         case .updateIsSelectable(let state):
-            update(\.viewState.isEditable, value: state)
+            update(\.viewState.isSelectable, value: state)
             
         case .updateDataDetectorTypes(let dataDetectorTypes):
             update(\.viewState.dataDetectorTypes, value: dataDetectorTypes)

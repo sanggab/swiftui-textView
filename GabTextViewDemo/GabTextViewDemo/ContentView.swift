@@ -13,12 +13,23 @@ struct ContentView: View {
     @State private var text: String = "dddddsadasdasdasdsdsadsasdas\nsdfsdfssdfsfssd"
     @FocusState private var keyboardState
     
+    @State private var textColor: Color = .black
+    @State private var id: UUID = UUID()
+    
     var body: some View {
         Text("키보드 내려")
             .accessibilityLabel("보이스 기능 입니다. 키보드 내려")
             .accessibilityIdentifier("키보드 내려")
             .onTapGesture {
                 keyboardState = false
+            }
+        
+        Text("속성 테스트")
+            .accessibilityLabel("보이스 기능 입니다. 속성 변경")
+            .accessibilityIdentifier("속성 변경")
+            .onTapGesture {
+                textColor = .mint
+                id = UUID()
             }
         
 //        Button("키보드 내려") {
@@ -34,6 +45,11 @@ struct ContentView: View {
             .textContainerInset(.zero)
             .lineFragmentPadding(.zero)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            .textViewConfiguration { textView in
+                print("이거 걸려?")
+                textView.text = "hi"
+                textView.textColor = UIColor(textColor)
+            }
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
             }
@@ -41,6 +57,7 @@ struct ContentView: View {
             .frame(maxWidth: .infinity)
             .accessibilityIdentifier("GabTextView")
             .focused($keyboardState)
+            .id(id)
         
     }
 }

@@ -15,6 +15,8 @@ public struct TextView: UIViewRepresentable {
     
     @Binding public var text: String
     
+    var testcaseTextView: ((UITextView) -> Void)?
+    
     var dataDetectorTypesLinkUrl: ((URL) -> Void)?
     
     public init(text: Binding<String>) {
@@ -22,11 +24,16 @@ public struct TextView: UIViewRepresentable {
     }
     
     public func makeUIView(context: Context) -> UIViewType {
-        let textView: UITextView = UITextView()
-        textView.text = text
-        textView.delegate = context.coordinator
+        var textView: UITextView = UITextView()
         
-        bindTextView(textView)
+        if let testcaseTextView {
+            testcaseTextView(textView)
+        } else {
+            textView.text = text
+            bindTextView(textView)
+        }
+        
+        textView.delegate = context.coordinator
         
         return textView
     }
@@ -171,5 +178,14 @@ private extension TextView {
         textView.textContainer.maximumNumberOfLines = textContainerState.maximumNumberOfLines
         textView.textContainer.widthTracksTextView = textContainerState.widthTracksTextView
         textView.textContainer.heightTracksTextView = textContainerState.heightTracksTextView
+    }
+}
+
+public extension TextView {
+    
+    func textViewConfiguration(_ closure: @escaping (UITextView) -> Void) -> TextView {
+        var view: TextView = self
+        view.testcaseTextView = closure
+        return view
     }
 }

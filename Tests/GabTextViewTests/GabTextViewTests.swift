@@ -102,8 +102,8 @@ final class GabTextViewTests: XCTestCase {
         var resultTask: String?
         
 //        let exp = expectation(description: "APIProvider Error")
-//        let exp2 = expectation(description: "Gab Error")
-        let test = XCTestExpectation(description: "hihihi")
+        let exp2 = expectation(description: "Gab Error")
+//        let test = XCTestExpectation(description: "hihihi")
         let apiProvider = APIProvider()
         
         XCTAssertNil(resultTask, "미리 할당됨")
@@ -111,14 +111,13 @@ final class GabTextViewTests: XCTestCase {
         apiProvider.asyncTask { text in
             resultTask = text
 //            exp.fulfill()
-//            exp2.fulfill()
-            test.fulfill()
+            exp2.fulfill()
+//            test.fulfill()
         }
         
 //        wait(for: [exp, exp2], timeout: 3)
-//        waitForExpectations(timeout: 3, handler: nil)
-        wait(for: [test], timeout: 3)
-        
+        waitForExpectations(timeout: 3, handler: nil)
+//        wait(for: [test], timeout: 3)
         
         XCTAssertNotNil(resultTask, "작업 안된듯?")
         
@@ -137,6 +136,16 @@ final class GabTextViewTests: XCTestCase {
         self.measure {
             // Put the code you want to measure the time of here.
         }
+    }
+    
+    func testClosureTextView2() throws {
+        let textview = TextView(text: .init(get: { self.text }, set: { self.text = $0})).textViewConfiguration { textView in
+            textView.text = "hi nice to meet you"
+        }
+        
+        XCTAssertNotNil(textview.testcaseTextView)
+        
+        print(textview.text)
     }
     
     override func tearDown() {

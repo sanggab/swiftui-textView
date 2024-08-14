@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EF36A5922C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A5912C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift */; };
+		EF36A5982C6C6A8D006CF215 /* ViewStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A5972C6C6A8D006CF215 /* ViewStateTests.swift */; };
 		EF44A2312C69A1D100687479 /* GabTextView + ViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */; };
 		EF44A2332C6B3F9700687479 /* GabTextView + coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2322C6B3F9700687479 /* GabTextView + coordinator.swift */; };
 		EF44A2352C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		EF36A5912C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + TextContainerModifier.swift"; sourceTree = "<group>"; };
+		EF36A5972C6C6A8D006CF215 /* ViewStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStateTests.swift; sourceTree = "<group>"; };
 		EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ViewStateModifier.swift"; sourceTree = "<group>"; };
 		EF44A2322C6B3F9700687479 /* GabTextView + coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + coordinator.swift"; sourceTree = "<group>"; };
 		EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ScrollViewStateModifier.swift"; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */,
+				EF36A5972C6C6A8D006CF215 /* ViewStateTests.swift */,
 			);
 			path = GabTextViewTests;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF36A5982C6C6A8D006CF215 /* ViewStateTests.swift in Sources */,
 				EF4C21F32C538FDB00688997 /* GabTextViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
