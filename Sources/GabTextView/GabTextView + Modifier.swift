@@ -23,6 +23,14 @@ public extension TextView {
             self.overlay(makePlaceHolderView(content: content), alignment: alignment)
         }
     }
+    /// Modifier가 아닌 직접 TextView를 구현하고 싶을 때, 사용
+    ///
+    ///
+    func textViewConfiguration(_ configuration: @escaping (UITextView) -> Void) -> TextView {
+        var view: TextView = self
+        view.configuration = configuration
+        return view
+    }
 }
 
 // MARK: - Helper

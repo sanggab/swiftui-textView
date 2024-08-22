@@ -49,6 +49,7 @@ struct ContentView: View {
                 print("이거 걸려?")
                 textView.text = "hi"
                 textView.textColor = UIColor(textColor)
+                textView.backgroundColor = .white
             }
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")

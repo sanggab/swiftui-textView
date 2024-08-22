@@ -143,7 +143,7 @@ final class GabTextViewTests: XCTestCase {
             textView.text = "hi nice to meet you"
         }
         
-        XCTAssertNotNil(textview.testcaseTextView)
+        XCTAssertNotNil(textview.configuration)
         
         print(textview.text)
     }
