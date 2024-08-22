@@ -32,10 +32,6 @@ struct ContentView: View {
                 id = UUID()
             }
         
-//        Button("키보드 내려") {
-//            keyboardState = false
-//        }
-//
         TextView(text: $text)
             .changeBackgroundColor(.gray.opacity(0.5))
             .isEditable(true)
@@ -51,8 +47,13 @@ struct ContentView: View {
                 textView.textColor = UIColor(textColor)
                 textView.backgroundColor = .white
             }
+            .textViewDidBeginEditing { textView in
+                print("textView: \(textView)")
+                textView.text = "nono"
+            }
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
+                    .foregroundStyle(.black)
             }
             .frame(height: 50)
             .frame(maxWidth: .infinity)

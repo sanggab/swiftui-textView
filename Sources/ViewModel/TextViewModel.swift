@@ -173,6 +173,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var contentPriorityState: ContentPriorityState = .init()
         var styleState: StyleState = .init()
         var textContainerState: TextContainerState = .init()
+        var isConfigurationMode: Bool = false
     }
     
     enum MainAction: Equatable {
@@ -181,6 +182,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateContentPriorityState(ContentPriorityAction)
         case updateStyleState(StyleAction)
         case updateTextContainerState(TextContainerAction)
+        case updateIsConfigurationMode(Bool)
     }
     // ------------------------------------------------------------------------------------ //
     
@@ -202,6 +204,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             styleAction(action)
         case .updateTextContainerState(let action):
             textContainerAction(action)
+        case .updateIsConfigurationMode(let status):
+            update(\.isConfigurationMode, value: status)
         }
     }
 }

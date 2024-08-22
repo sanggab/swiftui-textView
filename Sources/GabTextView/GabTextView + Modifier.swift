@@ -28,7 +28,26 @@ public extension TextView {
     ///
     func textViewConfiguration(_ configuration: @escaping (UITextView) -> Void) -> TextView {
         var view: TextView = self
+        view.viewModel.action(.updateIsConfigurationMode(true))
         view.configuration = configuration
+        return view
+    }
+    
+    func textViewDidBeginEditing(_ textViewDidBeginEditing: @escaping ((UITextView) -> Void)) -> TextView {
+        var view: TextView = self
+        view.textViewDidBeginEditing = textViewDidBeginEditing
+        return view
+    }
+    
+    func textViewDidChange(_ textViewDidBeginEditing: @escaping ((UITextView) -> Void)) -> TextView {
+        var view: TextView = self
+        view.textViewDidChange = textViewDidChange
+        return view
+    }
+    
+    func textViewDidEndEditing(_ textViewDidBeginEditing: @escaping ((UITextView) -> Void)) -> TextView {
+        var view: TextView = self
+        view.textViewDidEndEditing = textViewDidEndEditing
         return view
     }
 }

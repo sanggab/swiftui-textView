@@ -19,12 +19,16 @@ public struct TextView: UIViewRepresentable {
     
     var dataDetectorTypesLinkUrl: ((URL) -> Void)?
     
+    var textViewDidBeginEditing: ((UITextView) -> Void)?
+    var textViewDidChange: ((UITextView) -> Void)?
+    var textViewDidEndEditing: ((UITextView) -> Void)?
+    
     public init(text: Binding<String>) {
         self._text = text
     }
     
     public func makeUIView(context: Context) -> UIViewType {
-        var textView: UITextView = UITextView()
+        let textView: UITextView = UITextView()
         
         if let configuration {
             configuration(textView)
