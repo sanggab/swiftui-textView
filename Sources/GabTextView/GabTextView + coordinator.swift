@@ -30,51 +30,57 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidChange(_ textView: UITextView) {
-        parent.text = textView.text
+        if parent.viewModel(\.isConfigurationMode) {
+            parent.textViewDidChange?(textView)
+        } else {
+            parent.text = textView.text
+        }
     }
     
     public func textViewDidEndEditing(_ textView: UITextView) {
-        let noneFocusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).noneFocus
-        textView.font = noneFocusAppearance.font
-        textView.textColor = UIColor(noneFocusAppearance.color)
+        if parent.viewModel(\.isConfigurationMode) {
+            parent.textViewDidEndEditing?(textView)
+        } else {
+            let noneFocusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).noneFocus
+            textView.font = noneFocusAppearance.font
+            textView.textColor = UIColor(noneFocusAppearance.color)
+        }
     }
     
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
-//        if !parent.viewModel(\.isConfigurationMode) {
-//            let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-//            
-//            let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
-//                                                      options: .usesLineFragmentOrigin,
-//                                                      attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
-//                                                      context: nil).height
-//            
-//            let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
-//            
-//            if lines > parent.viewModel(\.styleState.limitLine) {
-//                return false
-//            }
-//            
-//            if newText.count > parent.viewModel(\.styleState.limitCount) {
-//                let prefixCount = parent.viewModel(\.styleState.limitCount) - textView.text.count
-//                
-//                guard prefixCount > 0 else {
-//                    return false
-//                }
-//                
-//                let prefixText = text.prefix(prefixCount)
-//                textView.text.append(contentsOf: prefixText)
-//                parent.text = textView.text
-//                
-//                textView.selectedRange = NSRange(location: parent.viewModel(\.styleState.limitCount), length: 0)
-//            }
-//            
-//            return true
-//        } else {
-//            return true
-//        }
-        
-        return true
+        if !parent.viewModel(\.isConfigurationMode) {
+            let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+            
+            let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
+                                                      options: .usesLineFragmentOrigin,
+                                                      attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
+                                                      context: nil).height
+            
+            let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
+            
+            if lines > parent.viewModel(\.styleState.limitLine) {
+                return false
+            }
+            
+            if newText.count > parent.viewModel(\.styleState.limitCount) {
+                let prefixCount = parent.viewModel(\.styleState.limitCount) - textView.text.count
+                
+                guard prefixCount > 0 else {
+                    return false
+                }
+                
+                let prefixText = text.prefix(prefixCount)
+                textView.text.append(contentsOf: prefixText)
+                parent.text = textView.text
+                
+                textView.selectedRange = NSRange(location: parent.viewModel(\.styleState.limitCount), length: 0)
+            }
+            
+            return true
+        } else {
+            return true
+        }
     }
     
     public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
