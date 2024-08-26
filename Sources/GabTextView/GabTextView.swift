@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SafariServices
 
 public struct TextView: UIViewRepresentable {
     public typealias UIViewType = UITextView
@@ -19,8 +18,13 @@ public struct TextView: UIViewRepresentable {
     
     var dataDetectorTypesLinkUrl: ((URL) -> Void)?
     
+    var textViewShouldBeginEditing: ((UITextView) -> Bool)?
     var textViewDidBeginEditing: ((UITextView) -> Void)?
+    
     var textViewDidChange: ((UITextView) -> Void)?
+    var textViewDidChangeSelection: ((UITextView) -> Void)?
+    
+    var textViewShouldEndEditing: ((UITextView) -> Bool)?
     var textViewDidEndEditing: ((UITextView) -> Void)?
     
     public init(text: Binding<String>) {
@@ -34,10 +38,9 @@ public struct TextView: UIViewRepresentable {
             configuration(textView)
         } else {
             textView.text = text
+            textView.delegate = context.coordinator
             bindTextView(textView)
         }
-        
-        textView.delegate = context.coordinator
         
         return textView
     }

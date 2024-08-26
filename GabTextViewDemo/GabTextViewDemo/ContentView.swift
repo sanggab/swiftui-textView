@@ -41,12 +41,12 @@ struct ContentView: View {
             .textContainerInset(.zero)
             .lineFragmentPadding(.zero)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-            .textViewConfiguration { textView in
-                print("이거 걸려?")
-                textView.text = "hi"
-                textView.textColor = UIColor(textColor)
-                textView.backgroundColor = .white
-            }
+//            .textViewConfiguration { textView in
+//                print("이거 걸려?")
+//                textView.text = "hi"
+//                textView.textColor = UIColor(textColor)
+//                textView.backgroundColor = .white
+//            }
             .textViewDidBeginEditing { textView in
                 print("textView: \(textView)")
                 textView.text = "nono"

@@ -92,3 +92,35 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
          return false
     }
 }
+
+public extension TextViewCoordinator {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if let closure = parent.textViewShouldBeginEditing {
+            return closure(textView)
+        } else {
+            return true
+        }
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if let closure = parent.textViewDidChangeSelection {
+            closure(textView)
+        }
+    }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        if let closure = parent.textViewShouldEndEditing {
+            return closure(textView)
+        } else {
+            return true
+        }
+    }
+}
+
+public extension TextViewCoordinator {
+    @available(iOS 16.0, *)
+    func textView(_ textView: UITextView, willDismissEditMenuWith animator: UIEditMenuInteractionAnimating) {
+        
+    }
+    
+}
