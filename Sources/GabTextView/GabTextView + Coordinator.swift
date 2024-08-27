@@ -72,7 +72,45 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         
     }
     
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if checkInputBreakMode(textView, replacementText: text) {
+            let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+            
+            let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
+                                                      options: .usesLineFragmentOrigin,
+                                                      attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
+                                                      context: nil).height
+            
+            let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
+            
+            if lines > parent.viewModel(\.styleState.limitLine) {
+                return false
+            }
+            
+            if newText.count > parent.viewModel(\.styleState.limitCount) {
+                let prefixCount = parent.viewModel(\.styleState.limitCount) - textView.text.count
+                
+                guard prefixCount > 0 else {
+                    return false
+                }
+                
+                let prefixText = text.prefix(prefixCount)
+                textView.text.append(contentsOf: prefixText)
+                parent.text = textView.text
+                
+                textView.selectedRange = NSRange(location: parent.viewModel(\.styleState.limitCount), length: 0)
+            }
+            
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+// MARK: - automatic 미구현
+public extension TextViewCoordinator {
+    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
                 
         switch mode {
@@ -85,39 +123,6 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         }
     }
     
-    private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        
-        let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
-                                                  options: .usesLineFragmentOrigin,
-                                                  attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
-                                                  context: nil).height
-        
-        let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
-        
-        if lines > parent.viewModel(\.styleState.limitLine) {
-            return false
-        }
-        
-        if newText.count > parent.viewModel(\.styleState.limitCount) {
-            let prefixCount = parent.viewModel(\.styleState.limitCount) - textView.text.count
-            
-            guard prefixCount > 0 else {
-                return false
-            }
-            
-            let prefixText = text.prefix(prefixCount)
-            textView.text.append(contentsOf: prefixText)
-            parent.text = textView.text
-            
-            textView.selectedRange = NSRange(location: parent.viewModel(\.styleState.limitCount), length: 0)
-        }
-        
-        return true
-    }
-}
-
-public extension TextViewCoordinator {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         print("상갑 logEvent \(#function)")
         let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
@@ -254,11 +259,64 @@ public extension TextViewCoordinator {
                 
         switch mode {
         case .none:
-            break
+            break 
         case .automatic:
             break
         case .modifier:
             parent.textItemMenuWillDisplayFor?(textView, textItem, animator)
+        }
+    }
+}
+
+extension TextViewCoordinator {
+    func checkInputBreakMode(_ textView: UITextView, replacementText text: String) -> Bool {
+        switch parent.viewModel(\.styleState.inputBreakMode) {
+        case .lineBreak:
+            
+            if text == "\n" {
+                return false
+            } else {
+                return true
+            }
+            
+        case .whiteSpace:
+            
+            if text == " " {
+                return false
+            } else {
+                return true
+            }
+            
+        case .continuousWhiteSpace:
+            
+            let lastText = textView.text.last
+            
+            if lastText == " " && text == " " {
+                return false
+            } else {
+                return true
+            }
+            
+        case .lineWithWhiteSpace:
+            
+            if text == "\n" || text == " " {
+                return false
+            } else {
+                return true
+            }
+            
+        case .lineWithContinuousWhiteSpace:
+            
+            let lastText = textView.text.last
+            
+            if text == "\n" || lastText == " " && text == " " {
+                return false
+            } else {
+                return true
+            }
+            
+        default:
+            return true
         }
     }
 }

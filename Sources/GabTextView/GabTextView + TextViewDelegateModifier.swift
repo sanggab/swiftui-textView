@@ -1,5 +1,5 @@
 //
-//  GabTextView + DelegateModifier.swift
+//  GabTextView + TextViewDelegateModifier.swift
 //  GabTextView
 //
 //  Created by Gab on 2024/08/26.

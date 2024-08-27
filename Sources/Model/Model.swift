@@ -72,15 +72,6 @@ public struct TextViewContentPriority: Equatable {
         self.compressionResistance = compressionResistance
     }
 }
-//
-//@frozen
-//public struct TextViewOptionModel: Equatable {
-//    public var isScrollEnabld: Bool = true
-//    public var isEditable: Bool = true
-//    public var isSelectable: Bool = true
-//    public var backgroundColor: Color = .white
-//    public var contentPriority: TextViewContentPriority = .default
-//}
 
 /// TextViewDelegate 처리 Mode
 @frozen
@@ -91,4 +82,43 @@ public enum TextViewDelegateMode: Equatable {
     case modifier
     /// 시스템 방식대로 처리
     case automatic
+}
+
+/// TextView Size Mode
+@frozen
+public enum TextViewSizeMode: Equatable {
+    /// 고정
+    case fixed
+    /// 동적
+    case dynamic
+}
+/// TextView의 Trim 처리 모드
+@frozen
+public enum TextViewTrimMode {
+    /// default
+    case none
+    /// trim의 whitespaces과 같다
+    case whitespaces
+    /// trim의 whitespacesAndNewlines과 같다
+    case whitespacesAndNewlines
+    /// 문자열 사이의 공백과 whitespaces 제거
+    case blankWithWhitespaces
+    /// 문자열 사이의 공백과 whitespacesAndNewlines 제거
+    case blankWithWhitespacesAndNewlines
+}
+/// TextView의 입력 모드를 케이스에 따라 막는 모드
+@frozen
+public enum TextViewInputBreakMode {
+    /// 기본
+    case none
+    /// 개행의 입력을 막는다
+    case lineBreak
+    /// 공백의 입력을 막는다
+    case whiteSpace
+    /// 연속된 공백의 입력을 막는다
+    case continuousWhiteSpace
+    /// 개행과 공백의 입력을 막는다
+    case lineWithWhiteSpace
+    /// 개행과 연속된 공백의 입력을 막는다
+    case lineWithContinuousWhiteSpace
 }

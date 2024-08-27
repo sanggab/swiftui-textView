@@ -40,6 +40,7 @@ struct ContentView: View {
             .lineFragmentPadding(.zero)
             .controlTextViewDelegate(.automatic)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            .inputBreakMode(.continuousWhiteSpace)
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
                     .foregroundStyle(.black)

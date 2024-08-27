@@ -135,6 +135,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var appearance: TextViewAppearanceModel = .default
         var limitCount: Int = 999999
         var limitLine: Int = 999999
+        var trimMode: TextViewTrimMode = .none
+        var inputBreakMode: TextViewInputBreakMode = .none
     }
     
     enum StyleAction: Equatable {
@@ -143,6 +145,9 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         
         case updateLimitCount(Int)
         case updateLimitLine(Int)
+        
+        case updateTrimMode(TextViewTrimMode)
+        case updateInputBreakMode(TextViewInputBreakMode)
     }
     // ------------------------------------------------------------------------------------ //
     
@@ -175,6 +180,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var textContainerState: TextContainerState = .init()
         var isConfigurationMode: Bool = false
         var delegateMode: TextViewDelegateMode = .automatic
+        var sizeMode: TextViewSizeMode = .fixed
     }
     
     enum MainAction: Equatable {
@@ -185,6 +191,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateTextContainerState(TextContainerAction)
         case updateIsConfigurationMode(Bool)
         case updateDelegateMode(TextViewDelegateMode)
+        case updateSizeMode(TextViewSizeMode)
     }
     // ------------------------------------------------------------------------------------ //
     
@@ -210,6 +217,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             update(\.isConfigurationMode, value: status)
         case .updateDelegateMode(let mode):
             update(\.delegateMode, value: mode)
+        case .updateSizeMode(let mode):
+            update(\.sizeMode, value: mode)
         }
     }
 }
@@ -366,6 +375,12 @@ private extension TextViewModel {
             
         case .updateLimitLine(let line):
             update(\.styleState.limitLine, value: line)
+            
+        case .updateTrimMode(let method):
+            update(\.styleState.trimMode, value: method)
+            
+        case .updateInputBreakMode(let mode):
+            update(\.styleState.inputBreakMode, value: mode)
         }
     }
 }
