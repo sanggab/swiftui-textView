@@ -27,6 +27,15 @@ public struct TextView: UIViewRepresentable {
     var textViewShouldEndEditing: ((UITextView) -> Bool)?
     var textViewDidEndEditing: ((UITextView) -> Void)?
     
+    var _editMenuForTextIn: Any? = nil
+    var _willDismissEditMenuWith: Any? = nil
+    var _willPresentEditMenuWith: Any? = nil
+    var _primaryActionFor: Any? = nil
+    var _menuConfigurationFor: Any? = nil
+    var _textItemMenuWillEndFor: Any? = nil
+    var _textItemMenuWillDisplayFor: Any? = nil
+    
+    
     public init(text: Binding<String>) {
         self._text = text
     }
@@ -70,8 +79,8 @@ private extension TextView {
     func bindViewState(_ textView: UITextView) {
         let viewState = viewModel(\.viewState)
         
-        textView.backgroundColor = UIColor(viewState.backgroundColor)
-        textView.textAlignment = viewState.textAlignment
+        textView.backgroundColor = UIColor(viewModel(\.viewState).backgroundColor)
+        textView.textAlignment = viewModel(\.viewState).textAlignment
         textView.isEditable = viewState.isEditable
         textView.isSelectable = viewState.isSelectable
         

@@ -21,7 +21,7 @@ public extension TextView {
         return view
     }
     
-    func textViewDidChange(_ textViewDidBeginEditing: @escaping ((UITextView) -> Void)) -> TextView {
+    func textViewDidChange(_ textViewDidChange: @escaping ((UITextView) -> Void)) -> TextView {
         var view: TextView = self
         view.textViewDidChange = textViewDidChange
         return view
@@ -48,23 +48,51 @@ public extension TextView {
 
 public extension TextView {
     
-//    @available(iOS 16.0, *)
-//    func willDismissEditMenuWith(_ willDismissEditMenuWith: @escaping (() -> Void)) -> TextView {
-//        var view: TextView = self
-//        
-//        return view
-//    }
-    
-    @available(iOS 16.0, *)
-    func textViewAvailableTest(_ closure: @escaping ((UITextView) -> Void)) -> TextView {
+    func editMenuForTextIn(_ editMenuForTextIn: @escaping ((TextViewTypealias.EditMenuForTextIn) -> UIMenu?)) -> TextView {
         var view: TextView = self
-        
+        view.editMenuForTextIn = editMenuForTextIn
         return view
     }
-}
-
-@available(iOS 16.0, *)
-public struct HOHOHO {
-    static let shared = HOHOHO()
-    var test: ((UITextView) -> Void)?
+    
+    @available(iOS 16.0, *)
+    func willDismissEditMenuWith(_ willDismissEditMenuWith: @escaping ((TextViewTypealias.WillDismissEditMenuWith) -> Void)) -> TextView {
+        var view: TextView = self
+        view.willDismissEditMenuWith = willDismissEditMenuWith
+        return view
+    }
+    
+    @available(iOS 16.0, *)
+    func willPresentEditMenuWith(_ willPresentEditMenuWith: @escaping ((TextViewTypealias.WillPresentEditMenuWith) -> Void)) -> TextView {
+        var view: TextView = self
+        view.willPresentEditMenuWith = willPresentEditMenuWith
+        return view
+    }
+    
+    @available(iOS 17.0, *)
+    func primaryActionFor(_ primaryActionFor: @escaping ((TextViewTypealias.PrimaryActionFor) -> UIAction?)) -> TextView {
+        var view: TextView = self
+        view.primaryActionFor = primaryActionFor
+        return view
+    }
+    
+    @available(iOS 17.0, *)
+    func menuConfigurationFor(_ menuConfigurationFor: @escaping ((TextViewTypealias.MenuConfigurationFor) -> UITextItem.MenuConfiguration?)) -> TextView {
+        var view: TextView = self
+        view.menuConfigurationFor = menuConfigurationFor
+        return view
+    }
+    
+    @available(iOS 17.0, *)
+    func textItemMenuWillEndFor(_ textItemMenuWillEndFor: @escaping ((TextViewTypealias.TextItemMenuWillEndFor) -> Void)) -> TextView {
+        var view: TextView = self
+        view.textItemMenuWillEndFor = textItemMenuWillEndFor
+        return view
+    }
+    
+    @available(iOS 17.0, *)
+    func textItemMenuWillDisplayFor(_ textItemMenuWillDisplayFor: @escaping ((TextViewTypealias.TextItemMenuWillDisplayFor) -> Void)) -> TextView {
+        var view: TextView = self
+        view.textItemMenuWillDisplayFor = textItemMenuWillDisplayFor
+        return view
+    }
 }

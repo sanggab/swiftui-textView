@@ -10,7 +10,7 @@ import SwiftUI
 import GabTextView
 
 struct ContentView: View {
-    @State private var text: String = "dddddsadasdasdasdsdsadsasdas\nsdfsdfssdfsfssd"
+    @State private var text: String = ""
     @FocusState private var keyboardState
     
     @State private var textColor: Color = .black
@@ -41,16 +41,6 @@ struct ContentView: View {
             .textContainerInset(.zero)
             .lineFragmentPadding(.zero)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-//            .textViewConfiguration { textView in
-//                print("이거 걸려?")
-//                textView.text = "hi"
-//                textView.textColor = UIColor(textColor)
-//                textView.backgroundColor = .white
-//            }
-            .textViewDidBeginEditing { textView in
-                print("textView: \(textView)")
-                textView.text = "nono"
-            }
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
                     .foregroundStyle(.black)
@@ -62,8 +52,9 @@ struct ContentView: View {
             .id(id)
         
     }
+
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}
