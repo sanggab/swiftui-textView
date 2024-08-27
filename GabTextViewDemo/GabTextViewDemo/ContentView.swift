@@ -34,12 +34,11 @@ struct ContentView: View {
         
         TextView(text: $text)
             .changeBackgroundColor(.gray.opacity(0.5))
-            .isEditable(true)
-            .isSelectable(true)
             .setTextViewAppearanceModel(.default)
             .limitCountAndLine(100, 5)
             .textContainerInset(.zero)
             .lineFragmentPadding(.zero)
+            .controlTextViewDelegate(.automatic)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
@@ -55,6 +54,6 @@ struct ContentView: View {
 
 }
 
-//#Preview {
-//    ContentView()
-//}
+#Preview {
+    ContentView()
+}

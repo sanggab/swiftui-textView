@@ -174,6 +174,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var styleState: StyleState = .init()
         var textContainerState: TextContainerState = .init()
         var isConfigurationMode: Bool = false
+        var delegateMode: TextViewDelegateMode = .automatic
     }
     
     enum MainAction: Equatable {
@@ -183,6 +184,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateStyleState(StyleAction)
         case updateTextContainerState(TextContainerAction)
         case updateIsConfigurationMode(Bool)
+        case updateDelegateMode(TextViewDelegateMode)
     }
     // ------------------------------------------------------------------------------------ //
     
@@ -206,6 +208,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             textContainerAction(action)
         case .updateIsConfigurationMode(let status):
             update(\.isConfigurationMode, value: status)
+        case .updateDelegateMode(let mode):
+            update(\.delegateMode, value: mode)
         }
     }
 }

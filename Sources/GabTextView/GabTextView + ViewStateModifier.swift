@@ -47,10 +47,9 @@ public extension TextView {
     /// The types of data that convert to tappable URLs in the text view.
     ///
     /// You can use this property to specify the types of data (phone numbers, http links, and so on) that should be automatically converted to URLs in the text view. When tapped, the text view opens the application responsible for handling the URL type and passes it the URL. Note that data detection does not occur if the text view's ``isEditable(_:)`` property is set to true.
-    func dataDetectorTypes(_ dataType: UIDataDetectorTypes, _ closure: @escaping ((URL) -> Void)) -> TextView {
-        var view: TextView = self
+    func dataDetectorTypes(_ dataType: UIDataDetectorTypes) -> TextView {
+        let view: TextView = self
         view.viewModel.action(.updateViewState(.updateDataDetectorTypes(dataType)))
-        view.dataDetectorTypesLinkUrl = closure
         return view
     }
     /// The inset of the text container's layout area within the text view's content area.

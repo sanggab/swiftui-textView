@@ -81,3 +81,14 @@ public struct TextViewContentPriority: Equatable {
 //    public var backgroundColor: Color = .white
 //    public var contentPriority: TextViewContentPriority = .default
 //}
+
+/// TextViewDelegate 처리 Mode
+@frozen
+public enum TextViewDelegateMode: Equatable {
+    /// configuration을 이용해서 직접 delegate 처리
+    case none
+    /// modifier로 구현된 것으로 받아서 처리
+    case modifier
+    /// 시스템 방식대로 처리
+    case automatic
+}

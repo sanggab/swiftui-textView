@@ -8,64 +8,55 @@
 import SwiftUI
 
 extension TextView {
-    
-    var editMenuForTextIn: ((TextViewTypealias.EditMenuForTextIn) -> UIMenu?)? {
-        get {
-            return _editMenuForTextIn as? ((TextViewTypealias.EditMenuForTextIn) -> UIMenu?)
-        } set {
-            _editMenuForTextIn = newValue
-        }
-    }
-    
     @available(iOS 16.0, *)
-    var willDismissEditMenuWith: ((TextViewTypealias.WillDismissEditMenuWith) -> Void)? {
+    var willDismissEditMenuWith: ((UITextView, UIEditMenuInteractionAnimating) -> Void)? {
         get {
-            return _willDismissEditMenuWith as? ((TextViewTypealias.WillDismissEditMenuWith) -> Void)
+            return _willDismissEditMenuWith as? ((UITextView, UIEditMenuInteractionAnimating) -> Void)
         } set {
             _willDismissEditMenuWith = newValue
         }
     }
     
     @available(iOS 16.0, *)
-    var willPresentEditMenuWith: ((TextViewTypealias.WillDismissEditMenuWith) -> Void)? {
+    var willPresentEditMenuWith: ((UITextView, UIEditMenuInteractionAnimating) -> Void)? {
         get {
-            return _willDismissEditMenuWith as? ((TextViewTypealias.WillDismissEditMenuWith) -> Void)
+            return _willDismissEditMenuWith as? ((UITextView, UIEditMenuInteractionAnimating) -> Void)
         } set {
             _willDismissEditMenuWith = newValue
         }
     }
     
     @available(iOS 17.0, *)
-    var primaryActionFor: ((TextViewTypealias.PrimaryActionFor) -> UIAction?)? {
+    var primaryActionFor: ((UITextView, UITextItem, UIAction) -> UIAction?)? {
         get {
-            return _primaryActionFor as? ((TextViewTypealias.PrimaryActionFor) -> UIAction?)
+            return _primaryActionFor as? ((UITextView, UITextItem, UIAction) -> UIAction?)
         } set {
             _primaryActionFor = newValue
         }
     }
     
     @available(iOS 17.0, *)
-    var menuConfigurationFor: ((TextViewTypealias.MenuConfigurationFor) -> UITextItem.MenuConfiguration?)? {
+    var menuConfigurationFor: ((UITextView, UITextItem, UIMenu) -> UITextItem.MenuConfiguration?)? {
         get {
-            return _menuConfigurationFor as? ((TextViewTypealias.MenuConfigurationFor) -> UITextItem.MenuConfiguration?)
+            return _menuConfigurationFor as? ((UITextView, UITextItem, UIMenu) -> UITextItem.MenuConfiguration?)
         } set {
             _menuConfigurationFor = newValue
         }
     }
     
     @available(iOS 17.0, *)
-    var textItemMenuWillEndFor: ((TextViewTypealias.TextItemMenuWillEndFor) -> Void)? {
+    var textItemMenuWillEndFor: ((UITextView, UITextItem, UIContextMenuInteractionAnimating) -> Void)? {
         get {
-            return _textItemMenuWillEndFor as? ((TextViewTypealias.TextItemMenuWillEndFor) -> Void)
+            return _textItemMenuWillEndFor as? ((UITextView, UITextItem, UIContextMenuInteractionAnimating) -> Void)
         } set {
             _textItemMenuWillEndFor = newValue
         }
     }
     
     @available(iOS 17.0, *)
-    var textItemMenuWillDisplayFor: ((TextViewTypealias.TextItemMenuWillDisplayFor) -> Void)? {
+    var textItemMenuWillDisplayFor: ((UITextView, UITextItem, UIContextMenuInteractionAnimating) -> Void)? {
         get {
-            return _textItemMenuWillDisplayFor as? ((TextViewTypealias.TextItemMenuWillDisplayFor) -> Void)
+            return _textItemMenuWillDisplayFor as? ((UITextView, UITextItem, UIContextMenuInteractionAnimating) -> Void)
         } set {
             _textItemMenuWillDisplayFor = newValue
         }

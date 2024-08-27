@@ -32,6 +32,14 @@ public extension TextView {
         view.configuration = configuration
         return view
     }
+    /// UITextViewDelegate 처리를 어떻게 할 것 인지 정하는 Modifier
+    ///
+    /// default값은 automatic
+    func controlTextViewDelegate(_ mode: TextViewDelegateMode = .automatic) -> TextView {
+        let view: TextView = self
+        view.viewModel.action(.updateDelegateMode(mode))
+        return view
+    }
 }
 
 // MARK: - Helper

@@ -12,11 +12,9 @@ public struct TextView: UIViewRepresentable {
     
     @ObservedObject var viewModel: TextViewModel = TextViewModel()
     
-    @Binding public var text: String
+    @Binding var text: String
     
     var configuration: ((UITextView) -> Void)?
-    
-    var dataDetectorTypesLinkUrl: ((URL) -> Void)?
     
     var textViewShouldBeginEditing: ((UITextView) -> Bool)?
     var textViewDidBeginEditing: ((UITextView) -> Void)?
@@ -27,7 +25,10 @@ public struct TextView: UIViewRepresentable {
     var textViewShouldEndEditing: ((UITextView) -> Bool)?
     var textViewDidEndEditing: ((UITextView) -> Void)?
     
-    var _editMenuForTextIn: Any? = nil
+    var shouldChangeTextIn: ((UITextView, NSRange, String) -> Bool)?
+    var shouldInteractWith: ((UITextView, URL, NSRange, UITextItemInteraction) -> Bool)?
+    var editMenuForTextIn: ((UITextView, NSRange, [UIMenuElement]) -> UIMenu?)?
+    
     var _willDismissEditMenuWith: Any? = nil
     var _willPresentEditMenuWith: Any? = nil
     var _primaryActionFor: Any? = nil
@@ -47,8 +48,11 @@ public struct TextView: UIViewRepresentable {
             configuration(textView)
         } else {
             textView.text = text
-            textView.delegate = context.coordinator
             bindTextView(textView)
+        }
+        
+        if viewModel(\.delegateMode) != .none {
+            textView.delegate = context.coordinator
         }
         
         return textView

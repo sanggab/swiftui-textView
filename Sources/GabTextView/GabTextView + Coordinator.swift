@@ -16,40 +16,76 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidBeginEditing(_ textView: UITextView) {
-        let focusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).focus
-        textView.font = focusAppearance.font
-        textView.textColor = UIColor(focusAppearance.color)
-//        if parent.viewModel(\.isConfigurationMode) {
-//            print("설정 설정!")
-//            parent.textViewDidBeginEditing?(textView)
-//        } else {
-//            let focusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).focus
-//            textView.font = focusAppearance.font
-//            textView.textColor = UIColor(focusAppearance.color)
-//        }
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        
+        switch mode {
+        case .none:
+            break
+        case .automatic:
+            let focusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).focus
+            textView.font = focusAppearance.font
+            textView.textColor = UIColor(focusAppearance.color)
+        case .modifier:
+            parent.textViewDidBeginEditing?(textView)
+        }
     }
     
     public func textViewDidChange(_ textView: UITextView) {
-        parent.text = textView.text
-//        if parent.viewModel(\.isConfigurationMode) {
-//            parent.textViewDidChange?(textView)
-//        } else {
-//            parent.text = textView.text
-//        }
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        
+        switch mode {
+        case .none:
+            break
+        case .automatic:
+            parent.text = textView.text
+        case .modifier:
+            parent.textViewDidChange?(textView)
+        }
     }
     
     public func textViewDidEndEditing(_ textView: UITextView) {
-        parent.textViewDidEndEditing?(textView)
-//        if parent.viewModel(\.isConfigurationMode) {
-//            parent.textViewDidEndEditing?(textView)
-//        } else {
-//            let noneFocusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).noneFocus
-//            textView.font = noneFocusAppearance.font
-//            textView.textColor = UIColor(noneFocusAppearance.color)
-//        }
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            break
+        case .automatic:
+            let noneFocusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).noneFocus
+            textView.font = noneFocusAppearance.font
+            textView.textColor = UIColor(noneFocusAppearance.color)
+        case .modifier:
+            parent.textViewDidEndEditing?(textView)
+        }
     }
     
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            return true
+        case .automatic:
+            return conditionTextView(textView, shouldChangeTextIn: range, replacementText: text)
+        case .modifier:
+            return parent.shouldChangeTextIn?(textView, range, text) ?? true
+        }
+        
+    }
+    
+    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            return true
+        case .automatic:
+            return true
+        case .modifier:
+            return parent.shouldInteractWith?(textView, url, characterRange, interaction) ?? true
+        }
+    }
+    
+    private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         
         let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
@@ -78,98 +114,151 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         }
         
         return true
-//        if !parent.viewModel(\.isConfigurationMode) {
-//            
-//        } else {
-//            return true
-//        }
-    }
-    
-    public func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        
-        if let closure = parent.dataDetectorTypesLinkUrl {
-            closure(url)
-        }
-            
-         return false
     }
 }
 
 public extension TextViewCoordinator {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        return true
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if let closure = parent.textViewDidChangeSelection {
-            closure(textView)
+        print("상갑 logEvent \(#function)")
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            return true
+        case .automatic:
+            return true
+        case .modifier:
+            return parent.textViewShouldBeginEditing?(textView) ?? true
         }
     }
     
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            break
+        case .automatic:
+            break
+        case .modifier:
+            parent.textViewDidChangeSelection?(textView)
+        }
+        
+    }
+    
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        if let closure = parent.textViewShouldEndEditing {
-            return closure(textView)
-        } else {
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
             return true
+        case .automatic:
+            return true
+        case .modifier:
+            return parent.textViewShouldEndEditing?(textView) ?? true
         }
     }
 }
 
 public extension TextViewCoordinator {
     func textView(_ textView: UITextView, editMenuForTextIn range: NSRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
-        return nil
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            return nil
+        case .automatic:
+            return nil
+        case .modifier:
+            return parent.editMenuForTextIn?(textView, range, suggestedActions)
+        }
+        
     }
     
     @available(iOS 16.0, *)
     func textView(_ textView: UITextView, willDismissEditMenuWith animator: UIEditMenuInteractionAnimating) {
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            break
+        case .automatic:
+            break
+        case .modifier:
+            parent.willDismissEditMenuWith?(textView, animator)
+        }
         
     }
     
     @available(iOS 16.0, *)
     func textView(_ textView: UITextView, willPresentEditMenuWith animator: UIEditMenuInteractionAnimating) {
-        
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            break
+        case .automatic:
+            break
+        case .modifier:
+            parent.willPresentEditMenuWith?(textView, animator)
+        }
     }
     
     @available(iOS 17.0, *)
     func textView(_ textView: UITextView, primaryActionFor textItem: UITextItem, defaultAction: UIAction) -> UIAction? {
-        return nil
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            return nil
+        case .automatic:
+            return nil
+        case .modifier:
+            return parent.primaryActionFor?(textView, textItem, defaultAction)
+        }
+        
     }
     
     @available(iOS 17.0, *)
     func textView(_ textView: UITextView, menuConfigurationFor textItem: UITextItem, defaultMenu: UIMenu) -> UITextItem.MenuConfiguration? {
-        return nil
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            return nil
+        case .automatic:
+            return nil
+        case .modifier:
+            return parent.menuConfigurationFor?(textView, textItem, defaultMenu)
+        }
     }
     
     @available(iOS 17.0, *)
     func textView(_ textView: UITextView, textItemMenuWillEndFor textItem: UITextItem, animator: UIContextMenuInteractionAnimating) {
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            break
+        case .automatic:
+            break
+        case .modifier:
+            parent.textItemMenuWillEndFor?(textView, textItem, animator)
+        }
         
     }
     
     @available(iOS 17.0, *)
     func textView(_ textView: UITextView, textItemMenuWillDisplayFor textItem: UITextItem, animator: UIContextMenuInteractionAnimating) {
-        
+        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+                
+        switch mode {
+        case .none:
+            break
+        case .automatic:
+            break
+        case .modifier:
+            parent.textItemMenuWillDisplayFor?(textView, textItem, animator)
+        }
     }
-}
-
-public struct TextViewTypealias {
-    
-    public typealias EditMenuForTextIn = (textView: UITextView, range: NSRange, suggestedActions: [UIMenuElement])
-    
-    @available(iOS 16.0, *)
-    public typealias WillDismissEditMenuWith = (textView: UITextView, animator: UIEditMenuInteractionAnimating)
-    
-    @available(iOS 16.0, *)
-    public typealias WillPresentEditMenuWith = (textView: UITextView, animator: UIEditMenuInteractionAnimating)
-    
-    @available(iOS 17.0, *)
-    public typealias PrimaryActionFor = (textView: UITextView, textItem: UITextItem, defaultAction: UIAction)
-    
-    @available(iOS 17.0, *)
-    public typealias MenuConfigurationFor = (textView: UITextView, textItem: UITextItem, defaultMenu: UIMenu)
-    
-    @available(iOS 17.0, *)
-    public typealias TextItemMenuWillEndFor = (textView: UITextView, textItem: UITextItem, animator: UIContextMenuInteractionAnimating)
-    
-    @available(iOS 17.0, *)
-    public typealias TextItemMenuWillDisplayFor = (textView: UITextView, textItem: UITextItem, animator: UIContextMenuInteractionAnimating)
 }
