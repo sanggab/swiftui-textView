@@ -38,7 +38,7 @@ struct ContentView: View {
             .changeBackgroundColor(.gray.opacity(0.5))
             .setTextViewAppearanceModel(.default)
             .limitCountAndLine(200, 5)
-            .textContainerInset(.init(top: 10, left: 10, bottom: 10, right: 10))
+            .textContainerInset(.zero)
             .lineFragmentPadding(.zero)
             .controlTextViewDelegate(.automatic)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -54,7 +54,7 @@ struct ContentView: View {
                     .foregroundStyle(.black)
             }
             .frame(height: textViewHeight)
-            .frame(maxWidth: 300)
+//            .frame(width: 300)
             .accessibilityIdentifier("GabTextView")
             .focused($keyboardState)
             .id(id)

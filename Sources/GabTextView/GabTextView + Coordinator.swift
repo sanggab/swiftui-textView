@@ -72,6 +72,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         
     }
     
+    // TODO: textContainerInset 대응하기
     private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if checkInputBreakMode(textView, replacementText: text) {
             let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
@@ -84,13 +85,6 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
             
             if lines > parent.viewModel(\.styleState.limitLine) {
-                
-                let limitedText = truncateTextToLimitLines(text: newText, limitLines: parent.viewModel(\.styleState.limitLine), textView: textView)
-                
-                print("상갑 logEvent limitedText\(#function) : \(limitedText)")
-                textView.text = limitedText
-                parent.text = textView.text
-                
                 return false
             }
             
@@ -325,74 +319,5 @@ extension TextViewCoordinator {
                 return true
             }
         }
-    }
-    
-    func truncateTextToLimitLines(text: String, limitLines: Int, textView: UITextView) -> String {
-        let lines = text.split(separator: "\n")
-        
-        var limitedText = ""
-        var currentLineCount = 0
-        
-        for line in lines {
-            let lineText = String(line)
-            
-            // 라인의 줄 수 계산
-            let lineHeight = lineText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
-                                                   options: .usesLineFragmentOrigin,
-                                                   attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.systemFont(ofSize: 15)],
-                                                   context: nil).height
-            let lineCount = Int(lineHeight / (textView.font?.lineHeight ?? 1))
-            
-            if currentLineCount + lineCount <= limitLines {
-                limitedText.append(contentsOf: lineText)
-                limitedText.append("\n")
-                currentLineCount += lineCount
-            } else {
-                // 남은 줄 수만큼 잘라내기
-                let remainingLines = limitLines - currentLineCount
-                let truncatedLine = truncateLineToLimit(line: lineText, remainingLines: remainingLines, textView: textView)
-                limitedText.append(contentsOf: truncatedLine)
-                break
-            }
-        }
-        
-        if limitedText.count > parent.viewModel(\.styleState.limitCount) {
-            let prefixCount = parent.viewModel(\.styleState.limitCount) - textView.text.count
-            
-            guard prefixCount > 0 else {
-                return limitedText
-            }
-            
-            limitedText = String(text.prefix(prefixCount))
-        }
-        
-        print("상갑 logEvent limitedText\(#function) : \(limitedText)")
-
-        
-        return limitedText
-    }
-
-    // 줄 수에 맞게 라인을 잘라내는 함수
-    func truncateLineToLimit(line: String, remainingLines: Int, textView: UITextView) -> String {
-        var truncatedLine = ""
-        var currentText = ""
-        
-        for character in line {
-            currentText.append(character)
-            
-            let lineHeight = currentText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
-                                                      options: .usesLineFragmentOrigin,
-                                                      attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.systemFont(ofSize: 15)],
-                                                      context: nil).height
-            let lineCount = Int(lineHeight / (textView.font?.lineHeight ?? 1))
-            
-            if lineCount > remainingLines {
-                break
-            }
-            
-            truncatedLine = currentText
-        }
-        
-        return truncatedLine
     }
 }
