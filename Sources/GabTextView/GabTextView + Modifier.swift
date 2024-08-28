@@ -48,6 +48,14 @@ public extension TextView {
         view.viewModel.action(.updateSizeMode(mode))
         return view
     }
+    /// TextView의 height을 던져주는 Modifier
+    ///
+    /// 이 Modifier는 ``sizeMode(_:)``의 ``TextViewSizeMode``에서 dynamic일 때 작동합니다.
+    func calTextViewHeight(_ height: @escaping ((CGFloat) -> Void)) -> TextView {
+        var view: TextView = self
+        view.calTextViewHeight = height
+        return view
+    }
 }
 
 // MARK: - Helper

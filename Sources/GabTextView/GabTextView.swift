@@ -36,6 +36,8 @@ public struct TextView: UIViewRepresentable {
     var _textItemMenuWillEndFor: Any? = nil
     var _textItemMenuWillDisplayFor: Any? = nil
     
+    var calTextViewHeight: ((CGFloat) -> Void)?
+    
     
     public init(text: Binding<String>) {
         self._text = text
@@ -60,10 +62,43 @@ public struct TextView: UIViewRepresentable {
     
     public func updateUIView(_ textView: UIViewType, context: Context) {
         print(#function)
+        updateHeight(textView)
     }
     
     public func makeCoordinator() -> TextViewCoordinator {
         TextViewCoordinator(parent: self)
+    }
+    
+    private func updateHeight(_ textView: UITextView) {
+        DispatchQueue.main.async {
+            print("상갑 logEvent textView.frame \(#function) : \(textView.frame)")
+            print("상갑 logEvent textView.bounds \(#function) : \(textView.bounds)")
+            print("상갑 logEvent textView.contentSize \(#function) : \(textView.contentSize)")
+            print("상갑 logEvent textView.visibleSize \(#function) : \(textView.visibleSize)")
+            print("상갑 logEvent textView.intrinsicContentSize \(#function) : \(textView.intrinsicContentSize)")
+            
+            if viewModel(\.sizeMode) == .dynamic {
+                let textViewRect = textView.text.boundingRect(with: CGSize(width: textView.bounds.width,
+                                                                           height: textView.contentSize.height),
+                                                              options: .usesLineFragmentOrigin,
+                                                              attributes: [NSAttributedString.Key.font: textView.font ?? viewModel(\.styleState.appearance.focus.font)],
+                                                              context: nil)
+                
+                print("상갑 logEvent textViewRect\(#function) : \(textViewRect)")
+                print("상갑 logEvent textView.font?.lineHeight\(#function) : \(textView.font?.lineHeight)")
+
+                let size = textView.sizeThatFits(CGSize(width: textView.frame.size.width,
+                                                        height: .infinity))
+
+                print("상갑 logEvent size\(#function) : \(size)")
+                let lines = Int(textViewRect.height / (textView.font?.lineHeight ?? 0))
+                print("상갑 logEvent lines\(#function) : \(lines)")
+
+
+            }
+            
+            calTextViewHeight?(textView.contentSize.height)
+        }
     }
 }
 
