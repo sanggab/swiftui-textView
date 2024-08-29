@@ -31,7 +31,6 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidChange(_ textView: UITextView) {
-        print("상갑 logEvent \(#function)")
         let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
         
         switch mode {
@@ -46,7 +45,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     
     public func textViewDidEndEditing(_ textView: UITextView) {
         let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
-        print("상갑 logEvent \(#function)")
+        
         switch mode {
         case .none:
             break
@@ -59,17 +58,17 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             
             switch trimMode {
             case .whitespaces:
-                print("상갑 logEvent \(#function)")
                 textView.text = textView.text.trimmingCharacters(in: .whitespaces)
+                parent.text = textView.text
             case .whitespacesAndNewlines:
-                print("상갑 logEvent \(#function)")
                 textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+                parent.text = textView.text
             case .blankWithWhitespaces:
-                print("상갑 logEvent \(#function)")
                 textView.text = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
+                parent.text = textView.text
             case .blankWithWhitespacesAndNewlines:
-                print("상갑 logEvent \(#function)")
                 textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+                parent.text = textView.text
             case .none:
                 break
             }
@@ -96,7 +95,6 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if checkInputBreakMode(textView, replacementText: text) {
             let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-            
             let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
                                                       options: .usesLineFragmentOrigin,
                                                       attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
@@ -160,7 +158,6 @@ public extension TextViewCoordinator {
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        print("상갑 logEvent \(#function)")
         let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
                 
         switch mode {

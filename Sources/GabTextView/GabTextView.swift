@@ -61,7 +61,7 @@ public struct TextView: UIViewRepresentable {
     }
     
     public func updateUIView(_ textView: UIViewType, context: Context) {
-        print(#function)
+//        print(#function)
         updateHeight(textView)
     }
     
@@ -71,29 +71,7 @@ public struct TextView: UIViewRepresentable {
     
     private func updateHeight(_ textView: UITextView) {
         DispatchQueue.main.async {
-//            print("상갑 logEvent \(#function) textView.frame: \(textView.frame)")
-//            print("상갑 logEvent \(#function) textView.bounds: \(textView.bounds)")
-//            print("상갑 logEvent \(#function) textView.contentSize: \(textView.contentSize)")
-//            print("상갑 logEvent \(#function) textView.visibleSize: \(textView.visibleSize)")
-//            print("상갑 logEvent \(#function) textView.intrinsicContentSize: \(textView.intrinsicContentSize)")
-            
             if viewModel(\.sizeMode) == .dynamic {
-//                let textViewRect = textView.text.boundingRect(with: CGSize(width: textView.bounds.width,
-//                                                                           height: textView.contentSize.height),
-//                                                              options: .usesLineFragmentOrigin,
-//                                                              attributes: [NSAttributedString.Key.font: textView.font ?? viewModel(\.styleState.appearance.focus.font)],
-//                                                              context: nil)
-//                
-//                print("상갑 logEvent \(#function) textViewRect: \(textViewRect)")
-//                print("상갑 logEvent \(#function) textView.font?.lineHeight: \(textView.font?.lineHeight)")
-//
-//                let size = textView.sizeThatFits(CGSize(width: textView.frame.size.width,
-//                                                        height: .infinity))
-//
-//                print("상갑 logEvent \(#function) size: \(size)")
-//                let lines = Int(textViewRect.height / (textView.font?.lineHeight ?? 0))
-//                print("상갑 logEvent \(#function) lines: \(lines)")
-
                 calTextViewHeight?(textView.contentSize.height)
             }
         }
