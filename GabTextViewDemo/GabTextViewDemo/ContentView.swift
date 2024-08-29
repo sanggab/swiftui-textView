@@ -42,7 +42,7 @@ struct ContentView: View {
             .lineFragmentPadding(.zero)
             .controlTextViewDelegate(.automatic)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-            .trimMode(.none)
+            .trimMode(.blankWithWhitespaces)
             .sizeMode(.dynamic)
             .inputBreakMode(.continuousWhiteSpace)
             .calTextViewHeight { height in

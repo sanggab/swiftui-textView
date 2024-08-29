@@ -31,6 +31,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidChange(_ textView: UITextView) {
+        print("상갑 logEvent \(#function)")
         let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
         
         switch mode {
@@ -45,7 +46,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     
     public func textViewDidEndEditing(_ textView: UITextView) {
         let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
-                
+        print("상갑 logEvent \(#function)")
         switch mode {
         case .none:
             break
@@ -53,6 +54,25 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             let noneFocusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).noneFocus
             textView.font = noneFocusAppearance.font
             textView.textColor = UIColor(noneFocusAppearance.color)
+            
+            let trimMode: TextViewTrimMode = parent.viewModel(\.styleState.trimMode)
+            
+            switch trimMode {
+            case .whitespaces:
+                print("상갑 logEvent \(#function)")
+                textView.text = textView.text.trimmingCharacters(in: .whitespaces)
+            case .whitespacesAndNewlines:
+                print("상갑 logEvent \(#function)")
+                textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            case .blankWithWhitespaces:
+                print("상갑 logEvent \(#function)")
+                textView.text = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
+            case .blankWithWhitespacesAndNewlines:
+                print("상갑 logEvent \(#function)")
+                textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+            case .none:
+                break
+            }
         case .modifier:
             parent.textViewDidEndEditing?(textView)
         }
@@ -88,7 +108,22 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
                 return false
             }
             
-            if newText.count > parent.viewModel(\.styleState.limitCount) {
+            var changedText: String = ""
+            
+            switch parent.viewModel(\.styleState.trimMode) {
+            case .none:
+                changedText = newText
+            case .whitespaces:
+                changedText = newText.trimmingCharacters(in: .whitespaces)
+            case .whitespacesAndNewlines:
+                changedText = newText.trimmingCharacters(in: .whitespacesAndNewlines)
+            case .blankWithWhitespaces:
+                changedText = newText.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
+            case .blankWithWhitespacesAndNewlines:
+                changedText = newText.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+            }
+            
+            if changedText.count > parent.viewModel(\.styleState.limitCount) {
                 let prefixCount = parent.viewModel(\.styleState.limitCount) - textView.text.count
                 
                 guard prefixCount > 0 else {
