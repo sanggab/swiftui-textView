@@ -17,8 +17,12 @@ struct ContentView: View {
     @State private var id: UUID = UUID()
     
     @State private var textViewHeight: CGFloat = .zero
+    @State private var textCount: Int = .zero
     
     var body: some View {
+        Text("현재 text count : \(textCount)")
+            .accessibilityIdentifier("텍스트 카운트")
+        
         Text("키보드 내려")
             .accessibilityLabel("보이스 기능 입니다. 키보드 내려")
             .accessibilityIdentifier("키보드 내려")
@@ -45,9 +49,12 @@ struct ContentView: View {
             .trimMode(.blankWithWhitespacesAndNewlines)
             .sizeMode(.dynamic)
             .inputBreakMode(.continuousWhiteSpace)
-            .calTextViewHeight { height in
+            .receiveTextViewHeight { height in
                 textViewHeight = height
                 print("상갑 logEvent \(#function) : \(height)")
+            }
+            .receiveTextCount { count in
+                textCount = count
             }
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")

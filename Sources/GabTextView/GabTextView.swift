@@ -36,8 +36,8 @@ public struct TextView: UIViewRepresentable {
     var _textItemMenuWillEndFor: Any? = nil
     var _textItemMenuWillDisplayFor: Any? = nil
     
-    var calTextViewHeight: ((CGFloat) -> Void)?
-    
+    var receiveTextViewHeight: ((CGFloat) -> Void)?
+    var receiveTextCount: ((Int) -> Void)?
     
     public init(text: Binding<String>) {
         self._text = text
@@ -63,6 +63,7 @@ public struct TextView: UIViewRepresentable {
     public func updateUIView(_ textView: UIViewType, context: Context) {
 //        print(#function)
         updateHeight(textView)
+        updateTextCount(textView)
     }
     
     public func makeCoordinator() -> TextViewCoordinator {
@@ -72,8 +73,38 @@ public struct TextView: UIViewRepresentable {
     private func updateHeight(_ textView: UITextView) {
         DispatchQueue.main.async {
             if viewModel(\.sizeMode) == .dynamic {
-                calTextViewHeight?(textView.contentSize.height)
+                receiveTextViewHeight?(textView.contentSize.height)
             }
+        }
+    }
+    
+    private func updateTextCount(_ textView: UITextView) {
+        DispatchQueue.main.async {
+            var count: Int = 0
+            var newText: String = ""
+            
+            let trimMode: TextViewTrimMode = viewModel(\.styleState.trimMode)
+            
+            switch trimMode {
+            case .none:
+                newText = textView.text
+                count = textView.text.count
+            case .whitespaces:
+                newText = textView.text.trimmingCharacters(in: .whitespaces)
+                count = textView.text.trimmingCharacters(in: .whitespaces).count
+            case .whitespacesAndNewlines:
+                newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+                count = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).count
+            case .blankWithWhitespaces:
+                newText = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
+                count = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "").count
+            case .blankWithWhitespacesAndNewlines:
+                newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+                count = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "").count
+            }
+            print("상갑 logEvent \(#function) newText: \(newText)")
+            print("상갑 logEvent \(#function) count: \(count)")
+            receiveTextCount?(count)
         }
     }
 }

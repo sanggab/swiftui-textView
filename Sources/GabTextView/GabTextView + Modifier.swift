@@ -51,9 +51,17 @@ public extension TextView {
     /// TextView의 height을 던져주는 Modifier
     ///
     /// 이 Modifier는 ``sizeMode(_:)``의 ``TextViewSizeMode``에서 dynamic일 때 작동합니다.
-    func calTextViewHeight(_ height: @escaping ((CGFloat) -> Void)) -> TextView {
+    func receiveTextViewHeight(_ height: @escaping ((CGFloat) -> Void)) -> TextView {
         var view: TextView = self
-        view.calTextViewHeight = height
+        view.receiveTextViewHeight = height
+        return view
+    }
+    /// TextView의 text count를 던져주는 Modifier
+    ///
+    /// 이 Modifier는 ``trimMode(_:)``의 ``TextViewTrimMode``에 영향을 받는다.
+    func receiveTextCount(_ count: @escaping ((Int) -> Void)) -> TextView {
+        var view: TextView = self
+        view.receiveTextCount = count
         return view
     }
 }
