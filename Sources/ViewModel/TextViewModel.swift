@@ -380,6 +380,7 @@ private extension TextViewModel {
             update(\.styleState.trimMode, value: method)
             
         case .updateInputBreakMode(let mode):
+            print("상갑 logEvent \(#function) mode: \(mode)")
             update(\.styleState.inputBreakMode, value: mode)
         }
     }

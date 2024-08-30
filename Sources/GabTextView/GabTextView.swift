@@ -65,9 +65,10 @@ public struct TextView: UIViewRepresentable {
         updateHeight(textView)
         updateTextCount(textView)
     }
-    
+    // TODO: Coordinator 갱신 문제 해결하기
     public func makeCoordinator() -> TextViewCoordinator {
-        TextViewCoordinator(parent: self)
+        print("상갑 logEvent \(#function)")
+        return TextViewCoordinator(parent: self, viewModel: viewModel)
     }
     
     private func updateHeight(_ textView: UITextView) {

@@ -83,7 +83,7 @@ final class GabTextViewDemoUITests: XCTestCase {
         textView.typeText("가나다라마바사\n")
         textView.typeText("아아  이것은 퇴근이다")
         
-        let breakView = app.otherElements["InputBreakMode 변경"].firstMatch
+        let breakView = app.otherElements["lineWithContinuousWhiteSpace 변경"].firstMatch
         
         XCTAssertNotNil(breakView)
         

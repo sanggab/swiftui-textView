@@ -25,14 +25,25 @@ struct ContentView: View {
         Text("현재 text count : \(textCount)")
             .accessibilityIdentifier("텍스트 카운트")
         
-        Rectangle()
-            .fill(.mint)
-            .frame(width: 50, height: 50)
-            .onTapGesture {
-                print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
-                inputBreakMode = .lineWithContinuousWhiteSpace
-            }
-            .accessibilityIdentifier("InputBreakMode 변경")
+        HStack {
+            Rectangle()
+                .fill(.mint)
+                .frame(width: 50, height: 50)
+                .onTapGesture {
+                    print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
+                    inputBreakMode = .lineWithContinuousWhiteSpace
+                }
+                .accessibilityIdentifier("lineWithContinuousWhiteSpace 변경")
+            
+            Rectangle()
+                .fill(.orange)
+                .frame(width: 50, height: 50)
+                .onTapGesture {
+                    print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
+                    inputBreakMode = .continuousWhiteSpace
+                }
+                .accessibilityIdentifier("continuousWhiteSpace 변경")
+        }
         
         Text("키보드 내려")
             .accessibilityLabel("보이스 기능 입니다. 키보드 내려")

@@ -10,9 +10,11 @@ import SwiftUI
 public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     
     private var parent: TextView
+    @ObservedObject private var viewModel: TextViewModel
     
-    init(parent: TextView) {
+    init(parent: TextView, viewModel: TextViewModel) {
         self.parent = parent
+        self.viewModel = viewModel
     }
     
     public func textViewDidBeginEditing(_ textView: UITextView) {
@@ -303,6 +305,7 @@ public extension TextViewCoordinator {
 
 extension TextViewCoordinator {
     func checkInputBreakMode(_ textView: UITextView, replacementText text: String) -> Bool {
+        print("상갑 logEvent \(#function) inputBreakMode: \(viewModel(\.styleState.inputBreakMode))")
         switch parent.viewModel(\.styleState.inputBreakMode) {
         case .none:
             return true
@@ -344,7 +347,7 @@ extension TextViewCoordinator {
         case .lineWithContinuousWhiteSpace:
             
             let lastText = textView.text.last
-            
+            print("상갑 logEvent \(#function) lastText: \(lastText)")
             if text == "\n" || lastText == " " && text == " " {
                 return false
             } else {
