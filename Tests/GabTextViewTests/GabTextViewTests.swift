@@ -96,6 +96,17 @@ final class GabTextViewTests: XCTestCase {
         XCTAssertLessThan(self.text.count, self.textView.viewModel(\.styleState.limitCount))
     }
     
+    func testReceiveTextCount() throws {
+        let textView = try XCTUnwrap(self.textView)
+        
+        let _ = textView.trimMode(.blankWithWhitespacesAndNewlines)
+        textView.text = "아나다 아나다 아나다 아나다\n아나다"
+        print("상갑 logEvent \(#function) : \(textView.text.count)")
+        
+        XCTAssertEqual(textView.viewModel(\.styleState.trimMode), .blankWithWhitespacesAndNewlines)
+        
+        
+    }
     
     
     func testAsyncTask() {

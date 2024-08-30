@@ -69,6 +69,28 @@ final class GabTextViewDemoUITests: XCTestCase {
         
         changeText.tap()
     }
+    
+    
+    func testReceiveModifier() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let textView = app.textViews["GabTextView"].firstMatch
+        
+        XCTAssertNotNil(textView)
+        
+        textView.tap()
+        textView.typeText("가나다라마바사\n")
+        textView.typeText("아아  이것은 퇴근이다")
+        
+        let breakView = app.otherElements["InputBreakMode 변경"].firstMatch
+        
+        XCTAssertNotNil(breakView)
+        
+        breakView.tap()
+        
+        textView.typeText("가\n나\n다\n라\n")
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {

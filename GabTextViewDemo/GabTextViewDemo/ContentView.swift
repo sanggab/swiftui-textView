@@ -19,9 +19,20 @@ struct ContentView: View {
     @State private var textViewHeight: CGFloat = .zero
     @State private var textCount: Int = .zero
     
+    @State private var inputBreakMode: TextViewInputBreakMode = .continuousWhiteSpace
+    
     var body: some View {
         Text("현재 text count : \(textCount)")
             .accessibilityIdentifier("텍스트 카운트")
+        
+        Rectangle()
+            .fill(.mint)
+            .frame(width: 50, height: 50)
+            .onTapGesture {
+                print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
+                inputBreakMode = .lineWithContinuousWhiteSpace
+            }
+            .accessibilityIdentifier("InputBreakMode 변경")
         
         Text("키보드 내려")
             .accessibilityLabel("보이스 기능 입니다. 키보드 내려")
@@ -48,7 +59,7 @@ struct ContentView: View {
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             .trimMode(.blankWithWhitespacesAndNewlines)
             .sizeMode(.dynamic)
-            .inputBreakMode(.continuousWhiteSpace)
+            .inputBreakMode(inputBreakMode)
             .receiveTextViewHeight { height in
                 textViewHeight = height
                 print("상갑 logEvent \(#function) : \(height)")
