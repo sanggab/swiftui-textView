@@ -10,7 +10,7 @@ import SwiftUI
 public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     
     private var parent: TextView
-    @ObservedObject private var viewModel: TextViewModel
+    @ObservedObject var viewModel: TextViewModel
     
     init(parent: TextView, viewModel: TextViewModel) {
         self.parent = parent
@@ -18,13 +18,13 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidBeginEditing(_ textView: UITextView) {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
         
         switch mode {
         case .none:
             break
         case .automatic:
-            let focusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).focus
+            let focusAppearance: TextAppearance = viewModel(\.styleState.appearance).focus
             textView.font = focusAppearance.font
             textView.textColor = UIColor(focusAppearance.color)
         case .modifier:
@@ -33,7 +33,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidChange(_ textView: UITextView) {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
         
         switch mode {
         case .none:
@@ -46,17 +46,17 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textViewDidEndEditing(_ textView: UITextView) {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
         
         switch mode {
         case .none:
             break
         case .automatic:
-            let noneFocusAppearance: TextAppearance = parent.viewModel(\.styleState.appearance).noneFocus
+            let noneFocusAppearance: TextAppearance = viewModel(\.styleState.appearance).noneFocus
             textView.font = noneFocusAppearance.font
             textView.textColor = UIColor(noneFocusAppearance.color)
             
-            let trimMode: TextViewTrimMode = parent.viewModel(\.styleState.trimMode)
+            let trimMode: TextViewTrimMode = viewModel(\.styleState.trimMode)
             
             switch trimMode {
             case .whitespaces:
@@ -80,7 +80,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     }
     
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -104,13 +104,13 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             
             let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
             
-            if lines > parent.viewModel(\.styleState.limitLine) {
+            if lines > viewModel(\.styleState.limitLine) {
                 return false
             }
             
             var changedText: String = ""
             
-            switch parent.viewModel(\.styleState.trimMode) {
+            switch viewModel(\.styleState.trimMode) {
             case .none:
                 changedText = newText
             case .whitespaces:
@@ -123,8 +123,8 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
                 changedText = newText.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
             }
             
-            if changedText.count > parent.viewModel(\.styleState.limitCount) {
-                let prefixCount = parent.viewModel(\.styleState.limitCount) - textView.text.count
+            if changedText.count > viewModel(\.styleState.limitCount) {
+                let prefixCount = viewModel(\.styleState.limitCount) - textView.text.count
                 
                 guard prefixCount > 0 else {
                     return false
@@ -134,7 +134,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
                 textView.text.append(contentsOf: prefixText)
                 parent.text = textView.text
                 
-                textView.selectedRange = NSRange(location: parent.viewModel(\.styleState.limitCount), length: 0)
+                textView.selectedRange = NSRange(location: viewModel(\.styleState.limitCount), length: 0)
             }
             
             return true
@@ -147,7 +147,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
 // MARK: - automatic 미구현
 public extension TextViewCoordinator {
     func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -160,7 +160,7 @@ public extension TextViewCoordinator {
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -173,7 +173,7 @@ public extension TextViewCoordinator {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -187,7 +187,7 @@ public extension TextViewCoordinator {
     }
     
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -202,7 +202,7 @@ public extension TextViewCoordinator {
 
 public extension TextViewCoordinator {
     func textView(_ textView: UITextView, editMenuForTextIn range: NSRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -217,7 +217,7 @@ public extension TextViewCoordinator {
     
     @available(iOS 16.0, *)
     func textView(_ textView: UITextView, willDismissEditMenuWith animator: UIEditMenuInteractionAnimating) {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -232,7 +232,7 @@ public extension TextViewCoordinator {
     
     @available(iOS 16.0, *)
     func textView(_ textView: UITextView, willPresentEditMenuWith animator: UIEditMenuInteractionAnimating) {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -246,7 +246,7 @@ public extension TextViewCoordinator {
     
     @available(iOS 17.0, *)
     func textView(_ textView: UITextView, primaryActionFor textItem: UITextItem, defaultAction: UIAction) -> UIAction? {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -261,7 +261,7 @@ public extension TextViewCoordinator {
     
     @available(iOS 17.0, *)
     func textView(_ textView: UITextView, menuConfigurationFor textItem: UITextItem, defaultMenu: UIMenu) -> UITextItem.MenuConfiguration? {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -275,7 +275,7 @@ public extension TextViewCoordinator {
     
     @available(iOS 17.0, *)
     func textView(_ textView: UITextView, textItemMenuWillEndFor textItem: UITextItem, animator: UIContextMenuInteractionAnimating) {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -290,7 +290,7 @@ public extension TextViewCoordinator {
     
     @available(iOS 17.0, *)
     func textView(_ textView: UITextView, textItemMenuWillDisplayFor textItem: UITextItem, animator: UIContextMenuInteractionAnimating) {
-        let mode: TextViewDelegateMode = parent.viewModel(\.delegateMode)
+        let mode: TextViewDelegateMode = viewModel(\.delegateMode)
                 
         switch mode {
         case .none:
@@ -306,7 +306,7 @@ public extension TextViewCoordinator {
 extension TextViewCoordinator {
     func checkInputBreakMode(_ textView: UITextView, replacementText text: String) -> Bool {
         print("상갑 logEvent \(#function) inputBreakMode: \(viewModel(\.styleState.inputBreakMode))")
-        switch parent.viewModel(\.styleState.inputBreakMode) {
+        switch viewModel(\.styleState.inputBreakMode) {
         case .none:
             return true
             

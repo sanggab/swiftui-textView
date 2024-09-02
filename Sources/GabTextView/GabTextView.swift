@@ -61,7 +61,8 @@ public struct TextView: UIViewRepresentable {
     }
     
     public func updateUIView(_ textView: UIViewType, context: Context) {
-//        print(#function)
+        print("상갑 logEvent \(#function)")
+        context.coordinator.viewModel = viewModel
         updateHeight(textView)
         updateTextCount(textView)
     }
