@@ -95,49 +95,27 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     
     // TODO: textContainerInset 대응하기
     private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        print("상갑 logEvent \(#function) replacementText: \(text)")
+        print("상갑 logEvent \(#function) replacementText count: \(text.count)")
         if checkInputBreakMode(textView, replacementText: text) {
-            let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-            let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
-                                                      options: .usesLineFragmentOrigin,
-                                                      attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
-                                                      context: nil).height
-            
-            let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
-            
-            if lines > viewModel(\.styleState.limitLine) {
+            if !limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+                print("상갑 logEvent \(#function) limitNewLineAndSpaceCondition false")
                 return false
             }
             
-            var changedText: String = ""
-            
-            switch viewModel(\.styleState.trimMode) {
-            case .none:
-                changedText = newText
-            case .whitespaces:
-                changedText = newText.trimmingCharacters(in: .whitespaces)
-            case .whitespacesAndNewlines:
-                changedText = newText.trimmingCharacters(in: .whitespacesAndNewlines)
-            case .blankWithWhitespaces:
-                changedText = newText.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
-            case .blankWithWhitespacesAndNewlines:
-                changedText = newText.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+            if !limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+                print("상갑 logEvent \(#function) limitLineCondition false")
+                return false
             }
             
-            if changedText.count > viewModel(\.styleState.limitCount) {
-                let prefixCount = viewModel(\.styleState.limitCount) - textView.text.count
-                
-                guard prefixCount > 0 else {
-                    return false
-                }
-                
-                let prefixText = text.prefix(prefixCount)
-                textView.text.append(contentsOf: prefixText)
-                parent.text = textView.text
-                
-                textView.selectedRange = NSRange(location: viewModel(\.styleState.limitCount), length: 0)
+            if !limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+                print("상갑 logEvent \(#function) limitCountCondition false")
+                return false
             }
             
             return true
+
+            
         } else {
             return false
         }
@@ -305,7 +283,6 @@ public extension TextViewCoordinator {
 
 extension TextViewCoordinator {
     func checkInputBreakMode(_ textView: UITextView, replacementText text: String) -> Bool {
-        print("상갑 logEvent \(#function) inputBreakMode: \(viewModel(\.styleState.inputBreakMode))")
         switch viewModel(\.styleState.inputBreakMode) {
         case .none:
             return true
@@ -347,12 +324,91 @@ extension TextViewCoordinator {
         case .lineWithContinuousWhiteSpace:
             
             let lastText = textView.text.last
-            print("상갑 logEvent \(#function) lastText: \(lastText)")
+            
             if text == "\n" || lastText == " " && text == " " {
                 return false
             } else {
                 return true
             }
         }
+    }
+}
+
+private extension TextViewCoordinator {
+    func limitLineCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
+                                                  options: .usesLineFragmentOrigin,
+                                                  attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
+                                                  context: nil).height
+        
+        let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
+        
+        if lines > viewModel(\.styleState.limitLine) {
+            return false
+        }
+        
+        return true
+    }
+    
+    func limitCountCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = makeNewText(textView, shouldChangeTextIn: range, replacementText: text)
+        
+        let changedText = makeTrimText(newText)
+        let basicText = makeTrimText(textView.text)
+        
+        if changedText.count > viewModel(\.styleState.limitCount) {
+            let prefixCount = viewModel(\.styleState.limitCount) - basicText.count
+            
+            guard prefixCount > 0 else {
+                return false
+            }
+            
+            let prefixText = text.prefix(prefixCount)
+            
+            textView.text.append(contentsOf: prefixText)
+            parent.text = textView.text
+            textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    func limitNewLineAndSpaceCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = makeNewText(textView, shouldChangeTextIn: range, replacementText: text)
+        
+        if text == " " || text == "\n" {
+            let trimText = makeTrimText(textView.text)
+            if trimText.count >= viewModel(\.styleState.limitCount) {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func makeNewText(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> String {
+        return (textView.text as NSString).replacingCharacters(in: range, with: text)
+    }
+    
+    func makeTrimText(_ text: String) -> String {
+        var changedText: String = ""
+        
+        switch viewModel(\.styleState.trimMode) {
+        case .none:
+            changedText = text
+        case .whitespaces:
+            changedText = text.trimmingCharacters(in: .whitespaces)
+        case .whitespacesAndNewlines:
+            changedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        case .blankWithWhitespaces:
+            changedText = text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
+        case .blankWithWhitespacesAndNewlines:
+            changedText = text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+        }
+        
+        return changedText
     }
 }

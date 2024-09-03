@@ -63,7 +63,7 @@ struct ContentView: View {
         TextView(text: $text)
             .changeBackgroundColor(.gray.opacity(0.5))
             .setTextViewAppearanceModel(.default)
-            .limitCountAndLine(200, 5)
+            .limitCountAndLine(10, 5)
             .textContainerInset(.zero)
             .lineFragmentPadding(.zero)
             .controlTextViewDelegate(.automatic)
