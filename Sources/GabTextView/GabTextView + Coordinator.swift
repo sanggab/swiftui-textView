@@ -281,7 +281,7 @@ public extension TextViewCoordinator {
     }
 }
 
-extension TextViewCoordinator {
+private extension TextViewCoordinator {
     func checkInputBreakMode(_ textView: UITextView, replacementText text: String) -> Bool {
         switch viewModel(\.styleState.inputBreakMode) {
         case .none:
@@ -388,7 +388,9 @@ private extension TextViewCoordinator {
         
         return true
     }
-    
+}
+
+private extension TextViewCoordinator {
     func makeNewText(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> String {
         return (textView.text as NSString).replacingCharacters(in: range, with: text)
     }

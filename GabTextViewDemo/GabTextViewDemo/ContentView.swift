@@ -43,6 +43,15 @@ struct ContentView: View {
                     inputBreakMode = .continuousWhiteSpace
                 }
                 .accessibilityIdentifier("continuousWhiteSpace 변경")
+            
+            Rectangle()
+                .fill(.blue)
+                .frame(width: 50, height: 50)
+                .onTapGesture {
+                    text += "\n 하이용"
+                    print("상갑 logEvent \(#function) text: \(text)")
+                }
+                .accessibilityIdentifier("Text 변경")
         }
         
         Text("키보드 내려")
@@ -63,7 +72,7 @@ struct ContentView: View {
         TextView(text: $text)
             .changeBackgroundColor(.gray.opacity(0.5))
             .setTextViewAppearanceModel(.default)
-            .limitCountAndLine(10, 5)
+            .limitCountAndLine(100, 5)
             .textContainerInset(.zero)
             .lineFragmentPadding(.zero)
             .controlTextViewDelegate(.automatic)
@@ -87,7 +96,6 @@ struct ContentView: View {
             .accessibilityIdentifier("GabTextView")
             .focused($keyboardState)
             .id(id)
-        
     }
 
 }

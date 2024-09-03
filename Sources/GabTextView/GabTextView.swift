@@ -62,16 +62,18 @@ public struct TextView: UIViewRepresentable {
     
     public func updateUIView(_ textView: UIViewType, context: Context) {
         print("상갑 logEvent \(#function)")
+        checkDifferent(textView)
+        
         context.coordinator.viewModel = viewModel
         updateHeight(textView)
         updateTextCount(textView)
     }
     // TODO: Coordinator 갱신 문제 해결하기
     public func makeCoordinator() -> TextViewCoordinator {
-        print("상갑 logEvent \(#function)")
         return TextViewCoordinator(parent: self, viewModel: viewModel)
     }
     
+    @MainActor
     private func updateHeight(_ textView: UITextView) {
         DispatchQueue.main.async {
             if viewModel(\.sizeMode) == .dynamic {
@@ -80,6 +82,7 @@ public struct TextView: UIViewRepresentable {
         }
     }
     
+    @MainActor
     private func updateTextCount(_ textView: UITextView) {
         DispatchQueue.main.async {
             var count: Int = 0
@@ -242,5 +245,48 @@ private extension TextView {
         textView.textContainer.maximumNumberOfLines = textContainerState.maximumNumberOfLines
         textView.textContainer.widthTracksTextView = textContainerState.widthTracksTextView
         textView.textContainer.heightTracksTextView = textContainerState.heightTracksTextView
+    }
+}
+
+private extension TextView {
+    func checkDifferent(_ textView: UIViewType) {
+        if textView.text != text {
+            var differences: String = ""
+            print("상갑 logEvent \(#function) textView text: \(textView.text)")
+            print("상갑 logEvent \(#function) binding text: \(text)")
+            
+            var changedText: String = ""
+            
+            print("상갑 logEvent \(#function) changedText: \(changedText)")
+//            textView.text = changedText
+//            text = changedText
+            
+            let maxCount = max(textView.text.count, text.count)
+            print("상갑 logEvent \(#function) maxCount: \(maxCount)")
+            
+            for i in 0..<maxCount {
+                let index1 = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
+                
+                let index2 = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
+                
+                var char1: Character?
+                var char2: Character?
+                
+                if let index1 {
+                    let hoho = textView.text.distance(from: textView.text.startIndex, to: index1)
+                    print("hoho : \(hoho)")
+                    if textView.text.count <= hoho {
+                        print("버려")
+                    }
+                }
+                
+                if let index2 {
+                    char2 = text[index2]
+                }
+                
+                print("상갑 logEvent \(#function) char1: \(char1)")
+                print("상갑 logEvent \(#function) char2: \(char2)")
+            }
+        }
     }
 }
