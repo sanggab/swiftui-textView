@@ -249,44 +249,29 @@ private extension TextView {
 }
 
 private extension TextView {
+    // TODO: NSRange는 location과 length로 구성
+    // TODO: location은 현재 textView에서 공백을 제외한 위치를 나타냄. ex) 하이 요 다음에 다라는 글자가 들어오면 공백은 제외하고 location은 4가 들어옴. 근데 문제는 자음을 입력하면 location이 4가 됫을 때, 모음이 들어와서 합쳐져도 location은 4
+    // TODO: length는 delete시에 지워지는 값들을 의미
     func checkDifferent(_ textView: UIViewType) {
+        print("상갑 logEvent \(#function)")
         if textView.text != text {
-            var differences: String = ""
-            print("상갑 logEvent \(#function) textView text: \(textView.text)")
-            print("상갑 logEvent \(#function) binding text: \(text)")
-            
-            var changedText: String = ""
-            
-            print("상갑 logEvent \(#function) changedText: \(changedText)")
-//            textView.text = changedText
-//            text = changedText
-            
-            let maxCount = max(textView.text.count, text.count)
-            print("상갑 logEvent \(#function) maxCount: \(maxCount)")
-            
-            for i in 0..<maxCount {
-                let index1 = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
-                
-                let index2 = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
-                
-                var char1: Character?
-                var char2: Character?
-                
-                if let index1 {
-                    let hoho = textView.text.distance(from: textView.text.startIndex, to: index1)
-                    print("hoho : \(hoho)")
-                    if textView.text.count <= hoho {
-                        print("버려")
-                    }
-                }
-                
-                if let index2 {
-                    char2 = text[index2]
-                }
-                
-                print("상갑 logEvent \(#function) char1: \(char1)")
-                print("상갑 logEvent \(#function) char2: \(char2)")
+            if textView.text.count == text.count {
+                sameIndex(textView)
+            } else {
+                textView.text.count > text.count ? textViewOverIndex(textView) : bindingTextOverIndex(textView)
             }
         }
+    }
+    
+    func textViewOverIndex(_ textView: UIViewType) {
+        print("상갑 logEvent \(#function)")
+    }
+    
+    func bindingTextOverIndex(_ textView: UIViewType) {
+        print("상갑 logEvent \(#function)")
+    }
+    
+    func sameIndex(_ textView: UIViewType) {
+        print("상갑 logEvent \(#function)")
     }
 }

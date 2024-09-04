@@ -52,6 +52,14 @@ struct ContentView: View {
                     print("상갑 logEvent \(#function) text: \(text)")
                 }
                 .accessibilityIdentifier("Text 변경")
+            
+            Rectangle()
+                .fill(.pink)
+                .frame(width: 50, height: 50)
+                .onTapGesture {
+                    text = "텍스트를 갑자기 다른걸로\n슝 교체해버려"
+                }
+                .accessibilityIdentifier("Text 변경")
         }
         
         Text("키보드 내려")

@@ -97,6 +97,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         print("상갑 logEvent \(#function) replacementText: \(text)")
         print("상갑 logEvent \(#function) replacementText count: \(text.count)")
+        print("상갑 logEvent \(#function) range: \(range)")
         if checkInputBreakMode(textView, replacementText: text) {
             if !limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 print("상갑 logEvent \(#function) limitNewLineAndSpaceCondition false")
