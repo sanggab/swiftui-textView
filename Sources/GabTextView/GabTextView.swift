@@ -293,6 +293,10 @@ private extension TextView {
 //                }
 //            }
             
+            // TODO: 둘이 다를 경우에, 그때 replacementText에 추가
+            if char1 != char2, let char2 {
+                
+            }
             
             
             print("상갑 logEvent \(#function) char1: \(char1)")
@@ -303,6 +307,7 @@ private extension TextView {
         print("상갑 logEvent \(#function) replacementText: \(replacementText)")
         print("상갑 logEvent \(#function) replacementText count: \(replacementText.count)")
         
+        // TODO: differenceIndex로 textView에서 일정 이상 가져오고 그 뒤에 덧붙이기
         if !replacementText.isEmpty {
             if let differenceIndex {
                 let prefixText = textView.text.prefix(differenceIndex)
