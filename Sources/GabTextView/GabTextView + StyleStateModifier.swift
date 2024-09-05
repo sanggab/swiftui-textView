@@ -74,7 +74,6 @@ public extension TextView {
     /// TextViewInputBreakMode에 따라 TextView의 입력을 막습니다.
     func inputBreakMode(_ mode: TextViewInputBreakMode = .none) -> TextView {
         let view: TextView = self
-        print("상갑 logEvent \(#function)")
         view.viewModel.action(.updateStyleState(.updateInputBreakMode(mode)))
         return view
     }

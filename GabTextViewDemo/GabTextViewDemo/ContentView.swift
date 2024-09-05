@@ -19,6 +19,12 @@ struct ContentView: View {
     @State private var textViewHeight: CGFloat = .zero
     @State private var textCount: Int = .zero
     
+    private var randomSentence: [String] = [
+        "\n 하이용", "이것은 랜덤 문장", "응", "아니 아니\n",
+        "오늘은 목요일", "내일은 금요일", "모래는 토요일", "켄터키 프라이드 아저씨",
+        "퇴근"
+    ]
+    
     @State private var inputBreakMode: TextViewInputBreakMode = .continuousWhiteSpace
     
     var body: some View {
@@ -48,7 +54,7 @@ struct ContentView: View {
                 .fill(.blue)
                 .frame(width: 50, height: 50)
                 .onTapGesture {
-                    text += "\n 하이용"
+                    text += randomSentence.randomElement() ?? ""
                     print("상갑 logEvent \(#function) text: \(text)")
                 }
                 .accessibilityIdentifier("Text 변경")
@@ -57,7 +63,9 @@ struct ContentView: View {
                 .fill(.pink)
                 .frame(width: 50, height: 50)
                 .onTapGesture {
-                    text = "텍스트를 갑자기 다른걸로\n슝 교체해버려"
+//                    let newText = text.prefix(1)
+//                    text = String(newText)
+                    text = "초기화"
                 }
                 .accessibilityIdentifier("Text 변경")
         }
@@ -90,7 +98,6 @@ struct ContentView: View {
             .inputBreakMode(inputBreakMode)
             .receiveTextViewHeight { height in
                 textViewHeight = height
-                print("상갑 logEvent \(#function) : \(height)")
             }
             .receiveTextCount { count in
                 textCount = count

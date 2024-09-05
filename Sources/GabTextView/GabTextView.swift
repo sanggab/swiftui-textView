@@ -62,9 +62,8 @@ public struct TextView: UIViewRepresentable {
     
     public func updateUIView(_ textView: UIViewType, context: Context) {
         print("상갑 logEvent \(#function)")
-        checkDifferent(textView)
-        
         context.coordinator.viewModel = viewModel
+        checkDifferent(textView)
         updateHeight(textView)
         updateTextCount(textView)
     }
@@ -107,8 +106,8 @@ public struct TextView: UIViewRepresentable {
                 newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
                 count = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "").count
             }
-            print("상갑 logEvent \(#function) newText: \(newText)")
-            print("상갑 logEvent \(#function) count: \(count)")
+//            print("상갑 logEvent \(#function) newText: \(newText)")
+//            print("상갑 logEvent \(#function) count: \(count)")
             receiveTextCount?(count)
         }
     }
@@ -265,10 +264,105 @@ private extension TextView {
     
     func textViewOverIndex(_ textView: UIViewType) {
         print("상갑 logEvent \(#function)")
+        var differenceIndex: Int?
+        var replacementText: String = ""
+        
+        for i in 0..<textView.text.count {
+            let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
+            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
+            
+            var char1: Character?
+            var char2: Character?
+            
+            if let textViewIndex {
+                char1 = textView.text[textViewIndex]
+            }
+            
+            if let bindTextIndex {
+                let limit = text.distance(from: text.startIndex, to: bindTextIndex)
+                print("상갑 logEvent \(#function) text.count: \(text.count)")
+                print("상갑 logEvent \(#function) limit : \(limit)")
+                char2 = text.count > limit ? text[bindTextIndex] : nil
+            }
+            // TODO: 아마 textView가 더 큰경우에는 char1이랑 char2가 같든 다르든 통과시키고 char2가 nil만 아니면 replacementText에 추가하면 될 듯
+//            if char1 == char2, let char2 {
+//                replacementText.append(String(char2))
+//            } else {
+//                if differenceIndex == nil {
+//                    differenceIndex = i
+//                }
+//            }
+            
+            
+            
+            print("상갑 logEvent \(#function) char1: \(char1)")
+            print("상갑 logEvent \(#function) char2: \(char2)")
+        }
+        
+        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
+        print("상갑 logEvent \(#function) replacementText: \(replacementText)")
+        print("상갑 logEvent \(#function) replacementText count: \(replacementText.count)")
+        
+        if !replacementText.isEmpty {
+            if let differenceIndex {
+                let prefixText = textView.text.prefix(differenceIndex)
+                let newText = prefixText.appending(replacementText)
+                print("상갑 logEvent \(#function) prefixText: \(prefixText)")
+                print("상갑 logEvent \(#function) newText: \(newText)")
+            }
+        }
     }
     
     func bindingTextOverIndex(_ textView: UIViewType) {
         print("상갑 logEvent \(#function)")
+        var differenceIndex: Int?
+        var replacementText: String = ""
+        
+        for i in 0..<text.count {
+            let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
+            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
+            
+            var char1: Character?
+            var char2: Character?
+            
+            if let textViewIndex {
+                let limit = textView.text.distance(from: textView.text.startIndex, to: textViewIndex)
+                print("상갑 logEvent \(#function) textView.text.count: \(textView.text.count)")
+                print("상갑 logEvent \(#function) limit: \(limit)")
+                char1 = textView.text.count > limit ? textView.text[textViewIndex] : nil
+            }
+            
+            
+            if let bindTextIndex {
+                char2 = text[bindTextIndex]
+            }
+            
+            if char1 != char2, let char2 {
+                replacementText.append(String(char2))
+                if differenceIndex == nil {
+                    differenceIndex = i
+                }
+            }
+            
+            print("상갑 logEvent \(#function) char1: \(char1)")
+            print("상갑 logEvent \(#function) char2: \(char2)")
+        }
+        
+        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
+        print("상갑 logEvent \(#function) replacementText: \(replacementText)")
+        print("상갑 logEvent \(#function) replacementText count: \(replacementText.count)")
+        
+        if !replacementText.isEmpty {
+            if let differenceIndex {
+                let prefixText = textView.text.prefix(differenceIndex)
+                let newText = prefixText.appending(replacementText)
+                print("상갑 logEvent \(#function) prefixText: \(prefixText)")
+                print("상갑 logEvent \(#function) newText: \(newText)")
+                textView.text = newText
+            } else {
+                textView.text.append(replacementText)
+            }
+        }
     }
     
     func sameIndex(_ textView: UIViewType) {
