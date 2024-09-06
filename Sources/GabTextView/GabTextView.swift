@@ -329,8 +329,7 @@ private extension TextView {
             
             if let textViewIndex {
                 let limit = textView.text.distance(from: textView.text.startIndex, to: textViewIndex)
-                print("상갑 logEvent \(#function) textView.text.count: \(textView.text.count)")
-                print("상갑 logEvent \(#function) limit: \(limit)")
+                
                 char1 = textView.text.count > limit ? textView.text[textViewIndex] : nil
             }
             
@@ -369,5 +368,6 @@ private extension TextView {
     
     func sameIndex(_ textView: UIViewType) {
         print("상갑 logEvent \(#function)")
+        textView.text = text
     }
 }
