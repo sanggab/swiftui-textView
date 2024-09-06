@@ -63,7 +63,7 @@ public struct TextView: UIViewRepresentable {
     public func updateUIView(_ textView: UIViewType, context: Context) {
         print("상갑 logEvent \(#function)")
         context.coordinator.viewModel = viewModel
-        checkDifferent(textView)
+        checkDifferent(textView, context)
         updateHeight(textView)
         updateTextCount(textView)
     }
@@ -251,18 +251,18 @@ private extension TextView {
     // TODO: NSRange는 location과 length로 구성
     // TODO: location은 현재 textView에서 공백을 제외한 위치를 나타냄. ex) 하이 요 다음에 다라는 글자가 들어오면 공백은 제외하고 location은 4가 들어옴. 근데 문제는 자음을 입력하면 location이 4가 됫을 때, 모음이 들어와서 합쳐져도 location은 4
     // TODO: length는 delete시에 지워지는 값들을 의미
-    func checkDifferent(_ textView: UIViewType) {
+    func checkDifferent(_ textView: UIViewType, _ context: Context) {
         print("상갑 logEvent \(#function)")
         if textView.text != text {
             if textView.text.count == text.count {
                 sameIndex(textView)
             } else {
-                textView.text.count > text.count ? textViewOverIndex(textView) : bindingTextOverIndex(textView)
+                textView.text.count > text.count ? textViewOverIndex(textView, context) : bindingTextOverIndex(textView, context)
             }
         }
     }
     
-    func textViewOverIndex(_ textView: UIViewType) {
+    func textViewOverIndex(_ textView: UIViewType, _ context: Context) {
         print("상갑 logEvent \(#function)")
         var sameIndex: Int?
         var replacementText: String = ""
@@ -285,13 +285,14 @@ private extension TextView {
             
             // TODO: 둘이 다를 경우에, 그때 replacementText에 추가
             if char1 == char2 {
-                sameIndex = i
+                /// i에 +1 시키는 이유는 해당 인덱스 다음부터 달라지는 char가 나오기 때문에
+                sameIndex = i + 1
             } else {
                 if let char2 {
                     replacementText.append(String(char2))
                 }
             }
-            
+            print("상갑 logEvent \(#function) i: \(i)")
             print("상갑 logEvent \(#function) char1: \(char1)")
             print("상갑 logEvent \(#function) char2: \(char2)")
         }
@@ -306,16 +307,20 @@ private extension TextView {
             let newText = prefixText.appending(replacementText)
             print("상갑 logEvent \(#function) prefixText: \(prefixText)")
             print("상갑 logEvent \(#function) newText: \(newText)")
-            textView.text = newText
+            let range = NSRange(location: sameIndex, length: textView.text.count - sameIndex)
+            replacementTextView(textView, range: range, replacement: "")
+            
         } else {
             /// 일치한 Index가 없고 replacementText가 존재한다면 그냥 덮어쓰기
             if !replacementText.isEmpty {
                 textView.text = replacementText
+//                let range = NSRange(location: 0, length: replacementText.count)
+//                replacementTextView(textView, range: range, replacement: replacementText)
             }
         }
     }
     
-    func bindingTextOverIndex(_ textView: UIViewType) {
+    func bindingTextOverIndex(_ textView: UIViewType, _ context: Context) {
         print("상갑 logEvent \(#function)")
         var differenceIndex: Int?
         var replacementText: String = ""
@@ -344,7 +349,7 @@ private extension TextView {
                     differenceIndex = i
                 }
             }
-            
+            print("상갑 logEvent \(#function) i: \(i)")
             print("상갑 logEvent \(#function) char1: \(char1)")
             print("상갑 logEvent \(#function) char2: \(char2)")
         }
@@ -355,13 +360,18 @@ private extension TextView {
         
         if !replacementText.isEmpty {
             if let differenceIndex {
+                /// differenceIndex를 그대로 쓰는 이유는 char1과 char2가 다를 경우에 differenceIndex를 세팅하는 시점이기 때문에
                 let prefixText = textView.text.prefix(differenceIndex)
                 let newText = prefixText.appending(replacementText)
                 print("상갑 logEvent \(#function) prefixText: \(prefixText)")
                 print("상갑 logEvent \(#function) newText: \(newText)")
-                textView.text = newText
+//                textView.text = newText
+                let range = NSRange(location: textView.text.count, length: 0)
+                print("상갑 logEvent \(#function) range: \(range)")
+                replacementTextView(textView, range: range, replacement: replacementText)
+                
             } else {
-                textView.text.append(replacementText)
+                /// 나올 경우 zero
             }
         }
     }
@@ -369,5 +379,17 @@ private extension TextView {
     func sameIndex(_ textView: UIViewType) {
         print("상갑 logEvent \(#function)")
         textView.text = text
+    }
+}
+
+private extension TextView {
+    
+    func replacementTextView(_ textView: UITextView, range: NSRange, replacement text: String) {
+        print("상갑 logEvent \(#function) range: \(range)")
+        print("상갑 logEvent \(#function) replacement: \(text)")
+        if let textRange = Range(range, in: textView.text) {
+            print("상갑 logEvent \(#function) textRange: \(textRange)")
+            textView.text = textView.text.replacingCharacters(in: textRange, with: text)
+        }
     }
 }

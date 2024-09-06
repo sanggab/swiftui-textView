@@ -35,6 +35,9 @@ struct ContentView: View {
             Rectangle()
                 .fill(.mint)
                 .frame(width: 50, height: 50)
+                .overlay {
+                    Text("input")
+                }
                 .onTapGesture {
                     print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
                     inputBreakMode = .lineWithContinuousWhiteSpace
@@ -44,6 +47,9 @@ struct ContentView: View {
             Rectangle()
                 .fill(.orange)
                 .frame(width: 50, height: 50)
+                .overlay {
+                    Text("input2")
+                }
                 .onTapGesture {
                     print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
                     inputBreakMode = .continuousWhiteSpace
@@ -53,6 +59,9 @@ struct ContentView: View {
             Rectangle()
                 .fill(.blue)
                 .frame(width: 50, height: 50)
+                .overlay {
+                    Text("append")
+                }
                 .onTapGesture {
                     text += randomSentence.randomElement() ?? ""
                     print("상갑 logEvent \(#function) text: \(text)")
@@ -62,6 +71,9 @@ struct ContentView: View {
             Rectangle()
                 .fill(.pink)
                 .frame(width: 50, height: 50)
+                .overlay {
+                    Text("초기화")
+                }
                 .onTapGesture {
 //                    let newText = text.prefix(1)
 //                    text = String(newText)
@@ -72,6 +84,9 @@ struct ContentView: View {
             Rectangle()
                 .fill(.purple)
                 .frame(width: 50, height: 50)
+                .overlay {
+                    Text("prefix")
+                }
                 .onTapGesture {
                     let newText = text.prefix(5)
                     text = String(newText)
@@ -81,6 +96,9 @@ struct ContentView: View {
             Rectangle()
                 .fill(.brown)
                 .frame(width: 50, height: 50)
+                .overlay {
+                    Text("blank")
+                }
                 .onTapGesture {
                     text = "  "
                 }
@@ -89,6 +107,9 @@ struct ContentView: View {
             Rectangle()
                 .fill(.teal)
                 .frame(width: 50, height: 50)
+                .overlay {
+                    Text("line")
+                }
                 .onTapGesture {
                     text = "\n\n"
                 }
