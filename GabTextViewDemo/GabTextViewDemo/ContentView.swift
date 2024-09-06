@@ -68,6 +68,31 @@ struct ContentView: View {
                     text = "초기화"
                 }
                 .accessibilityIdentifier("Text 변경")
+            
+            Rectangle()
+                .fill(.purple)
+                .frame(width: 50, height: 50)
+                .onTapGesture {
+                    let newText = text.prefix(5)
+                    text = String(newText)
+                }
+                .accessibilityIdentifier("Prefix 자르기")
+            
+            Rectangle()
+                .fill(.brown)
+                .frame(width: 50, height: 50)
+                .onTapGesture {
+                    text = "  "
+                }
+                .accessibilityIdentifier("공백 교채")
+            
+            Rectangle()
+                .fill(.teal)
+                .frame(width: 50, height: 50)
+                .onTapGesture {
+                    text = "\n\n"
+                }
+                .accessibilityIdentifier("줄바꿈 교체")
         }
         
         Text("키보드 내려")

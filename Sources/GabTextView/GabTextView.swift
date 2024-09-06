@@ -264,7 +264,7 @@ private extension TextView {
     
     func textViewOverIndex(_ textView: UIViewType) {
         print("상갑 logEvent \(#function)")
-        var differenceIndex: Int?
+        var sameIndex: Int?
         var replacementText: String = ""
         
         for i in 0..<textView.text.count {
@@ -280,40 +280,37 @@ private extension TextView {
             
             if let bindTextIndex {
                 let limit = text.distance(from: text.startIndex, to: bindTextIndex)
-                print("상갑 logEvent \(#function) text.count: \(text.count)")
-                print("상갑 logEvent \(#function) limit : \(limit)")
                 char2 = text.count > limit ? text[bindTextIndex] : nil
             }
-            // TODO: 아마 textView가 더 큰경우에는 char1이랑 char2가 같든 다르든 통과시키고 char2가 nil만 아니면 replacementText에 추가하면 될 듯
-//            if char1 == char2, let char2 {
-//                replacementText.append(String(char2))
-//            } else {
-//                if differenceIndex == nil {
-//                    differenceIndex = i
-//                }
-//            }
             
             // TODO: 둘이 다를 경우에, 그때 replacementText에 추가
-            if char1 != char2, let char2 {
-                
+            if char1 == char2 {
+                sameIndex = i
+            } else {
+                if let char2 {
+                    replacementText.append(String(char2))
+                }
             }
-            
             
             print("상갑 logEvent \(#function) char1: \(char1)")
             print("상갑 logEvent \(#function) char2: \(char2)")
         }
         
-        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
+        print("상갑 logEvent \(#function) sameIndex: \(sameIndex)")
         print("상갑 logEvent \(#function) replacementText: \(replacementText)")
         print("상갑 logEvent \(#function) replacementText count: \(replacementText.count)")
         
-        // TODO: differenceIndex로 textView에서 일정 이상 가져오고 그 뒤에 덧붙이기
-        if !replacementText.isEmpty {
-            if let differenceIndex {
-                let prefixText = textView.text.prefix(differenceIndex)
-                let newText = prefixText.appending(replacementText)
-                print("상갑 logEvent \(#function) prefixText: \(prefixText)")
-                print("상갑 logEvent \(#function) newText: \(newText)")
+        /// 일치한 Index가 있으면 prefix로 자르고 덧 붙여서 사용
+        if let sameIndex {
+            let prefixText = textView.text.prefix(sameIndex)
+            let newText = prefixText.appending(replacementText)
+            print("상갑 logEvent \(#function) prefixText: \(prefixText)")
+            print("상갑 logEvent \(#function) newText: \(newText)")
+            textView.text = newText
+        } else {
+            /// 일치한 Index가 없고 replacementText가 존재한다면 그냥 덮어쓰기
+            if !replacementText.isEmpty {
+                textView.text = replacementText
             }
         }
     }
