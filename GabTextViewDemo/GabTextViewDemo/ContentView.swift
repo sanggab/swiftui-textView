@@ -63,7 +63,10 @@ struct ContentView: View {
                     Text("append")
                 }
                 .onTapGesture {
-                    text += randomSentence.randomElement() ?? ""
+                    let random = randomSentence.randomElement() ?? ""
+                    
+                    print("상갑 logEvent \(#function) random: \(random)")
+                    text += random
                     print("상갑 logEvent \(#function) text: \(text)")
                 }
                 .accessibilityIdentifier("Text 변경")
@@ -134,7 +137,7 @@ struct ContentView: View {
         TextView(text: $text)
             .changeBackgroundColor(.gray.opacity(0.5))
             .setTextViewAppearanceModel(.default)
-            .limitCountAndLine(100, 5)
+            .limitCountAndLine(100, 10)
             .textContainerInset(.zero)
             .lineFragmentPadding(.zero)
             .controlTextViewDelegate(.automatic)
@@ -156,6 +159,9 @@ struct ContentView: View {
 //            .frame(width: 300)
             .accessibilityIdentifier("GabTextView")
             .focused($keyboardState)
+            .onChange(of: text) { newValue in
+                print("상갑 logEvent \(#function) text: \(newValue)")
+            }
             .id(id)
     }
 

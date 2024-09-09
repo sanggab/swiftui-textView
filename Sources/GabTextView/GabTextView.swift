@@ -292,9 +292,9 @@ private extension TextView {
                     replacementText.append(String(char2))
                 }
             }
-            print("상갑 logEvent \(#function) i: \(i)")
-            print("상갑 logEvent \(#function) char1: \(char1)")
-            print("상갑 logEvent \(#function) char2: \(char2)")
+//            print("상갑 logEvent \(#function) i: \(i)")
+//            print("상갑 logEvent \(#function) char1: \(char1)")
+//            print("상갑 logEvent \(#function) char2: \(char2)")
         }
         
         print("상갑 logEvent \(#function) sameIndex: \(sameIndex)")
@@ -308,7 +308,7 @@ private extension TextView {
             print("상갑 logEvent \(#function) prefixText: \(prefixText)")
             print("상갑 logEvent \(#function) newText: \(newText)")
             let range = NSRange(location: sameIndex, length: textView.text.count - sameIndex)
-            replacementTextView(textView, range: range, replacement: "")
+            replacementTextView(textView, range: range, replacement: "", context: context)
             
         } else {
             /// 일치한 Index가 없고 replacementText가 존재한다면 그냥 덮어쓰기
@@ -349,9 +349,9 @@ private extension TextView {
                     differenceIndex = i
                 }
             }
-            print("상갑 logEvent \(#function) i: \(i)")
-            print("상갑 logEvent \(#function) char1: \(char1)")
-            print("상갑 logEvent \(#function) char2: \(char2)")
+//            print("상갑 logEvent \(#function) i: \(i)")
+//            print("상갑 logEvent \(#function) char1: \(char1)")
+//            print("상갑 logEvent \(#function) char2: \(char2)")
         }
         
         print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
@@ -368,7 +368,7 @@ private extension TextView {
 //                textView.text = newText
                 let range = NSRange(location: textView.text.count, length: 0)
                 print("상갑 logEvent \(#function) range: \(range)")
-                replacementTextView(textView, range: range, replacement: replacementText)
+                replacementTextView(textView, range: range, replacement: replacementText, context: context)
                 
             } else {
                 /// 나올 경우 zero
@@ -384,12 +384,37 @@ private extension TextView {
 
 private extension TextView {
     
-    func replacementTextView(_ textView: UITextView, range: NSRange, replacement text: String) {
+    func replacementTextView(_ textView: UITextView, range: NSRange, replacement text: String, context: Context) {
         print("상갑 logEvent \(#function) range: \(range)")
-        print("상갑 logEvent \(#function) replacement: \(text)")
+//        print("상갑 logEvent \(#function) replacement: \(text)")
+//        if let textRange = Range(range, in: textView.text) {
+//            print("상갑 logEvent \(#function) textRange: \(textRange)")
+//            textView.text = textView.text.replacingCharacters(in: textRange, with: text)
+//        }
+        
+        if !context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            print("상갑 logEvent \(#function) limitLineCondition")
+            DispatchQueue.main.async {
+                self.text = textView.text
+            }
+            return
+        }
+        
+        if !context.coordinator.limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            print("상갑 logEvent \(#function) limitCountCondition")
+            return
+        }
+        
+        if !context.coordinator.limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            print("상갑 logEvent \(#function) limitNewLineAndSpaceCondition")
+            return
+        }
+        
         if let textRange = Range(range, in: textView.text) {
             print("상갑 logEvent \(#function) textRange: \(textRange)")
             textView.text = textView.text.replacingCharacters(in: textRange, with: text)
         }
     }
+    
+    
 }

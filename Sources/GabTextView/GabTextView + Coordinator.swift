@@ -335,7 +335,7 @@ private extension TextViewCoordinator {
     }
 }
 
-private extension TextViewCoordinator {
+extension TextViewCoordinator {
     func limitLineCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
@@ -366,9 +366,10 @@ private extension TextViewCoordinator {
             }
             
             let prefixText = text.prefix(prefixCount)
-            
+            print("상갑 logEvent \(#function) prefixText: \(prefixText)")
             textView.text.append(contentsOf: prefixText)
             parent.text = textView.text
+            print("상갑 logEvent \(#function) parent.text: \(parent.text)")
             textView.selectedRange = NSRange(location: textView.text.count, length: 0)
             
             return false
@@ -391,7 +392,7 @@ private extension TextViewCoordinator {
     }
 }
 
-private extension TextViewCoordinator {
+extension TextViewCoordinator {
     func makeNewText(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> String {
         return (textView.text as NSString).replacingCharacters(in: range, with: text)
     }
