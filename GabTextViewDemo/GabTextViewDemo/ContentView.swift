@@ -31,92 +31,107 @@ struct ContentView: View {
         Text("현재 text count : \(textCount)")
             .accessibilityIdentifier("텍스트 카운트")
         
-        HStack {
-            Rectangle()
-                .fill(.mint)
-                .frame(width: 50, height: 50)
-                .overlay {
-                    Text("input")
-                }
-                .onTapGesture {
-                    print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
-                    inputBreakMode = .lineWithContinuousWhiteSpace
-                }
-                .accessibilityIdentifier("lineWithContinuousWhiteSpace 변경")
+        VStack {
+            HStack {
+                Rectangle()
+                    .fill(.mint)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("input")
+                    }
+                    .onTapGesture {
+                        print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
+                        inputBreakMode = .lineWithContinuousWhiteSpace
+                    }
+                    .accessibilityIdentifier("lineWithContinuousWhiteSpace 변경")
+                
+                Rectangle()
+                    .fill(.orange)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("input2")
+                    }
+                    .onTapGesture {
+                        print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
+                        inputBreakMode = .continuousWhiteSpace
+                    }
+                    .accessibilityIdentifier("continuousWhiteSpace 변경")
+                
+                Rectangle()
+                    .fill(.blue)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("append")
+                    }
+                    .onTapGesture {
+                        let random = randomSentence.randomElement() ?? ""
+                        
+                        print("상갑 logEvent \(#function) random: \(random)")
+                        text += random
+                        print("상갑 logEvent \(#function) text: \(text)")
+                    }
+                    .accessibilityIdentifier("Text 변경")
+                
+                Rectangle()
+                    .fill(.pink)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("초기화")
+                    }
+                    .onTapGesture {
+    //                    let newText = text.prefix(1)
+    //                    text = String(newText)
+                        text = "초기화"
+                    }
+                    .accessibilityIdentifier("Text 변경")
+                
+                Rectangle()
+                    .fill(.purple)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("prefix")
+                    }
+                    .onTapGesture {
+                        let newText = text.prefix(5)
+                        text = String(newText)
+                    }
+                    .accessibilityIdentifier("Prefix 자르기")
+                
+                Rectangle()
+                    .fill(.brown)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("blank")
+                    }
+                    .onTapGesture {
+                        text = "  "
+                    }
+                    .accessibilityIdentifier("공백 교채")
+                
+                Rectangle()
+                    .fill(.teal)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("line")
+                    }
+                    .onTapGesture {
+                        text = "\n\n"
+                    }
+                    .accessibilityIdentifier("줄바꿈 교체")
+            }
             
-            Rectangle()
-                .fill(.orange)
-                .frame(width: 50, height: 50)
-                .overlay {
-                    Text("input2")
-                }
-                .onTapGesture {
-                    print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
-                    inputBreakMode = .continuousWhiteSpace
-                }
-                .accessibilityIdentifier("continuousWhiteSpace 변경")
-            
-            Rectangle()
-                .fill(.blue)
-                .frame(width: 50, height: 50)
-                .overlay {
-                    Text("append")
-                }
-                .onTapGesture {
-                    let random = randomSentence.randomElement() ?? ""
-                    
-                    print("상갑 logEvent \(#function) random: \(random)")
-                    text += random
-                    print("상갑 logEvent \(#function) text: \(text)")
-                }
-                .accessibilityIdentifier("Text 변경")
-            
-            Rectangle()
-                .fill(.pink)
-                .frame(width: 50, height: 50)
-                .overlay {
-                    Text("초기화")
-                }
-                .onTapGesture {
-//                    let newText = text.prefix(1)
-//                    text = String(newText)
-                    text = "초기화"
-                }
-                .accessibilityIdentifier("Text 변경")
-            
-            Rectangle()
-                .fill(.purple)
-                .frame(width: 50, height: 50)
-                .overlay {
-                    Text("prefix")
-                }
-                .onTapGesture {
-                    let newText = text.prefix(5)
-                    text = String(newText)
-                }
-                .accessibilityIdentifier("Prefix 자르기")
-            
-            Rectangle()
-                .fill(.brown)
-                .frame(width: 50, height: 50)
-                .overlay {
-                    Text("blank")
-                }
-                .onTapGesture {
-                    text = "  "
-                }
-                .accessibilityIdentifier("공백 교채")
-            
-            Rectangle()
-                .fill(.teal)
-                .frame(width: 50, height: 50)
-                .overlay {
-                    Text("line")
-                }
-                .onTapGesture {
-                    text = "\n\n"
-                }
-                .accessibilityIdentifier("줄바꿈 교체")
+            HStack {
+                Rectangle()
+                    .fill(.teal)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("line")
+                    }
+                    .onTapGesture {
+                        text = "\n\n"
+                    }
+                    .accessibilityIdentifier("trimMode 리팩토링")
+            }
         }
         
         Text("키보드 내려")

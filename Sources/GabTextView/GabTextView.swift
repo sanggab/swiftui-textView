@@ -388,6 +388,15 @@ private extension TextView {
         print("상갑 logEvent \(#function) range: \(range)")
         
         DispatchQueue.main.async {
+            if context.coordinator.checkInputBreakMode(textView, replacementText: text) {
+                print("아아 이것은 찬성")
+            } else {
+                print("아아 이거는 거절")
+            }
+            
+            test(textView, replacementText: text)
+            
+            
             if !context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 self.text = textView.text
                 
@@ -412,5 +421,13 @@ private extension TextView {
                 textView.text = textView.text.replacingCharacters(in: textRange, with: text)
             }
         }
+    }
+}
+
+private extension TextView {
+    func test(_ textView: UITextView, replacementText: String) {
+        var text = replacementText
+        
+        
     }
 }

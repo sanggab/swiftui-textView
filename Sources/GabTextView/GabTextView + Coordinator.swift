@@ -121,6 +121,23 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             return false
         }
     }
+    
+    func newStart(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) {
+        switch viewModel(\.styleState.trimMode) {
+        case .none:
+            print("none")
+        case .whitespaces:
+            print("whitespaces")
+            var newText = text.trimmingCharacters(in: .whitespaces)
+        case .whitespacesAndNewlines:
+            print("whitespacesAndNewlines")
+            var newText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        case .blankWithWhitespaces:
+            print("blankWithWhitespaces")
+        case .blankWithWhitespacesAndNewlines:
+            print("blankWithWhitespacesAndNewlines")
+        }
+    }
 }
 
 // MARK: - automatic 미구현
@@ -282,7 +299,7 @@ public extension TextViewCoordinator {
     }
 }
 
-private extension TextViewCoordinator {
+extension TextViewCoordinator {
     func checkInputBreakMode(_ textView: UITextView, replacementText text: String) -> Bool {
         switch viewModel(\.styleState.inputBreakMode) {
         case .none:
