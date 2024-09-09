@@ -308,7 +308,7 @@ private extension TextView {
             print("상갑 logEvent \(#function) prefixText: \(prefixText)")
             print("상갑 logEvent \(#function) newText: \(newText)")
             let range = NSRange(location: sameIndex, length: textView.text.count - sameIndex)
-            replacementTextView(textView, range: range, replacement: "", context: context)
+            replacementTextView(textView, range: range, replacementText: "", context: context)
             
         } else {
             /// 일치한 Index가 없고 replacementText가 존재한다면 그냥 덮어쓰기
@@ -368,7 +368,7 @@ private extension TextView {
 //                textView.text = newText
                 let range = NSRange(location: textView.text.count, length: 0)
                 print("상갑 logEvent \(#function) range: \(range)")
-                replacementTextView(textView, range: range, replacement: replacementText, context: context)
+                replacementTextView(textView, range: range, replacementText: replacementText, context: context)
                 
             } else {
                 /// 나올 경우 zero
@@ -383,38 +383,34 @@ private extension TextView {
 }
 
 private extension TextView {
-    
-    func replacementTextView(_ textView: UITextView, range: NSRange, replacement text: String, context: Context) {
+    // TODO: trimMode랑 inputBreakMode 적용시키기
+    func replacementTextView(_ textView: UITextView, range: NSRange, replacementText text: String, context: Context) {
         print("상갑 logEvent \(#function) range: \(range)")
-//        print("상갑 logEvent \(#function) replacement: \(text)")
-//        if let textRange = Range(range, in: textView.text) {
-//            print("상갑 logEvent \(#function) textRange: \(textRange)")
-//            textView.text = textView.text.replacingCharacters(in: textRange, with: text)
-//        }
         
-        if !context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
-            print("상갑 logEvent \(#function) limitLineCondition")
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            if !context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 self.text = textView.text
+                
+                return
             }
-            return
-        }
-        
-        if !context.coordinator.limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
-            print("상갑 logEvent \(#function) limitCountCondition")
-            return
-        }
-        
-        if !context.coordinator.limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
-            print("상갑 logEvent \(#function) limitNewLineAndSpaceCondition")
-            return
-        }
-        
-        if let textRange = Range(range, in: textView.text) {
-            print("상갑 logEvent \(#function) textRange: \(textRange)")
-            textView.text = textView.text.replacingCharacters(in: textRange, with: text)
+            
+            if !context.coordinator.limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+                if self.text != textView.text {
+                    self.text = textView.text
+                }
+                
+                return
+            }
+            
+            if !context.coordinator.limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+                self.text = textView.text
+                
+                return
+            }
+            
+            if let textRange = Range(range, in: textView.text) {
+                textView.text = textView.text.replacingCharacters(in: textRange, with: text)
+            }
         }
     }
-    
-    
 }

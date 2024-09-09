@@ -359,18 +359,15 @@ extension TextViewCoordinator {
         let basicText = makeTrimText(textView.text)
         
         if changedText.count > viewModel(\.styleState.limitCount) {
-            let prefixCount = viewModel(\.styleState.limitCount) - basicText.count
-            
-            guard prefixCount > 0 else {
-                return false
-            }
+            let prefixCount = max(0, viewModel(\.styleState.limitCount) - basicText.count)
             
             let prefixText = text.prefix(prefixCount)
-            print("상갑 logEvent \(#function) prefixText: \(prefixText)")
-            textView.text.append(contentsOf: prefixText)
-            parent.text = textView.text
-            print("상갑 logEvent \(#function) parent.text: \(parent.text)")
-            textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+            
+            if !prefixText.isEmpty {
+                textView.text.append(contentsOf: prefixText)
+                parent.text = textView.text
+                textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+            }
             
             return false
         }
@@ -379,7 +376,7 @@ extension TextViewCoordinator {
     }
     
     func limitNewLineAndSpaceCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let newText = makeNewText(textView, shouldChangeTextIn: range, replacementText: text)
+//        let newText = makeNewText(textView, shouldChangeTextIn: range, replacementText: text)
         
         if text == " " || text == "\n" {
             let trimText = makeTrimText(textView.text)
