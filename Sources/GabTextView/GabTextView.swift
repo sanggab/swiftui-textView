@@ -316,6 +316,8 @@ private extension TextView {
                 textView.text = replacementText
 //                let range = NSRange(location: 0, length: replacementText.count)
 //                replacementTextView(textView, range: range, replacement: replacementText)
+            } else {
+                textView.text = text
             }
         }
     }
@@ -349,9 +351,9 @@ private extension TextView {
                     differenceIndex = i
                 }
             }
-            print("상갑 logEvent \(#function) i: \(i)")
-            print("상갑 logEvent \(#function) char1: \(char1)")
-            print("상갑 logEvent \(#function) char2: \(char2)")
+//            print("상갑 logEvent \(#function) i: \(i)")
+//            print("상갑 logEvent \(#function) char1: \(char1)")
+//            print("상갑 logEvent \(#function) char2: \(char2)")
         }
         
         print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
@@ -373,6 +375,7 @@ private extension TextView {
                 
             } else {
                 /// 나올 경우 zero
+                textView.text = text
             }
         }
     }
