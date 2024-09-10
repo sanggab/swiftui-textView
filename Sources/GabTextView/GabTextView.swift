@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct TextView: UIViewRepresentable {
     public typealias UIViewType = UITextView
+    public typealias CheckTypeAlias = (range: NSRange, replacementText: String)
     
     @ObservedObject var viewModel: TextViewModel = TextViewModel()
     
@@ -253,13 +254,116 @@ private extension TextView {
     // TODO: length는 delete시에 지워지는 값들을 의미
     func checkDifferent(_ textView: UIViewType, _ context: Context) {
         print("상갑 logEvent \(#function)")
+//        if textView.text != text {
+//            if textView.text.count == text.count {
+//                sameIndex(textView)
+//            } else {
+//                textView.text.count > text.count ? textViewOverIndex(textView, context) : bindingTextOverIndex(textView, context)
+//            }
+//        }
+        
         if textView.text != text {
-            if textView.text.count == text.count {
-                sameIndex(textView)
-            } else {
-                textView.text.count > text.count ? textViewOverIndex(textView, context) : bindingTextOverIndex(textView, context)
+//            checkTest(textView, context)
+            getReplacementText(textView, context)
+        }
+        
+        textView.text = text
+    }
+    
+    func checkTest(_ textView: UIViewType, _ context: Context) {
+        print("상갑 logEvent \(#function) textView.text: \(textView.text)")
+        print("상갑 logEvent \(#function) text: \(Optional(text))")
+//        textView.text = text
+        let hoho = getReplacementText(textView, context)
+    }
+    
+    func getReplacementText(_ textView: UIViewType, _ context: Context) -> String {
+        let trimText        = context.coordinator.makeTrimText(textView.text)
+        let trimBindText    = context.coordinator.makeTrimText(text)
+        
+        let replacementText: String = textView.text.count > text.count ? over(textView, context) : down(textView, context)
+//        hohoho(textView, context)
+        return ""
+    }
+    
+    func over(_ textView: UIViewType, _ context: Context) -> String {
+        var differenceIndex: Int?
+        var replacementText: String = ""
+        
+        for i in 0..<textView.text.count {
+            let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
+            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
+            
+            var char1: Character?
+            var char2: Character?
+            
+            if let textViewIndex {
+                char1 = textView.text[textViewIndex]
+            }
+            
+            if let bindTextIndex {
+                let limit = text.distance(from: text.startIndex, to: bindTextIndex)
+                char2 = text.count > limit ? text[bindTextIndex] : nil
+            }
+            
+//            print("상갑 logEvent \(#function) char1: \(char1)")
+//            print("상갑 logEvent \(#function) char2: \(char2)")
+            
+            if char1 != char2 {
+                if differenceIndex == nil {
+                    differenceIndex = i
+                }
             }
         }
+        
+        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
+        print("상갑 logEvent \(#function) replacementText: \(Optional(replacementText))")
+        
+        return replacementText
+    }
+    
+    func down(_ textView: UIViewType, _ context: Context) -> String {
+        print("상갑 logEvent \(#function)")
+        var differenceIndex: Int?
+        var replacementText: String = ""
+        
+        for i in 0..<text.count {
+            let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
+            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
+            
+            var char1: Character?
+            var char2: Character?
+            
+            if let textViewIndex {
+                let limit = textView.text.distance(from: textView.text.startIndex, to: textViewIndex)
+                char1 = textView.text.count > limit ? textView.text[textViewIndex] : nil
+            }
+            
+            if let bindTextIndex {
+                char2 = text[bindTextIndex]
+            }
+            
+            if char1 != char2, let char2 {
+                replacementText.append(String(char2))
+                
+                if differenceIndex == nil {
+                    differenceIndex = i
+                }
+            }
+        }
+        
+        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
+        print("상갑 logEvent \(#function) replacementText: \(Optional(replacementText))")
+        
+        let range: NSRange = NSRange(location: differenceIndex ?? .zero, length: 0)
+        
+        let hi: CheckTypeAlias = CheckTypeAlias(range, replacementText)
+        
+        let result = test(textView, replacementText: replacementText)
+        
+        print("상갑 logEvent \(#function) result: \(result)")
+        
+        return replacementText
     }
     
     func textViewOverIndex(_ textView: UIViewType, _ context: Context) {
@@ -292,9 +396,9 @@ private extension TextView {
                     replacementText.append(String(char2))
                 }
             }
-//            print("상갑 logEvent \(#function) i: \(i)")
-//            print("상갑 logEvent \(#function) char1: \(char1)")
-//            print("상갑 logEvent \(#function) char2: \(char2)")
+            print("상갑 logEvent \(#function) i: \(i)")
+            print("상갑 logEvent \(#function) char1: \(char1)")
+            print("상갑 logEvent \(#function) char2: \(char2)")
         }
         
         print("상갑 logEvent \(#function) sameIndex: \(sameIndex)")
@@ -309,14 +413,16 @@ private extension TextView {
             print("상갑 logEvent \(#function) newText: \(newText)")
             let range = NSRange(location: sameIndex, length: textView.text.count - sameIndex)
             replacementTextView(textView, range: range, replacementText: "", context: context)
-            
+            print("1111111")
         } else {
             /// 일치한 Index가 없고 replacementText가 존재한다면 그냥 덮어쓰기
             if !replacementText.isEmpty {
                 textView.text = replacementText
+                print("22222222")
 //                let range = NSRange(location: 0, length: replacementText.count)
 //                replacementTextView(textView, range: range, replacement: replacementText)
             } else {
+                print("그대로")
                 textView.text = text
             }
         }
@@ -351,9 +457,9 @@ private extension TextView {
                     differenceIndex = i
                 }
             }
-//            print("상갑 logEvent \(#function) i: \(i)")
-//            print("상갑 logEvent \(#function) char1: \(char1)")
-//            print("상갑 logEvent \(#function) char2: \(char2)")
+            print("상갑 logEvent \(#function) i: \(i)")
+            print("상갑 logEvent \(#function) char1: \(char1)")
+            print("상갑 logEvent \(#function) char2: \(char2)")
         }
         
         print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
@@ -372,11 +478,14 @@ private extension TextView {
                 let range = NSRange(location: differenceIndex, length: 0)
                 print("상갑 logEvent \(#function) range: \(range)")
                 replacementTextView(textView, range: range, replacementText: replacementText, context: context)
-                
+                print("33333333")
             } else {
                 /// 나올 경우 zero
+                print("4444444444")
                 textView.text = text
             }
+        } else {
+            print("555555555")
         }
     }
     
@@ -393,7 +502,7 @@ private extension TextView {
     // TODO: 외부에서 수정했으니 결국엔 키보드가 올라간 경우가 있을 거고, 아닌 경우가 있을 거임
     // TODO: 그러면 결국엔 모든 케이스를 대응하는 최고의 방법은 현재 textView.text하고 binding text하고 다른 점을 뽑아내서
     // TODO: 그게 inputBreakMode에 걸리는지 비교 하고
-    // TODO: 
+    // TODO: trimMode로 짤라내는것
     func replacementTextView(_ textView: UITextView, range: NSRange, replacementText text: String, context: Context) {
         print("상갑 logEvent \(#function) range: \(range)")
         
@@ -437,6 +546,8 @@ private extension TextView {
 private extension TextView {
     func test(_ textView: UITextView, replacementText: String) {
         var text = replacementText
+        print("상갑 logEvent \(#function) textView.text: \(textView.text)")
+        print("상갑 logEvent \(#function) replacementText: \(replacementText)")
         switch viewModel(\.styleState.inputBreakMode) {
         case .none:
             print("none")
@@ -450,7 +561,43 @@ private extension TextView {
             print("continuousWhiteSpace")
         case .lineWithContinuousWhiteSpace:
             print("lineWithContinuousWhiteSpace")
+            checkLineWithContinuousWhiteSpace(textView, replacementText: replacementText)
         }
         
+    }
+}
+
+
+private extension TextView {
+    
+    func checkLineWithContinuousWhiteSpace(_ textView: UITextView, replacementText: String) {
+        var last: Character? = textView.text.last
+        var lastKeyWord: Character?
+        for i in 0..<replacementText.count {
+            let index: String.Index? = replacementText.index(replacementText.startIndex, offsetBy: i, limitedBy: replacementText.endIndex)
+            
+            var char1: Character?
+            
+            if let index {
+                let limit = replacementText.distance(from: replacementText.startIndex, to: index)
+                char1 = replacementText.count > limit ? replacementText[index] : nil
+            }
+            
+            print("상갑 logEvent \(#function) char1: \(char1)")
+            
+            if last == " " && char1 == last {
+                print("연속공백")
+                break
+            } else if lastKeyWord == " " && char1 == " " {
+                print("연속공백")
+                break
+            } else if char1 == "\n" {
+                print("개행")
+                break
+            } else {
+                lastKeyWord = char1
+            }
+            
+        }
     }
 }

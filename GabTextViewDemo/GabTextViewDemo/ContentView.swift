@@ -41,8 +41,8 @@ struct ContentView: View {
                         Text("input")
                     }
                     .onTapGesture {
-                        print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
                         inputBreakMode = .lineWithContinuousWhiteSpace
+                        print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
                     }
                     .accessibilityIdentifier("lineWithContinuousWhiteSpace 변경")
                 
@@ -53,8 +53,8 @@ struct ContentView: View {
                         Text("input2")
                     }
                     .onTapGesture {
-                        print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
                         inputBreakMode = .continuousWhiteSpace
+                        print("상갑 logEvent \(#function) inputBreakMode: \(inputBreakMode)")
                     }
                     .accessibilityIdentifier("continuousWhiteSpace 변경")
                 
@@ -130,7 +130,6 @@ struct ContentView: View {
                     }
                     .onTapGesture {
                         text = ""
-                        trimMode = .none
                     }
                     .accessibilityIdentifier("trimMode1 리팩토링")
                 
@@ -141,8 +140,7 @@ struct ContentView: View {
                         Text("trim2")
                     }
                     .onTapGesture {
-                        text = " 하이 "
-                        trimMode = .whitespaces
+                        text = "하이 "
                     }
                     .accessibilityIdentifier("trimMode2 리팩토링")
                 
@@ -153,8 +151,7 @@ struct ContentView: View {
                         Text("trim3")
                     }
                     .onTapGesture {
-                        text = " 하이 \n"
-                        trimMode = .whitespacesAndNewlines
+                        text = "하이 \n"
                     }
                     .accessibilityIdentifier("trimMode3 리팩토링")
                 
@@ -166,7 +163,6 @@ struct ContentView: View {
                     }
                     .onTapGesture {
                         text = "하 이 요 "
-//                        trimMode = .blankWithWhitespaces
                     }
                     .accessibilityIdentifier("trimMode4 리팩토링")
                 
@@ -178,7 +174,6 @@ struct ContentView: View {
                     }
                     .onTapGesture {
                         text = " 누 구 세 요 \n"
-//                        trimMode = .blankWithWhitespacesAndNewlines
                     }
                     .accessibilityIdentifier("trimMode5 리팩토링")
                 
