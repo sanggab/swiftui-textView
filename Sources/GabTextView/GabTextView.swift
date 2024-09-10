@@ -349,9 +349,9 @@ private extension TextView {
                     differenceIndex = i
                 }
             }
-//            print("상갑 logEvent \(#function) i: \(i)")
-//            print("상갑 logEvent \(#function) char1: \(char1)")
-//            print("상갑 logEvent \(#function) char2: \(char2)")
+            print("상갑 logEvent \(#function) i: \(i)")
+            print("상갑 logEvent \(#function) char1: \(char1)")
+            print("상갑 logEvent \(#function) char2: \(char2)")
         }
         
         print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
@@ -366,7 +366,8 @@ private extension TextView {
                 print("상갑 logEvent \(#function) prefixText: \(prefixText)")
                 print("상갑 logEvent \(#function) newText: \(newText)")
 //                textView.text = newText
-                let range = NSRange(location: textView.text.count, length: 0)
+                
+                let range = NSRange(location: differenceIndex, length: 0)
                 print("상갑 logEvent \(#function) range: \(range)")
                 replacementTextView(textView, range: range, replacementText: replacementText, context: context)
                 
@@ -384,6 +385,12 @@ private extension TextView {
 
 private extension TextView {
     // TODO: trimMode랑 inputBreakMode 적용시키기
+    // TODO: 여기서 생각해야될게 여기는 updateUIView에서 textView.text하고 binding text가 다를 경우에만 들어옴.
+    // TODO: 결국엔 외부에서 binding text를 수정한 경우에 들어온다는 건데
+    // TODO: 외부에서 수정했으니 결국엔 키보드가 올라간 경우가 있을 거고, 아닌 경우가 있을 거임
+    // TODO: 그러면 결국엔 모든 케이스를 대응하는 최고의 방법은 현재 textView.text하고 binding text하고 다른 점을 뽑아내서
+    // TODO: 그게 inputBreakMode에 걸리는지 비교 하고
+    // TODO: 
     func replacementTextView(_ textView: UITextView, range: NSRange, replacementText text: String, context: Context) {
         print("상갑 logEvent \(#function) range: \(range)")
         
@@ -416,7 +423,7 @@ private extension TextView {
                 
                 return
             }
-            
+            // TODO: textRange 오류 수정해라 trim4했다가 trim5 하니까 에러 뜸;
             if let textRange = Range(range, in: textView.text) {
                 textView.text = textView.text.replacingCharacters(in: textRange, with: text)
             }
@@ -427,7 +434,20 @@ private extension TextView {
 private extension TextView {
     func test(_ textView: UITextView, replacementText: String) {
         var text = replacementText
-        
+        switch viewModel(\.styleState.inputBreakMode) {
+        case .none:
+            print("none")
+        case .lineBreak:
+            print("lineBreak")
+        case .whiteSpace:
+            print("whiteSpace")
+        case .lineWithWhiteSpace:
+            print("lineWithWhiteSpace")
+        case .continuousWhiteSpace:
+            print("continuousWhiteSpace")
+        case .lineWithContinuousWhiteSpace:
+            print("lineWithContinuousWhiteSpace")
+        }
         
     }
 }

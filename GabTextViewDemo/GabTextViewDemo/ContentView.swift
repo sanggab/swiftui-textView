@@ -26,6 +26,7 @@ struct ContentView: View {
     ]
     
     @State private var inputBreakMode: TextViewInputBreakMode = .continuousWhiteSpace
+    @State private var trimMode: TextViewTrimMode = .blankWithWhitespacesAndNewlines
     
     var body: some View {
         Text("현재 text count : \(textCount)")
@@ -122,15 +123,86 @@ struct ContentView: View {
             
             HStack {
                 Rectangle()
-                    .fill(.teal)
+                    .fill(.cyan)
                     .frame(width: 50, height: 50)
                     .overlay {
-                        Text("line")
+                        Text("trim1")
                     }
                     .onTapGesture {
-                        text = "\n\n"
+                        text = ""
+                        trimMode = .none
                     }
-                    .accessibilityIdentifier("trimMode 리팩토링")
+                    .accessibilityIdentifier("trimMode1 리팩토링")
+                
+                Rectangle()
+                    .fill(.yellow)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("trim2")
+                    }
+                    .onTapGesture {
+                        text = " 하이 "
+                        trimMode = .whitespaces
+                    }
+                    .accessibilityIdentifier("trimMode2 리팩토링")
+                
+                Rectangle()
+                    .fill(.green)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("trim3")
+                    }
+                    .onTapGesture {
+                        text = " 하이 \n"
+                        trimMode = .whitespacesAndNewlines
+                    }
+                    .accessibilityIdentifier("trimMode3 리팩토링")
+                
+                Rectangle()
+                    .fill(.indigo)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("trim4")
+                    }
+                    .onTapGesture {
+                        text = "하 이 요 "
+//                        trimMode = .blankWithWhitespaces
+                    }
+                    .accessibilityIdentifier("trimMode4 리팩토링")
+                
+                Rectangle()
+                    .fill(.red)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("trim5")
+                    }
+                    .onTapGesture {
+                        text = " 누 구 세 요 \n"
+//                        trimMode = .blankWithWhitespacesAndNewlines
+                    }
+                    .accessibilityIdentifier("trimMode5 리팩토링")
+                
+                Rectangle()
+                    .fill(.bar)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("줄바꿈 추가")
+                    }
+                    .onTapGesture {
+                        text += "\n"
+                    }
+                    .accessibilityIdentifier("줄바꿈 추가")
+                
+                Rectangle()
+                    .fill(.mint.opacity(0.5))
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("공백 추가")
+                    }
+                    .onTapGesture {
+                        text += " "
+                    }
+                    .accessibilityIdentifier("공백 추가")
             }
         }
         
@@ -140,6 +212,7 @@ struct ContentView: View {
             .onTapGesture {
                 keyboardState = false
             }
+            .padding(.top, 30)
         
         Text("속성 테스트")
             .accessibilityLabel("보이스 기능 입니다. 속성 변경")
@@ -157,7 +230,7 @@ struct ContentView: View {
             .lineFragmentPadding(.zero)
             .controlTextViewDelegate(.automatic)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-            .trimMode(.blankWithWhitespacesAndNewlines)
+            .trimMode(trimMode)
             .sizeMode(.dynamic)
             .inputBreakMode(inputBreakMode)
             .receiveTextViewHeight { height in

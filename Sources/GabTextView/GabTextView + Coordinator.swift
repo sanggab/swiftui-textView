@@ -93,7 +93,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         
     }
     
-    // TODO: textContainerInset 대응하기
+    // TODO: 여기는 inputBreakMode만 적용시켜야 한다. 그 이유는 키보드 입력시의 Text들이 들어오는데 trim을 시킨 Text는 오직 textcount하고 line을 계산할 때 필요하기 때문
     private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         print("상갑 logEvent \(#function) replacementText: \(text)")
         print("상갑 logEvent \(#function) replacementText count: \(text.count)")
@@ -374,7 +374,9 @@ extension TextViewCoordinator {
         
         let changedText = makeTrimText(newText)
         let basicText = makeTrimText(textView.text)
-        
+        // TODO: replacementText는 앞으로 입력될 단어
+        // TODO: 결국엔 이 단어가 limitCount Modifier에 의해 입력이 막아져야할 경우가 생기는데
+        // TODO: count를 막아야 할 경우나 line을 막아야 할 경우는 trim모드로 계산만 도와주기
         if changedText.count > viewModel(\.styleState.limitCount) {
             let prefixCount = max(0, viewModel(\.styleState.limitCount) - basicText.count)
             
@@ -393,8 +395,6 @@ extension TextViewCoordinator {
     }
     
     func limitNewLineAndSpaceCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        let newText = makeNewText(textView, shouldChangeTextIn: range, replacementText: text)
-        
         if text == " " || text == "\n" {
             let trimText = makeTrimText(textView.text)
             if trimText.count >= viewModel(\.styleState.limitCount) {
