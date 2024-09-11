@@ -266,27 +266,18 @@ private extension TextView {
 //            checkTest(textView, context)
             getReplacementText(textView, context)
         }
-        
-        textView.text = text
     }
     
-    func checkTest(_ textView: UIViewType, _ context: Context) {
-        print("상갑 logEvent \(#function) textView.text: \(textView.text)")
-        print("상갑 logEvent \(#function) text: \(Optional(text))")
-//        textView.text = text
-        let hoho = getReplacementText(textView, context)
-    }
-    
-    func getReplacementText(_ textView: UIViewType, _ context: Context) -> String {
+    func getReplacementText(_ textView: UIViewType, _ context: Context) {
         let trimText        = context.coordinator.makeTrimText(textView.text)
         let trimBindText    = context.coordinator.makeTrimText(text)
         
-        let replacementText: String = textView.text.count > text.count ? over(textView, context) : down(textView, context)
-//        hohoho(textView, context)
-        return ""
+        let result: CheckTypeAlias = textView.text.count > text.count ? over(textView, context) : down(textView, context)
+        
+        lastCondition(textView, result: result, context: context)
     }
     
-    func over(_ textView: UIViewType, _ context: Context) -> String {
+    func over(_ textView: UIViewType, _ context: Context) -> CheckTypeAlias {
         var differenceIndex: Int?
         var replacementText: String = ""
         
@@ -318,11 +309,13 @@ private extension TextView {
         
         print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
         print("상갑 logEvent \(#function) replacementText: \(Optional(replacementText))")
+        let range: NSRange = NSRange(location: 0, length: 0)
+        let result: CheckTypeAlias = (range, replacementText)
         
-        return replacementText
+        return result
     }
     
-    func down(_ textView: UIViewType, _ context: Context) -> String {
+    func down(_ textView: UIViewType, _ context: Context) -> CheckTypeAlias {
         print("상갑 logEvent \(#function)")
         var differenceIndex: Int?
         var replacementText: String = ""
@@ -357,12 +350,11 @@ private extension TextView {
         
         let range: NSRange = NSRange(location: differenceIndex ?? .zero, length: 0)
         
-        let repairText = repairText(textView, replacementText: replacementText)
+        let reassembleText = reassembleInputBreak(textView, replacementText: replacementText)
         
-        let result = CheckTypeAlias(range, repairText)
-        print("상갑 logEvent \(#function) result: \(Optional(result))")
+        let result = CheckTypeAlias(range, reassembleText)
         
-        return replacementText
+        return result
     }
     
     func textViewOverIndex(_ textView: UIViewType, _ context: Context) {
@@ -512,13 +504,13 @@ private extension TextView {
                 print("아아 이거는 거절")
             }
             
-            if !context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 self.text = textView.text
                 
                 return
             }
             
-            if !context.coordinator.limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            if context.coordinator.limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 if self.text != textView.text {
                     self.text = textView.text
                 }
@@ -526,7 +518,7 @@ private extension TextView {
                 return
             }
             
-            if !context.coordinator.limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            if context.coordinator.limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 self.text = textView.text
                 
                 return
@@ -540,21 +532,34 @@ private extension TextView {
 }
 
 private extension TextView {
-    func repairText(_ textView: UITextView, replacementText: String) -> String {
-        print("상갑 logEvent \(#function) : \(viewModel(\.styleState.inputBreakMode))")
-        switch viewModel(\.styleState.inputBreakMode) {
-        case .none:
-            return replacementText
-        case .lineBreak:
-            return checkLineBreak(textView, replacementText: replacementText)
-        case .whiteSpace:
-            return checkWhiteSpace(textView, replacementText: replacementText)
-        case .lineWithWhiteSpace:
-            return checkLineWithWhiteSpace(textView, replacementText: replacementText)
-        case .continuousWhiteSpace:
-            return checkContinuousWhiteSpace(textView, replacementText: replacementText)
-        case .lineWithContinuousWhiteSpace:
-            return checkLineWithContinuousWhiteSpace(textView, replacementText: replacementText)
+    
+    func lastCondition(_ textView: UITextView, result: CheckTypeAlias, context: Context) {
+        print("상갑 logEvent \(#function)")
+        print("상갑 logEvent \(#function) result: \(result)")
+        let reassembleText = reassembleTrimMode(result.replacementText)
+        
+        print("상갑 logEvent \(#function) reassembleText: \(reassembleText)")
+        
+        if checkLimitLine(textView, result: result) {
+            self.text = textView.text
+            return
         }
+    }
+    
+    func checkLimitLine(_ textView: UITextView, result: CheckTypeAlias) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: result.range, with: result.replacementText)
+        
+        let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
+                                                  options: .usesLineFragmentOrigin,
+                                                  attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
+                                                  context: nil).height
+        
+        let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
+        
+        if lines > viewModel(\.styleState.limitLine) {
+            return true
+        }
+        
+        return false
     }
 }

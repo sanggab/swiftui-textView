@@ -172,6 +172,42 @@ extension TextView {
     }
 }
 
+extension TextView {
+    func reassembleInputBreak(_ textView: UITextView, replacementText: String) -> String {
+        print("상갑 logEvent \(#function) : \(viewModel(\.styleState.inputBreakMode))")
+        switch viewModel(\.styleState.inputBreakMode) {
+        case .none:
+            return replacementText
+        case .lineBreak:
+            return checkLineBreak(textView, replacementText: replacementText)
+        case .whiteSpace:
+            return checkWhiteSpace(textView, replacementText: replacementText)
+        case .lineWithWhiteSpace:
+            return checkLineWithWhiteSpace(textView, replacementText: replacementText)
+        case .continuousWhiteSpace:
+            return checkContinuousWhiteSpace(textView, replacementText: replacementText)
+        case .lineWithContinuousWhiteSpace:
+            return checkLineWithContinuousWhiteSpace(textView, replacementText: replacementText)
+        }
+    }
+    
+    
+    func reassembleTrimMode(_ replacementText: String) -> String {
+        switch viewModel(\.styleState.trimMode) {
+        case .none:
+            return replacementText
+        case .whitespaces:
+            return replacementText.trimmingCharacters(in: .whitespaces)
+        case .whitespacesAndNewlines:
+            return replacementText.trimmingCharacters(in: .whitespacesAndNewlines)
+        case .blankWithWhitespaces:
+            return replacementText.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+        case .blankWithWhitespacesAndNewlines:
+            return replacementText.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+        }
+    }
+}
+
 private extension TextView {
     func isCharWhiteSpace(_ char1: Character?) -> Bool {
         return char1 == " "

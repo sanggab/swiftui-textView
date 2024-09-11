@@ -99,17 +99,17 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         print("상갑 logEvent \(#function) replacementText count: \(text.count)")
         print("상갑 logEvent \(#function) range: \(range)")
         if checkInputBreakMode(textView, replacementText: text) {
-            if !limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            if limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 print("상갑 logEvent \(#function) limitNewLineAndSpaceCondition false")
                 return false
             }
             
-            if !limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            if limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 print("상갑 logEvent \(#function) limitLineCondition false")
                 return false
             }
             
-            if !limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            if limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 print("상갑 logEvent \(#function) limitCountCondition false")
                 return false
             }
@@ -363,10 +363,10 @@ extension TextViewCoordinator {
         let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
         
         if lines > viewModel(\.styleState.limitLine) {
-            return false
+            return true
         }
         
-        return true
+        return false
     }
     
     func limitCountCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -388,21 +388,21 @@ extension TextViewCoordinator {
                 textView.selectedRange = NSRange(location: textView.text.count, length: 0)
             }
             
-            return false
+            return true
         }
         
-        return true
+        return false
     }
     
     func limitNewLineAndSpaceCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == " " || text == "\n" {
             let trimText = makeTrimText(textView.text)
             if trimText.count >= viewModel(\.styleState.limitCount) {
-                return false
+                return true
             }
         }
         
-        return true
+        return false
     }
 }
 
