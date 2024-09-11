@@ -20,6 +20,7 @@
 		EF4C21F32C538FDB00688997 /* GabTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */; };
 		EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21FB2C538FEB00688997 /* GabTextView.swift */; };
 		EF6D3B6F2C6608FF00D70E66 /* GabTextView + Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6D3B6E2C6608FF00D70E66 /* GabTextView + Modifier.swift */; };
+		EFB7B15A2C91166D005D9DE3 /* GabTextView + Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7B1592C91166D005D9DE3 /* GabTextView + Helper.swift */; };
 		EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */; };
 		EFC4CA662C58D15D00C1C86D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC4CA652C58D15D00C1C86D /* Model.swift */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,7 @@
 		EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewTests.swift; sourceTree = "<group>"; };
 		EF4C21FB2C538FEB00688997 /* GabTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextView.swift; sourceTree = "<group>"; };
 		EF6D3B6E2C6608FF00D70E66 /* GabTextView + Modifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + Modifier.swift"; sourceTree = "<group>"; };
+		EFB7B1592C91166D005D9DE3 /* GabTextView + Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + Helper.swift"; sourceTree = "<group>"; };
 		EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewModel.swift; sourceTree = "<group>"; };
 		EFC4CA652C58D15D00C1C86D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				EF4C21FB2C538FEB00688997 /* GabTextView.swift */,
+				EFB7B1592C91166D005D9DE3 /* GabTextView + Helper.swift */,
 				EF1AE13E2C7D5FCE00544B7F /* GabTextView + StoredProperty.swift */,
 				EF44A2322C6B3F9700687479 /* GabTextView + Coordinator.swift */,
 				EF6D3B6E2C6608FF00D70E66 /* GabTextView + Modifier.swift */,
@@ -270,6 +273,7 @@
 				EF44A2392C6B450700687479 /* GabTextView + StyleStateModifier.swift in Sources */,
 				EF44A2352C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift in Sources */,
 				EF44A2332C6B3F9700687479 /* GabTextView + Coordinator.swift in Sources */,
+				EFB7B15A2C91166D005D9DE3 /* GabTextView + Helper.swift in Sources */,
 				EF44A2372C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

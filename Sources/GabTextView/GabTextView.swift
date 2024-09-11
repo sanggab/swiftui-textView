@@ -357,11 +357,10 @@ private extension TextView {
         
         let range: NSRange = NSRange(location: differenceIndex ?? .zero, length: 0)
         
-        let hi: CheckTypeAlias = CheckTypeAlias(range, replacementText)
+        let repairText = repairText(textView, replacementText: replacementText)
         
-        let result = test(textView, replacementText: replacementText)
-        
-        print("상갑 logEvent \(#function) result: \(result)")
+        let result = CheckTypeAlias(range, repairText)
+        print("상갑 logEvent \(#function) result: \(Optional(result))")
         
         return replacementText
     }
@@ -513,9 +512,6 @@ private extension TextView {
                 print("아아 이거는 거절")
             }
             
-            test(textView, replacementText: text)
-            
-            
             if !context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 self.text = textView.text
                 
@@ -544,60 +540,21 @@ private extension TextView {
 }
 
 private extension TextView {
-    func test(_ textView: UITextView, replacementText: String) {
-        var text = replacementText
-        print("상갑 logEvent \(#function) textView.text: \(textView.text)")
-        print("상갑 logEvent \(#function) replacementText: \(replacementText)")
+    func repairText(_ textView: UITextView, replacementText: String) -> String {
+        print("상갑 logEvent \(#function) : \(viewModel(\.styleState.inputBreakMode))")
         switch viewModel(\.styleState.inputBreakMode) {
         case .none:
-            print("none")
+            return replacementText
         case .lineBreak:
-            print("lineBreak")
+            return checkLineBreak(textView, replacementText: replacementText)
         case .whiteSpace:
-            print("whiteSpace")
+            return checkWhiteSpace(textView, replacementText: replacementText)
         case .lineWithWhiteSpace:
-            print("lineWithWhiteSpace")
+            return checkLineWithWhiteSpace(textView, replacementText: replacementText)
         case .continuousWhiteSpace:
-            print("continuousWhiteSpace")
+            return checkContinuousWhiteSpace(textView, replacementText: replacementText)
         case .lineWithContinuousWhiteSpace:
-            print("lineWithContinuousWhiteSpace")
-            checkLineWithContinuousWhiteSpace(textView, replacementText: replacementText)
-        }
-        
-    }
-}
-
-
-private extension TextView {
-    
-    func checkLineWithContinuousWhiteSpace(_ textView: UITextView, replacementText: String) {
-        var last: Character? = textView.text.last
-        var lastKeyWord: Character?
-        for i in 0..<replacementText.count {
-            let index: String.Index? = replacementText.index(replacementText.startIndex, offsetBy: i, limitedBy: replacementText.endIndex)
-            
-            var char1: Character?
-            
-            if let index {
-                let limit = replacementText.distance(from: replacementText.startIndex, to: index)
-                char1 = replacementText.count > limit ? replacementText[index] : nil
-            }
-            
-            print("상갑 logEvent \(#function) char1: \(char1)")
-            
-            if last == " " && char1 == last {
-                print("연속공백")
-                break
-            } else if lastKeyWord == " " && char1 == " " {
-                print("연속공백")
-                break
-            } else if char1 == "\n" {
-                print("개행")
-                break
-            } else {
-                lastKeyWord = char1
-            }
-            
+            return checkLineWithContinuousWhiteSpace(textView, replacementText: replacementText)
         }
     }
 }
