@@ -20,9 +20,9 @@ extension TextView {
     @available(iOS 16.0, *)
     var willPresentEditMenuWith: ((UITextView, UIEditMenuInteractionAnimating) -> Void)? {
         get {
-            return _willDismissEditMenuWith as? ((UITextView, UIEditMenuInteractionAnimating) -> Void)
+            return _willPresentEditMenuWith as? ((UITextView, UIEditMenuInteractionAnimating) -> Void)
         } set {
-            _willDismissEditMenuWith = newValue
+            _willPresentEditMenuWith = newValue
         }
     }
     

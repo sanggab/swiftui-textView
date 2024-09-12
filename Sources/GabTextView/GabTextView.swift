@@ -101,6 +101,7 @@ public struct TextView: UIViewRepresentable {
                 newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
                 count = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).count
             case .blankWithWhitespaces:
+                // TODO: last가 줄바꿈이다가 단어가 들어오면 단어와 단어 사이의 줄바꿈이 카운트로 인식되서 limitCount가 애매해질 수 있다.
                 newText = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
                 count = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "").count
             case .blankWithWhitespacesAndNewlines:
@@ -264,7 +265,11 @@ private extension TextView {
         
         if textView.text != text {
 //            checkTest(textView, context)
-            getReplacementText(textView, context)
+            if text.isEmpty {
+                textView.text = ""
+            } else {
+                getReplacementText(textView, context)
+            }
         }
     }
     
@@ -309,7 +314,7 @@ private extension TextView {
         
         print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
         print("상갑 logEvent \(#function) replacementText: \(Optional(replacementText))")
-        let range: NSRange = NSRange(location: 0, length: 0)
+        let range: NSRange = NSRange(location: 0, length: textView.text.count - (differenceIndex ?? .zero))
         let result: CheckTypeAlias = (range, replacementText)
         
         return result
@@ -539,7 +544,13 @@ private extension TextView {
         DispatchQueue.main.async {
             let reassembleText = self.reassembleTrimMode(result.replacementText)
             
-            print("상갑 logEvent \(#function) reassembleText: \(reassembleText)")
+            print("상갑 logEvent \(#function) reassembleText: \(Optional(reassembleText))")
+            
+            if reassembleText.isEmpty {
+                print("없으면 그냥 치워!")
+                self.text = textView.text
+                return
+            }
             
             if self.checkLimitLine(textView, result: result, context: context) {
                 print("checkLimitLine")
@@ -553,7 +564,8 @@ private extension TextView {
                 return
             }
             
-            textView.text = self.text
+            textView.text.append(contentsOf: reassembleText)
+            self.text = textView.text
         }
     }
     
