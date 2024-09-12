@@ -536,18 +536,30 @@ private extension TextView {
     func lastCondition(_ textView: UITextView, result: CheckTypeAlias, context: Context) {
         print("상갑 logEvent \(#function)")
         print("상갑 logEvent \(#function) result: \(result)")
-        let reassembleText = reassembleTrimMode(result.replacementText)
-        
-        print("상갑 logEvent \(#function) reassembleText: \(reassembleText)")
-        
-        if checkLimitLine(textView, result: result) {
-            self.text = textView.text
-            return
+        DispatchQueue.main.async {
+            let reassembleText = self.reassembleTrimMode(result.replacementText)
+            
+            print("상갑 logEvent \(#function) reassembleText: \(reassembleText)")
+            
+            if self.checkLimitLine(textView, result: result, context: context) {
+                print("checkLimitLine")
+                self.text = textView.text
+                return
+            }
+            
+            if self.checkLimitTextCount(textView, result: result, context: context) {
+                print("checkLimitTextCount")
+                self.text = textView.text
+                return
+            }
+            
+            textView.text = self.text
         }
     }
     
-    func checkLimitLine(_ textView: UITextView, result: CheckTypeAlias) -> Bool {
-        let newText = (textView.text as NSString).replacingCharacters(in: result.range, with: result.replacementText)
+    func checkLimitLine(_ textView: UITextView, result: CheckTypeAlias, context: Context) -> Bool {
+//        let newText = (textView.text as NSString).replacingCharacters(in: result.range, with: result.replacementText)
+        let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: result.range, replacementText: result.replacementText)
         
         let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
                                                   options: .usesLineFragmentOrigin,
@@ -557,6 +569,33 @@ private extension TextView {
         let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
         
         if lines > viewModel(\.styleState.limitLine) {
+            return true
+        }
+        
+        return false
+    }
+    
+    func checkLimitTextCount(_  textView: UITextView, result: CheckTypeAlias, context: Context) -> Bool {
+        let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: result.range, replacementText: result.replacementText)
+        
+        let trimNewText: String = reassembleTrimMode(newText)
+        let trimOriginText: String = reassembleTrimMode(textView.text)
+        
+        print("상갑 logEvent \(#function) trimNewText.count: \(trimNewText.count)")
+        print("상갑 logEvent \(#function) trimOriginText.count: \(trimOriginText.count)")
+        
+        if trimNewText.count >= viewModel(\.styleState.limitCount) {
+            print("짤라")
+            let prefixCount = max(0, viewModel(\.styleState.limitCount) - trimOriginText.count)
+            print("상갑 logEvent \(#function) prefixCount: \(prefixCount)")
+            let prefixText = result.replacementText.prefix(prefixCount)
+            print("상갑 logEvent \(#function) prefixText: \(prefixText)")
+            
+            if prefixCount > .zero {
+                textView.text.append(contentsOf: prefixText)
+                textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+            }
+            
             return true
         }
         
