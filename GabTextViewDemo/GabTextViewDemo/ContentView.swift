@@ -20,14 +20,14 @@ struct ContentView: View {
     @State private var textCount: Int = .zero
     
     private var randomSentence: [String] = [
-//        "\n 하이용", "이것은 랜덤 문장", "응", "아니 아니\n",
-//        "오늘은 목요일", "내일은 금요일", "모래는 토요일", "켄터키 프라이드 아저씨",
-//        "퇴근", "하   이", "안녕\n반갑다", " 반가워요 \n"
-        " 반가워요 \n"
+        "\n 하이용", "이것은 랜덤 문장", "응", "아니 아니\n",
+        "오늘은 목요일", "내일은 금요일", "모래는 토요일", "켄터키 프라이드 아저씨",
+        "퇴근", "하   이", "안녕\n반갑다", " 반가워요 \n"
+//        " 반가워요 \n"
     ]
     
     @State private var inputBreakMode: TextViewInputBreakMode = .continuousWhiteSpace
-    @State private var trimMode: TextViewTrimMode = .blankWithWhitespacesAndNewlines
+    @State private var trimMode: TextViewTrimMode = .whitespacesAndNewlines
     
     var body: some View {
         Text("현재 text count : \(textCount)")
