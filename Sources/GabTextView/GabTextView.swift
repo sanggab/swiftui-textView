@@ -68,7 +68,7 @@ public struct TextView: UIViewRepresentable {
         updateHeight(textView)
         updateTextCount(textView)
     }
-    // TODO: Coordinator 갱신 문제 해결하기
+    
     public func makeCoordinator() -> TextViewCoordinator {
         return TextViewCoordinator(parent: self, viewModel: viewModel)
     }
@@ -267,7 +267,8 @@ private extension TextView {
             if text.isEmpty {
                 textView.text = ""
             } else {
-                getReplacementText(textView, context)
+//                getReplacementText(textView, context)
+                testReset(textView, context)
             }
         }
     }
@@ -321,7 +322,8 @@ private extension TextView {
         
         return result
     }
-    
+    // TODO: 앞으로 들어올 text가 기존 textView.text에 새로 추가되는(append)면 상관이 없는데
+    // TODO: 하이에서 하 이 요 같이 그냥 바꿔버리는거면 문제가 발생. - 노트 필기
     func down(_ textView: UIViewType, _ context: Context) -> CheckTypeAlias {
         print("상갑 logEvent \(#function)")
         var differenceIndex: Int?
@@ -355,7 +357,7 @@ private extension TextView {
         print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
         print("상갑 logEvent \(#function) replacementText: \(Optional(replacementText))")
         
-        let range: NSRange = NSRange(location: differenceIndex ?? .zero, length: 0)
+        let range: NSRange = NSRange(location: differenceIndex ?? .zero, length: textView.text.count - (differenceIndex ?? .zero))
         
         let reassembleText = reassembleInputBreak(textView, replacementText: replacementText)
         
@@ -416,11 +418,11 @@ private extension TextView {
         print("상갑 logEvent \(#function)")
         print("상갑 logEvent \(#function) result: \(result)")
         DispatchQueue.main.async {
-            let reassembleTrimText = self.reassembleTrimMode(result.replacementText)
+//            let reassembleTrimText = self.reassembleTrimMode(result.replacementText)
             
-            print("상갑 logEvent \(#function) reassembleText: \(Optional(reassembleTrimText))")
+//            print("상갑 logEvent \(#function) reassembleText: \(Optional(reassembleTrimText))")
             
-            if reassembleTrimText.isEmpty {
+            if result.replacementText.isEmpty {
                 print("없으면 그냥 치워!")
                 self.text = textView.text
                 return
@@ -439,7 +441,7 @@ private extension TextView {
             }
             
             if let textRange = Range(result.range, in: textView.text) {
-                textView.text = textView.text.replacingCharacters(in: textRange, with: reassembleTrimText)
+                textView.text = textView.text.replacingCharacters(in: textRange, with: result.replacementText)
                 self.text = textView.text
             }
         }
@@ -487,6 +489,79 @@ private extension TextView {
         }
         
         return false
+    }
+    
+    func testReset(_ textView: UITextView, _ context: Context) {
+        var sameIndex: Int?
+        var differenceIndex: Int?
+        var maxCount: Int = max(textView.text.count, self.text.count)
+        
+        print("상갑 logEvent \(#function) maxCount: \(maxCount)")
+        print("상갑 logEvent \(#function) text: \(Optional(textView.text))")
+        print("상갑 logEvent \(#function) text: \(Optional(text))")
+        for i in 0..<maxCount {
+            let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
+            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
+            
+            var char1: Character?
+            var char2: Character?
+            
+            if let textViewIndex {
+                let limit = textView.text.distance(from: textView.text.startIndex, to: textViewIndex)
+                char1 = textView.text.count > limit ? textView.text[textViewIndex] : nil
+            }
+            
+            if let bindTextIndex {
+                let limit = text.distance(from: text.startIndex, to: bindTextIndex)
+                char2 = text.count > limit ? text[bindTextIndex] : nil
+            }
+            
+            print("상갑 logEvent \(#function) char1: \(char1)")
+            print("상갑 logEvent \(#function) char2: \(char2)")
+            
+//            if let char1, let char2 {
+//                if char1 == char2 {
+//                    sameIndex = i
+//                } else {
+//                    if differenceIndex == nil {
+//                        differenceIndex = i
+//                    }
+//                }
+//            }
+            
+            if char1 == char2 {
+                if let char1, let char2 {
+                    sameIndex = i
+                }
+            } else {
+                if differenceIndex == nil {
+                    differenceIndex = i
+                }
+            }
+        }
+        
+        print("상갑 logEvent \(#function) sameIndex: \(sameIndex)")
+        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
+        let range = NSRange(location: differenceIndex ?? .zero, length: textView.text.count - (differenceIndex ?? .zero))
+        
+        var replacementText: String?
+        
+        if let differenceIndex {
+            replacementText = String(text.suffix(text.count - differenceIndex))
+        }
+        
+        print("상갑 logEvent \(#function) replacementText: \(replacementText)")
+        print("상갑 logEvent \(#function) range: \(range)")
+        
+        if let replacementText {
+            if let textRange = Range(range, in: textView.text) {
+                textView.text = textView.text.replacingCharacters(in: textRange, with: replacementText)
+            }
+        }
+    }
+    
+    func textShowChange(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) {
+        
     }
 }
 
