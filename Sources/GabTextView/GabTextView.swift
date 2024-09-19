@@ -255,240 +255,15 @@ private extension TextView {
     // TODO: length는 delete시에 지워지는 값들을 의미
     func checkDifferent(_ textView: UIViewType, _ context: Context) {
         print("상갑 logEvent \(#function)")
-//        if textView.text != text {
-//            if textView.text.count == text.count {
-//                sameIndex(textView)
-//            } else {
-//                textView.text.count > text.count ? textViewOverIndex(textView, context) : bindingTextOverIndex(textView, context)
-//            }
-//        }
-        
-        if textView.text != text {
-            if text.isEmpty {
-                textView.text = ""
-            } else {
-//                getReplacementText(textView, context)
-                testReset(textView, context)
-            }
-        }
-    }
-    
-    func getReplacementText(_ textView: UIViewType, _ context: Context) {
-        let result: CheckTypeAlias = textView.text.count > text.count ? over(textView, context) : down(textView, context)
-        
-        lastCondition(textView, result: result, context: context)
-    }
-    // TODO: bind text는 최종적으로 append가 아닌 교체. 즉, down이랑 다름 그래서 textView.text = text 이런식으로 적용해야하는 느낌
-    func over(_ textView: UIViewType, _ context: Context) -> CheckTypeAlias {
-        var differenceIndex: Int?
-        var replacementText: String = ""
-        
-        for i in 0..<textView.text.count {
-            let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
-            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
-            
-            var char1: Character?
-            var char2: Character?
-            
-            if let textViewIndex {
-                char1 = textView.text[textViewIndex]
-            }
-            
-            if let bindTextIndex {
-                let limit = text.distance(from: text.startIndex, to: bindTextIndex)
-                char2 = text.count > limit ? text[bindTextIndex] : nil
-            }
-            
-//            print("상갑 logEvent \(#function) char1: \(char1)")
-//            print("상갑 logEvent \(#function) char2: \(char2)")
-            
-            if char1 != char2, let char2 {
-                replacementText.append(String(char2))
-                if differenceIndex == nil {
-                    differenceIndex = i
-                }
-            }
-        }
-        
-        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
-        print("상갑 logEvent \(#function) replacementText: \(Optional(replacementText))")
-        
-        
-        let reassembleText = reassembleInputBreak(textView, replacementText: self.text)
-        
-        let range: NSRange = NSRange(location: 0, length: textView.text.count)
-        
-        let result: CheckTypeAlias = (range, reassembleText)
-        
-        return result
-    }
-    // TODO: 앞으로 들어올 text가 기존 textView.text에 새로 추가되는(append)면 상관이 없는데
-    // TODO: 하이에서 하 이 요 같이 그냥 바꿔버리는거면 문제가 발생. - 노트 필기
-    func down(_ textView: UIViewType, _ context: Context) -> CheckTypeAlias {
-        print("상갑 logEvent \(#function)")
-        var differenceIndex: Int?
-        var replacementText: String = ""
-        
-        for i in 0..<text.count {
-            let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
-            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
-            
-            var char1: Character?
-            var char2: Character?
-            
-            if let textViewIndex {
-                let limit = textView.text.distance(from: textView.text.startIndex, to: textViewIndex)
-                char1 = textView.text.count > limit ? textView.text[textViewIndex] : nil
-            }
-            
-            if let bindTextIndex {
-                char2 = text[bindTextIndex]
-            }
-            
-            if char1 != char2, let char2 {
-                replacementText.append(String(char2))
-                
-                if differenceIndex == nil {
-                    differenceIndex = i
-                }
-            }
-        }
-        
-        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
-        print("상갑 logEvent \(#function) replacementText: \(Optional(replacementText))")
-        
-        let range: NSRange = NSRange(location: differenceIndex ?? .zero, length: textView.text.count - (differenceIndex ?? .zero))
-        
-        let reassembleText = reassembleInputBreak(textView, replacementText: replacementText)
-        
-        let result = CheckTypeAlias(range, reassembleText)
-        
-        return result
-    }
-}
-
-private extension TextView {
-    // TODO: trimMode랑 inputBreakMode 적용시키기
-    // TODO: 여기서 생각해야될게 여기는 updateUIView에서 textView.text하고 binding text가 다를 경우에만 들어옴.
-    // TODO: 결국엔 외부에서 binding text를 수정한 경우에 들어온다는 건데
-    // TODO: 외부에서 수정했으니 결국엔 키보드가 올라간 경우가 있을 거고, 아닌 경우가 있을 거임
-    // TODO: 그러면 결국엔 모든 케이스를 대응하는 최고의 방법은 현재 textView.text하고 binding text하고 다른 점을 뽑아내서
-    // TODO: 그게 inputBreakMode에 걸리는지 비교 하고
-    // TODO: trimMode로 짤라내는것
-    func replacementTextView(_ textView: UITextView, range: NSRange, replacementText text: String, context: Context) {
-        print("상갑 logEvent \(#function) range: \(range)")
-        
         DispatchQueue.main.async {
-            if context.coordinator.checkInputBreakMode(textView, replacementText: text) {
-                print("아아 이것은 찬성")
-            } else {
-                print("아아 이거는 거절")
-            }
-            
-            if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
-                self.text = textView.text
-                
-                return
-            }
-            
-            if context.coordinator.limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
-                if self.text != textView.text {
-                    self.text = textView.text
+            if textView.text != self.text {
+                if self.text.isEmpty {
+                    textView.text = ""
+                } else {
+                    self.testReset(textView, context)
                 }
-                
-                return
-            }
-            
-            if context.coordinator.limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
-                self.text = textView.text
-                
-                return
-            }
-            // TODO: textRange 오류 수정해라 trim4했다가 trim5 하니까 에러 뜸;
-            if let textRange = Range(range, in: textView.text) {
-                textView.text = textView.text.replacingCharacters(in: textRange, with: text)
             }
         }
-    }
-}
-
-private extension TextView {
-    
-    func lastCondition(_ textView: UITextView, result: CheckTypeAlias, context: Context) {
-        print("상갑 logEvent \(#function)")
-        print("상갑 logEvent \(#function) result: \(result)")
-        DispatchQueue.main.async {
-//            let reassembleTrimText = self.reassembleTrimMode(result.replacementText)
-            
-//            print("상갑 logEvent \(#function) reassembleText: \(Optional(reassembleTrimText))")
-            
-            if result.replacementText.isEmpty {
-                print("없으면 그냥 치워!")
-                self.text = textView.text
-                return
-            }
-            
-            if self.checkLimitLine(textView, result: result, context: context) {
-                print("checkLimitLine")
-                self.text = textView.text
-                
-            }
-            
-            if self.checkLimitTextCount(textView, result: result, context: context) {
-                print("checkLimitTextCount")
-                self.text = textView.text
-                return
-            }
-            
-            if let textRange = Range(result.range, in: textView.text) {
-                textView.text = textView.text.replacingCharacters(in: textRange, with: result.replacementText)
-                self.text = textView.text
-            }
-        }
-    }
-    
-    func checkLimitLine(_ textView: UITextView, result: CheckTypeAlias, context: Context) -> Bool {
-        let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: result.range, replacementText: result.replacementText)
-        
-        let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
-                                                  options: .usesLineFragmentOrigin,
-                                                  attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
-                                                  context: nil).height
-        
-        let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
-        
-        if lines > viewModel(\.styleState.limitLine) {
-            return true
-        }
-        
-        return false
-    }
-    
-    func checkLimitTextCount(_  textView: UITextView, result: CheckTypeAlias, context: Context) -> Bool {
-        let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: result.range, replacementText: result.replacementText)
-        
-        let trimNewText: String = reassembleTrimMode(newText)
-        let trimOriginText: String = reassembleTrimMode(textView.text)
-        
-        print("상갑 logEvent \(#function) trimNewText.count: \(trimNewText.count)")
-        print("상갑 logEvent \(#function) trimOriginText.count: \(trimOriginText.count)")
-        
-        if trimNewText.count >= viewModel(\.styleState.limitCount) {
-            print("짤라")
-            let prefixCount = max(0, viewModel(\.styleState.limitCount) - trimOriginText.count)
-            print("상갑 logEvent \(#function) prefixCount: \(prefixCount)")
-            let prefixText = result.replacementText.prefix(prefixCount)
-            print("상갑 logEvent \(#function) prefixText: \(prefixText)")
-            
-            if prefixCount > .zero {
-                textView.text.append(contentsOf: prefixText)
-                textView.selectedRange = NSRange(location: textView.text.count, length: 0)
-            }
-            
-            return true
-        }
-        
-        return false
     }
     
     func testReset(_ textView: UITextView, _ context: Context) {
@@ -497,7 +272,7 @@ private extension TextView {
         var maxCount: Int = max(textView.text.count, self.text.count)
         
         print("상갑 logEvent \(#function) maxCount: \(maxCount)")
-        print("상갑 logEvent \(#function) text: \(Optional(textView.text))")
+        print("상갑 logEvent \(#function) textView.text: \(Optional(textView.text))")
         print("상갑 logEvent \(#function) text: \(Optional(text))")
         for i in 0..<maxCount {
             let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
@@ -516,18 +291,8 @@ private extension TextView {
                 char2 = text.count > limit ? text[bindTextIndex] : nil
             }
             
-            print("상갑 logEvent \(#function) char1: \(char1)")
-            print("상갑 logEvent \(#function) char2: \(char2)")
-            
-//            if let char1, let char2 {
-//                if char1 == char2 {
-//                    sameIndex = i
-//                } else {
-//                    if differenceIndex == nil {
-//                        differenceIndex = i
-//                    }
-//                }
-//            }
+//            print("상갑 logEvent \(#function) char1: \(char1)")
+//            print("상갑 logEvent \(#function) char2: \(char2)")
             
             if char1 == char2 {
                 if let char1, let char2 {
@@ -544,7 +309,7 @@ private extension TextView {
         print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
         let range = NSRange(location: differenceIndex ?? .zero, length: textView.text.count - (differenceIndex ?? .zero))
         
-        var replacementText: String?
+        var replacementText: String = ""
         
         if let differenceIndex {
             replacementText = String(text.suffix(text.count - differenceIndex))
@@ -553,16 +318,275 @@ private extension TextView {
         print("상갑 logEvent \(#function) replacementText: \(replacementText)")
         print("상갑 logEvent \(#function) range: \(range)")
         
-        if let replacementText {
-            if let textRange = Range(range, in: textView.text) {
-                textView.text = textView.text.replacingCharacters(in: textRange, with: replacementText)
-            }
-        }
+        replacementCondition(textView, shouldChangeTextIn: range, replacementText: replacementText, context: context)
     }
     
-    func textShowChange(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) {
+    func replacementCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) {
+        print("상갑 logEvent \(#function)")
+        print("상갑 logEvent \(#function) replacementText: \(Optional(text))")
+        let reassembleText = reassembleInputBreak(textView, replacementText: text)
+        print("상갑 logEvent \(#function) reassembleText: \(Optional(reassembleText))")
+        if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+            print("limitLineCondition")
+            self.text = textView.text
+            return
+        }
         
+        if checkLimitCountCondition(textView, shouldChangeTextIn: range, replacementText: text, context: context) {
+            print("checkLimitCountCondition")
+            if textView.text != self.text {
+                self.text = textView.text
+            }
+            return
+        }
+        
+        textView.text = self.text
     }
+    
+    func checkLimitCountCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) -> Bool {
+        let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: range, replacementText: text)
+        
+        let changedText = reassembleTrimMode(newText)
+        let basicText = reassembleTrimMode(textView.text)
+        
+        print("상갑 logEvent \(#function) changedText: \(Optional(changedText))")
+        print("상갑 logEvent \(#function) basicText: \(Optional(basicText))")
+        
+        if changedText.count > viewModel(\.styleState.limitCount) {
+            let prefixCount = max(0, viewModel(\.styleState.limitCount) - basicText.count)
+            print("상갑 logEvent \(#function) prefixCount: \(prefixCount)")
+            let prefixText = text.prefix(prefixCount)
+            print("상갑 logEvent \(#function) prefixText: \(prefixText)")
+            
+            if !prefixText.isEmpty {
+                textView.text.append(contentsOf: prefixText)
+                self.text = textView.text
+                textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+            }
+            
+            return true
+        }
+        
+        return false
+    }
+    
+//    func getReplacementText(_ textView: UIViewType, _ context: Context) {
+//        let result: CheckTypeAlias = textView.text.count > text.count ? over(textView, context) : down(textView, context)
+//        
+//        lastCondition(textView, result: result, context: context)
+//    }
+//    // TODO: bind text는 최종적으로 append가 아닌 교체. 즉, down이랑 다름 그래서 textView.text = text 이런식으로 적용해야하는 느낌
+//    func over(_ textView: UIViewType, _ context: Context) -> CheckTypeAlias {
+//        var differenceIndex: Int?
+//        var replacementText: String = ""
+//        
+//        for i in 0..<textView.text.count {
+//            let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
+//            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
+//            
+//            var char1: Character?
+//            var char2: Character?
+//            
+//            if let textViewIndex {
+//                char1 = textView.text[textViewIndex]
+//            }
+//            
+//            if let bindTextIndex {
+//                let limit = text.distance(from: text.startIndex, to: bindTextIndex)
+//                char2 = text.count > limit ? text[bindTextIndex] : nil
+//            }
+//            
+////            print("상갑 logEvent \(#function) char1: \(char1)")
+////            print("상갑 logEvent \(#function) char2: \(char2)")
+//            
+//            if char1 != char2, let char2 {
+//                replacementText.append(String(char2))
+//                if differenceIndex == nil {
+//                    differenceIndex = i
+//                }
+//            }
+//        }
+//        
+//        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
+//        print("상갑 logEvent \(#function) replacementText: \(Optional(replacementText))")
+//        
+//        
+//        let reassembleText = reassembleInputBreak(textView, replacementText: self.text)
+//        
+//        let range: NSRange = NSRange(location: 0, length: textView.text.count)
+//        
+//        let result: CheckTypeAlias = (range, reassembleText)
+//        
+//        return result
+//    }
+//    // TODO: 앞으로 들어올 text가 기존 textView.text에 새로 추가되는(append)면 상관이 없는데
+//    // TODO: 하이에서 하 이 요 같이 그냥 바꿔버리는거면 문제가 발생. - 노트 필기
+//    func down(_ textView: UIViewType, _ context: Context) -> CheckTypeAlias {
+//        print("상갑 logEvent \(#function)")
+//        var differenceIndex: Int?
+//        var replacementText: String = ""
+//        
+//        for i in 0..<text.count {
+//            let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
+//            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
+//            
+//            var char1: Character?
+//            var char2: Character?
+//            
+//            if let textViewIndex {
+//                let limit = textView.text.distance(from: textView.text.startIndex, to: textViewIndex)
+//                char1 = textView.text.count > limit ? textView.text[textViewIndex] : nil
+//            }
+//            
+//            if let bindTextIndex {
+//                char2 = text[bindTextIndex]
+//            }
+//            
+//            if char1 != char2, let char2 {
+//                replacementText.append(String(char2))
+//                
+//                if differenceIndex == nil {
+//                    differenceIndex = i
+//                }
+//            }
+//        }
+//        
+//        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
+//        print("상갑 logEvent \(#function) replacementText: \(Optional(replacementText))")
+//        
+//        let range: NSRange = NSRange(location: differenceIndex ?? .zero, length: textView.text.count - (differenceIndex ?? .zero))
+//        
+//        let reassembleText = reassembleInputBreak(textView, replacementText: replacementText)
+//        
+//        let result = CheckTypeAlias(range, reassembleText)
+//        
+//        return result
+//    }
+}
+
+private extension TextView {
+    // TODO: trimMode랑 inputBreakMode 적용시키기
+    // TODO: 여기서 생각해야될게 여기는 updateUIView에서 textView.text하고 binding text가 다를 경우에만 들어옴.
+    // TODO: 결국엔 외부에서 binding text를 수정한 경우에 들어온다는 건데
+    // TODO: 외부에서 수정했으니 결국엔 키보드가 올라간 경우가 있을 거고, 아닌 경우가 있을 거임
+    // TODO: 그러면 결국엔 모든 케이스를 대응하는 최고의 방법은 현재 textView.text하고 binding text하고 다른 점을 뽑아내서
+    // TODO: 그게 inputBreakMode에 걸리는지 비교 하고
+    // TODO: trimMode로 짤라내는것
+//    func replacementTextView(_ textView: UITextView, range: NSRange, replacementText text: String, context: Context) {
+//        print("상갑 logEvent \(#function) range: \(range)")
+//        
+//        DispatchQueue.main.async {
+//            if context.coordinator.checkInputBreakMode(textView, replacementText: text) {
+//                print("아아 이것은 찬성")
+//            } else {
+//                print("아아 이거는 거절")
+//            }
+//            
+//            if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+//                self.text = textView.text
+//                
+//                return
+//            }
+//            
+//            if context.coordinator.limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+//                if self.text != textView.text {
+//                    self.text = textView.text
+//                }
+//                
+//                return
+//            }
+//            
+//            if context.coordinator.limitNewLineAndSpaceCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+//                self.text = textView.text
+//                
+//                return
+//            }
+//            // TODO: textRange 오류 수정해라 trim4했다가 trim5 하니까 에러 뜸;
+//            if let textRange = Range(range, in: textView.text) {
+//                textView.text = textView.text.replacingCharacters(in: textRange, with: text)
+//            }
+//        }
+//    }
+}
+
+private extension TextView {
+//    
+//    func lastCondition(_ textView: UITextView, result: CheckTypeAlias, context: Context) {
+//        print("상갑 logEvent \(#function)")
+//        print("상갑 logEvent \(#function) result: \(result)")
+//        DispatchQueue.main.async {
+////            let reassembleTrimText = self.reassembleTrimMode(result.replacementText)
+//            
+////            print("상갑 logEvent \(#function) reassembleText: \(Optional(reassembleTrimText))")
+//            
+//            if result.replacementText.isEmpty {
+//                print("없으면 그냥 치워!")
+//                self.text = textView.text
+//                return
+//            }
+//            
+//            if self.checkLimitLine(textView, result: result, context: context) {
+//                print("checkLimitLine")
+//                self.text = textView.text
+//                
+//            }
+//            
+//            if self.checkLimitTextCount(textView, result: result, context: context) {
+//                print("checkLimitTextCount")
+//                self.text = textView.text
+//                return
+//            }
+//            
+//            if let textRange = Range(result.range, in: textView.text) {
+//                textView.text = textView.text.replacingCharacters(in: textRange, with: result.replacementText)
+//                self.text = textView.text
+//            }
+//        }
+//    }
+//    
+//    func checkLimitLine(_ textView: UITextView, result: CheckTypeAlias, context: Context) -> Bool {
+//        let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: result.range, replacementText: result.replacementText)
+//        
+//        let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
+//                                                  options: .usesLineFragmentOrigin,
+//                                                  attributes: [NSAttributedString.Key.font: textView.font ?? UIFont.boldSystemFont(ofSize: 15)],
+//                                                  context: nil).height
+//        
+//        let lines = Int(textHeight / (textView.font?.lineHeight ?? 0))
+//        
+//        if lines > viewModel(\.styleState.limitLine) {
+//            return true
+//        }
+//        
+//        return false
+//    }
+//    
+//    func checkLimitTextCount(_  textView: UITextView, result: CheckTypeAlias, context: Context) -> Bool {
+//        let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: result.range, replacementText: result.replacementText)
+//        
+//        let trimNewText: String = reassembleTrimMode(newText)
+//        let trimOriginText: String = reassembleTrimMode(textView.text)
+//        
+//        print("상갑 logEvent \(#function) trimNewText.count: \(trimNewText.count)")
+//        print("상갑 logEvent \(#function) trimOriginText.count: \(trimOriginText.count)")
+//        
+//        if trimNewText.count >= viewModel(\.styleState.limitCount) {
+//            print("짤라")
+//            let prefixCount = max(0, viewModel(\.styleState.limitCount) - trimOriginText.count)
+//            print("상갑 logEvent \(#function) prefixCount: \(prefixCount)")
+//            let prefixText = result.replacementText.prefix(prefixCount)
+//            print("상갑 logEvent \(#function) prefixText: \(prefixText)")
+//            
+//            if prefixCount > .zero {
+//                textView.text.append(contentsOf: prefixText)
+//                textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+//            }
+//            
+//            return true
+//        }
+//        
+//        return false
+//    }
 }
 
 //
