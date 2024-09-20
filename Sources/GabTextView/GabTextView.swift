@@ -340,7 +340,7 @@ private extension TextView {
         } else {
             // 기존 textViewl.text 뒤에 공백이 있는데 또 replacementText가 앞에 공백으로 시작하면 이상해져버림.. 그럴 땐 막아버리자
             if context.coordinator.checkInputBreakMode(textView, replacementText: text) {
-                let reassembleText = reassembleInputBreak(textView, replacementText: text)
+                let reassembleText = reassembleInputBreak(text)
                 print("상갑 logEvent \(#function) reassembleText: \(Optional(reassembleText))")
                 if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                     print("limitLineCondition")
@@ -400,6 +400,16 @@ extension TextView {
     
     func testLocationZero(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) {
         let reassembleText = reassembleInputBreak(text)
+        
+        if let textRange = Range(range, in: textView.text) {
+            textView.text = reassembleTrimMode(textView.text.replacingCharacters(in: textRange, with: reassembleText))
+            
+            if self.text != textView.text {
+                self.text = textView.text
+            }
+        } else {
+            textView.text = self.text
+        }
     }
     
     func checkTest(_ originalText: String, replacementText: String) -> String {

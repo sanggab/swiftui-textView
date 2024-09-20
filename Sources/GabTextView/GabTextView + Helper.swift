@@ -64,6 +64,29 @@ extension TextView {
 extension TextView {
     
     func checkLineBreak(replacementText: String) -> String {
+        var limitIndex: Int?
+        
+        for i in 0..<replacementText.count {
+            let index: String.Index? = replacementText.index(replacementText.startIndex, offsetBy: i, limitedBy: replacementText.endIndex)
+            
+            var char1: Character?
+            
+            if let index {
+                let limit = replacementText.distance(from: replacementText.startIndex, to: index)
+                char1 = replacementText.count > limit ? replacementText[index] : nil
+            }
+            
+            if isCharNextLine(char1) {
+                limitIndex = i
+                break
+            }
+        }
+        
+        if let limitIndex {
+            let prefixText = replacementText.prefix(limitIndex)
+            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
+            return String(prefixText)
+        }
         
         return replacementText
     }
@@ -100,6 +123,29 @@ extension TextView {
 extension TextView {
     
     func checkWhiteSpace(replacementText: String) -> String {
+        var limitIndex: Int?
+        
+        for i in 0..<replacementText.count {
+            let index: String.Index? = replacementText.index(replacementText.startIndex, offsetBy: i, limitedBy: replacementText.endIndex)
+            
+            var char1: Character?
+            
+            if let index {
+                let limit = replacementText.distance(from: replacementText.startIndex, to: index)
+                char1 = replacementText.count > limit ? replacementText[index] : nil
+            }
+            
+            if isCharWhiteSpace(char1) {
+                limitIndex = i
+                break
+            }
+        }
+        
+        if let limitIndex {
+            let prefixText = replacementText.prefix(limitIndex)
+            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
+            return String(prefixText)
+        }
         
         return replacementText
     }
@@ -136,6 +182,29 @@ extension TextView {
 extension TextView {
     
     func checkLineWithWhiteSpace(replacementText: String) -> String {
+        var limitIndex: Int?
+        
+        for i in 0..<replacementText.count {
+            let index: String.Index? = replacementText.index(replacementText.startIndex, offsetBy: i, limitedBy: replacementText.endIndex)
+            
+            var char1: Character?
+            
+            if let index {
+                let limit = replacementText.distance(from: replacementText.startIndex, to: index)
+                char1 = replacementText.count > limit ? replacementText[index] : nil
+            }
+            
+            if isCharWhiteSpace(char1) || isCharNextLine(char1) {
+                limitIndex = i
+                break
+            }
+        }
+        
+        if let limitIndex {
+            let prefixText = replacementText.prefix(limitIndex)
+            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
+            return String(prefixText)
+        }
         
         return replacementText
     }
