@@ -394,16 +394,16 @@ extension TextViewCoordinator {
         return false
     }
     
-    func limitNewLineAndSpaceCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == " " || text == "\n" {
-            let trimText = makeTrimText(textView.text)
-            if trimText.count >= viewModel(\.styleState.limitCount) {
-                return true
-            }
-        }
-        
-        return false
-    }
+//    func limitNewLineAndSpaceCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        if text == " " || text == "\n" {
+//            let trimText = makeTrimText(textView.text)
+//            if trimText.count >= viewModel(\.styleState.limitCount) {
+//                return true
+//            }
+//        }
+//        
+//        return false
+//    }
 }
 
 extension TextViewCoordinator {
