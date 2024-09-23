@@ -360,7 +360,8 @@ private extension TextView {
                 }
                 
                 if let textRange = Range(range, in: textView.text) {
-                    let newText: String = viewModel(\.reassembleMode) == .trim ? self.reassembleTrimMode(textView.text.replacingCharacters(in: textRange, with: reassembleText)) : reassembleText
+                    let replacementText: String = textView.text.replacingCharacters(in: textRange, with: reassembleText)
+                    let newText: String = viewModel(\.reassembleMode) == .trim ? self.reassembleTrimMode(replacementText) : replacementText
                     textView.text = newText
                     
                     if self.text != textView.text {

@@ -28,6 +28,7 @@ struct ContentView: View {
     
     @State private var inputBreakMode: TextViewInputBreakMode = .continuousWhiteSpace
     @State private var trimMode: TextViewTrimMode = .blankWithWhitespacesAndNewlines
+    @State private var reassembleMode: ReassembleMode = .none
     
     var body: some View {
         Text("현재 text count : \(textCount)")
@@ -198,6 +199,52 @@ struct ContentView: View {
                     }
                     .accessibilityIdentifier("공백 추가")
             }
+            
+            HStack {
+                Rectangle()
+                    .fill(.blue.opacity(0.5))
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("none")
+                    }
+                    .onTapGesture {
+                        reassembleMode = .none
+                    }
+                    .accessibilityIdentifier("reassembleMode none")
+                
+                Rectangle()
+                    .fill(.pink.opacity(0.5))
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("inputbreak")
+                    }
+                    .onTapGesture {
+                        reassembleMode = .inputBreak
+                    }
+                    .accessibilityIdentifier("reassembleMode inputBreak")
+                
+                Rectangle()
+                    .fill(.gray.opacity(0.5))
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("trim")
+                    }
+                    .onTapGesture {
+                        reassembleMode = .trim
+                    }
+                    .accessibilityIdentifier("reassembleMode trim")
+                
+                Rectangle()
+                    .fill(.orange.opacity(0.5))
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text("all")
+                    }
+                    .onTapGesture {
+                        reassembleMode = .all
+                    }
+                    .accessibilityIdentifier("reassembleMode all")
+            }
         }
         
         Text("키보드 내려")
@@ -233,6 +280,7 @@ struct ContentView: View {
             .receiveTextCount { count in
                 textCount = count
             }
+            .reassembleMode(reassembleMode)
             .overlayPlaceHolder(.topLeading) {
                 Text("Input Message")
                     .foregroundStyle(.black)
