@@ -228,10 +228,10 @@ private extension TextView {
         textView.font = noneFocusModel.font
         textView.textColor = UIColor(noneFocusModel.color)
         
-        if text.count > styleState.limitCount {
+        if self.text.count > styleState.limitCount {
             let prefixText = textView.text.prefix(styleState.limitCount)
             textView.text = String(prefixText)
-            text = String(prefixText)
+            self.text = String(prefixText)
         }
     }
 }
@@ -255,12 +255,14 @@ private extension TextView {
     // TODO: length는 delete시에 지워지는 값들을 의미
     func checkDifferent(_ textView: UIViewType, _ context: Context) {
         print("상갑 logEvent \(#function)")
-        DispatchQueue.main.async {
-            if textView.text != self.text {
-                if self.text.isEmpty {
-                    textView.text = ""
-                } else {
-                    self.testReset(textView, context)
+        if viewModel(\.reassembleMode) != .none {
+            DispatchQueue.main.async {
+                if textView.text != self.text {
+                    if self.text.isEmpty {
+                        textView.text = ""
+                    } else {
+                        self.testReset(textView, context)
+                    }
                 }
             }
         }
@@ -275,7 +277,7 @@ private extension TextView {
         print("상갑 logEvent \(#function) text: \(Optional(text))")
         for i in 0..<maxCount {
             let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
-            let bindTextIndex: String.Index? = text.index(text.startIndex, offsetBy: i, limitedBy: text.endIndex)
+            let bindTextIndex: String.Index? = self.text.index(self.text.startIndex, offsetBy: i, limitedBy: text.endIndex)
             
             var char1: Character?
             var char2: Character?
@@ -286,8 +288,8 @@ private extension TextView {
             }
             
             if let bindTextIndex {
-                let limit = text.distance(from: text.startIndex, to: bindTextIndex)
-                char2 = text.count > limit ? text[bindTextIndex] : nil
+                let limit = self.text.distance(from: self.text.startIndex, to: bindTextIndex)
+                char2 = self.text.count > limit ? self.text[bindTextIndex] : nil
             }
             
 //            if char1 == char2 {
@@ -313,13 +315,13 @@ private extension TextView {
         var replacementText: String = ""
         
         if let differenceIndex {
-            replacementText = String(text.suffix(text.count - differenceIndex))
+            replacementText = String(self.text.suffix(self.text.count - differenceIndex))
         }
         
         print("상갑 logEvent \(#function) replacementText: \(replacementText)")
         print("상갑 logEvent \(#function) range: \(range)")
         
-        replacementCondition(textView, shouldChangeTextIn: range, replacementText: replacementText, context: context)
+        self.replacementCondition(textView, shouldChangeTextIn: range, replacementText: replacementText, context: context)
     }
     
     func replacementCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) {
@@ -329,7 +331,7 @@ private extension TextView {
         
         if range.location == .zero {
             print("처음부터 바꾸는거니까 trim만 적용시켜도 될 듯")
-            testLocationZero(textView, shouldChangeTextIn: range, replacementText: text, context: context)
+            self.testLocationZero(textView, shouldChangeTextIn: range, replacementText: text, context: context)
 //            if let textRange = Range(range, in: textView.text) {
 //                // TODO: trim추가
 //                textView.text = textView.text.replacingCharacters(in: textRange, with: text)
@@ -340,7 +342,8 @@ private extension TextView {
         } else {
             // 기존 textViewl.text 뒤에 공백이 있는데 또 replacementText가 앞에 공백으로 시작하면 이상해져버림.. 그럴 땐 막아버리자
             if context.coordinator.checkInputBreakMode(textView, replacementText: text) {
-                let reassembleText = reassembleInputBreak(text)
+                let reassembleText = viewModel(\.reassembleMode) != .trim ? self.reassembleInputBreak(text) : text
+//                let reassembleText = self.reassembleInputBreak(text)
                 print("상갑 logEvent \(#function) reassembleText: \(Optional(reassembleText))")
                 if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                     print("limitLineCondition")
@@ -348,7 +351,7 @@ private extension TextView {
                     return
                 }
                 
-                if checkLimitCountCondition(textView, shouldChangeTextIn: range, replacementText: text, context: context) {
+                if self.checkLimitCountCondition(textView, shouldChangeTextIn: range, replacementText: text, context: context) {
                     print("checkLimitCountCondition")
                     if self.text != textView.text {
                         self.text = textView.text
@@ -357,7 +360,8 @@ private extension TextView {
                 }
                 
                 if let textRange = Range(range, in: textView.text) {
-                    textView.text = textView.text.replacingCharacters(in: textRange, with: reassembleText)
+                    let newText: String = viewModel(\.reassembleMode) == .trim ? self.reassembleTrimMode(textView.text.replacingCharacters(in: textRange, with: reassembleText)) : reassembleText
+                    textView.text = newText
                     
                     if self.text != textView.text {
                         self.text = textView.text
@@ -372,8 +376,8 @@ private extension TextView {
     func checkLimitCountCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) -> Bool {
         let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: range, replacementText: text)
         
-        let changedText = reassembleTrimMode(newText)
-        let basicText = reassembleTrimMode(textView.text)
+        let changedText = self.reassembleTrimMode(newText)
+        let basicText = self.reassembleTrimMode(textView.text)
         
         print("상갑 logEvent \(#function) changedText: \(Optional(changedText))")
         print("상갑 logEvent \(#function) basicText: \(Optional(basicText))")
@@ -399,20 +403,22 @@ private extension TextView {
 extension TextView {
     
     func testLocationZero(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) {
-        let reassembleText = reassembleInputBreak(text)
+        let reassembleText = viewModel(\.reassembleMode) != .trim ? self.reassembleInputBreak(text) : text
         
         if let textRange = Range(range, in: textView.text) {
-            textView.text = reassembleTrimMode(textView.text.replacingCharacters(in: textRange, with: reassembleText))
+            let newText: String = viewModel(\.reassembleMode) == .trim ? self.reassembleTrimMode(textView.text.replacingCharacters(in: textRange, with: reassembleText)) : reassembleText
+            textView.text = newText
             
             if self.text != textView.text {
                 self.text = textView.text
             }
         } else {
-            textView.text = self.text
+            let newText: String = viewModel(\.reassembleMode) == .trim ? self.reassembleTrimMode(self.text) : self.text
+            textView.text = newText
+            
+            if self.text != textView.text {
+                self.text = textView.text
+            }
         }
-    }
-    
-    func checkTest(_ originalText: String, replacementText: String) -> String {
-        return ""
     }
 }

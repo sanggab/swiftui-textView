@@ -48,6 +48,14 @@ public extension TextView {
         view.viewModel.action(.updateSizeMode(mode))
         return view
     }
+    /// TextView에서 입력이 아닌 외부에서 text를 수정할 경우에 textView.text를 적용시킬지 말지 정하는 Modifier
+    ///
+    /// default값은 none
+    func reassembleMode(_ mode: ReassembleMode = .none) -> TextView {
+        let view: TextView = self
+        view.viewModel.action(.updateReassembleMode(mode))
+        return view
+    }
     /// TextView의 height을 던져주는 Modifier
     ///
     /// 이 Modifier는 ``sizeMode(_:)``의 ``TextViewSizeMode``에서 dynamic일 때 작동합니다.
