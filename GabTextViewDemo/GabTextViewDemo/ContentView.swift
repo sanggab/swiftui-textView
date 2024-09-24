@@ -28,7 +28,7 @@ struct ContentView: View {
     
     @State private var inputBreakMode: TextViewInputBreakMode = .continuousWhiteSpace
     @State private var trimMode: TextViewTrimMode = .blankWithWhitespacesAndNewlines
-    @State private var reassembleMode: ReassembleMode = .none
+    @State private var reassembleMode: TextViewReassembleMode = .none
     
     var body: some View {
         Text("현재 text count : \(textCount)")

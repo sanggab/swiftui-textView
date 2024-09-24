@@ -10,7 +10,6 @@ import SwiftUI
 extension TextView {
     /// Range의 Location이 zero일 경우에만 사용
     func reassembleInputBreak(_ replacementText: String) -> String {
-        print("상갑 logEvent \(#function) : \(viewModel(\.styleState.inputBreakMode))")
         switch viewModel(\.styleState.inputBreakMode) {
         case .none:
             return replacementText
@@ -28,7 +27,6 @@ extension TextView {
     }
     
     func reassembleInputBreak(_ textView: UITextView, replacementText: String) -> String {
-        print("상갑 logEvent \(#function) : \(viewModel(\.styleState.inputBreakMode))")
         switch viewModel(\.styleState.inputBreakMode) {
         case .none:
             return replacementText
@@ -84,7 +82,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         
@@ -112,7 +109,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         
@@ -143,7 +139,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         
@@ -171,7 +166,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         
@@ -202,7 +196,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         
@@ -230,7 +223,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         
@@ -254,9 +246,7 @@ extension TextView {
                 char1 = replacementText.count > limit ? replacementText[charIndex] : nil
             }
             
-            print("상갑 logEvent \(#function) char1: \(char1)")
             if isCharsWhiteSpace(lastKeyWord, char1) {
-                print("연속공백")
                 limitIndex = i
                 break
             } else {
@@ -266,7 +256,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         
@@ -289,11 +278,9 @@ extension TextView {
             }
             
             if i == .zero && isCharsWhiteSpace(last, char1) {
-                print("연속 공백")
                 limitIndex = i
                 break
             } else if isCharsWhiteSpace(lastKeyWord, char1) {
-                print("연속 공백2")
                 limitIndex = i
                 break
             } else {
@@ -303,7 +290,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         
@@ -328,11 +314,9 @@ extension TextView {
             }
             
             if isCharsWhiteSpace(lastKeyWord, char1) {
-                print("연속공백")
                 limitIndex = i
                 break
             } else if isCharNextLine(char1) {
-                print("개행")
                 limitIndex = i
                 break
             } else {
@@ -342,7 +326,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         
@@ -365,15 +348,12 @@ extension TextView {
             }
             
             if i == .zero && isCharsWhiteSpace(last, char1) {
-                print("연속 공백")
                 limitIndex = i
                 break
             } else if isCharsWhiteSpace(lastKeyWord, char1) {
-                print("연속 공백2")
                 limitIndex = i
                 break
             } else if isCharNextLine(char1) {
-                print("개행")
                 limitIndex = i
                 break
             } else {
@@ -383,7 +363,6 @@ extension TextView {
         
         if let limitIndex {
             let prefixText = replacementText.prefix(limitIndex)
-            print("상갑 logEvent \(#function) prefixText: \(Optional(prefixText))")
             return String(prefixText)
         }
         

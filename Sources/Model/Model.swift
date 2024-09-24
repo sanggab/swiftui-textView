@@ -126,7 +126,7 @@ public enum TextViewInputBreakMode {
 ///
 /// 외부의 State에서 변경을 시키면 그것을 감지해서 inputBreak랑 trim을 적용시킬지 말지 정한다.
 @frozen
-public enum ReassembleMode {
+public enum TextViewReassembleMode {
     /// 기본
     case none
     /// 입력모드

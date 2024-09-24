@@ -51,7 +51,7 @@ public extension TextView {
     /// TextView에서 입력이 아닌 외부에서 text를 수정할 경우에 textView.text를 적용시킬지 말지 정하는 Modifier
     ///
     /// default값은 none
-    func reassembleMode(_ mode: ReassembleMode = .none) -> TextView {
+    func reassembleMode(_ mode: TextViewReassembleMode = .none) -> TextView {
         let view: TextView = self
         view.viewModel.action(.updateReassembleMode(mode))
         return view

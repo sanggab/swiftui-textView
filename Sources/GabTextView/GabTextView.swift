@@ -62,7 +62,6 @@ public struct TextView: UIViewRepresentable {
     }
     
     public func updateUIView(_ textView: UIViewType, context: Context) {
-        print("상갑 logEvent \(#function)")
         context.coordinator.viewModel = viewModel
         checkDifferent(textView, context)
         updateHeight(textView)
@@ -86,30 +85,28 @@ public struct TextView: UIViewRepresentable {
     private func updateTextCount(_ textView: UITextView) {
         DispatchQueue.main.async {
             var count: Int = 0
-            var newText: String = ""
+//            var newText: String = ""
             
             let trimMode: TextViewTrimMode = viewModel(\.styleState.trimMode)
             
             switch trimMode {
             case .none:
-                newText = textView.text
+//                newText = textView.text
                 count = textView.text.count
             case .whitespaces:
-                newText = textView.text.trimmingCharacters(in: .whitespaces)
+//                newText = textView.text.trimmingCharacters(in: .whitespaces)
                 count = textView.text.trimmingCharacters(in: .whitespaces).count
             case .whitespacesAndNewlines:
-                newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+//                newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
                 count = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).count
             case .blankWithWhitespaces:
-                // TODO: last가 줄바꿈이다가 단어가 들어오면 단어와 단어 사이의 줄바꿈이 카운트로 인식되서 limitCount가 애매해질 수 있다.
-                newText = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
+//                newText = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
                 count = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "").count
             case .blankWithWhitespacesAndNewlines:
-                newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+//                newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
                 count = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "").count
             }
-//            print("상갑 logEvent \(#function) newText: \(newText)")
-//            print("상갑 logEvent \(#function) count: \(count)")
+            
             receiveTextCount?(count)
         }
     }
@@ -254,27 +251,23 @@ private extension TextView {
     // TODO: location은 현재 textView에서 공백을 제외한 위치를 나타냄. ex) 하이 요 다음에 다라는 글자가 들어오면 공백은 제외하고 location은 4가 들어옴. 근데 문제는 자음을 입력하면 location이 4가 됫을 때, 모음이 들어와서 합쳐져도 location은 4
     // TODO: length는 delete시에 지워지는 값들을 의미
     func checkDifferent(_ textView: UIViewType, _ context: Context) {
-        print("상갑 logEvent \(#function)")
         if viewModel(\.reassembleMode) != .none {
             DispatchQueue.main.async {
                 if textView.text != self.text {
                     if self.text.isEmpty {
                         textView.text = ""
                     } else {
-                        self.testReset(textView, context)
+                        self.determineRangeAndReplacementText(textView, context)
                     }
                 }
             }
         }
     }
     
-    func testReset(_ textView: UITextView, _ context: Context) {
+    func determineRangeAndReplacementText(_ textView: UITextView, _ context: Context) {
         var differenceIndex: Int?
         let maxCount: Int = max(textView.text.count, self.text.count)
         
-        print("상갑 logEvent \(#function) maxCount: \(maxCount)")
-        print("상갑 logEvent \(#function) textView.text: \(Optional(textView.text))")
-        print("상갑 logEvent \(#function) text: \(Optional(text))")
         for i in 0..<maxCount {
             let textViewIndex: String.Index? = textView.text.index(textView.text.startIndex, offsetBy: i, limitedBy: textView.text.endIndex)
             let bindTextIndex: String.Index? = self.text.index(self.text.startIndex, offsetBy: i, limitedBy: text.endIndex)
@@ -292,16 +285,6 @@ private extension TextView {
                 char2 = self.text.count > limit ? self.text[bindTextIndex] : nil
             }
             
-//            if char1 == char2 {
-//                if let char1, let char2 {
-//                    sameIndex = i
-//                }
-//            } else {
-//                if differenceIndex == nil {
-//                    differenceIndex = i
-//                }
-//            }
-            
             if char1 != char2 {
                 if differenceIndex == nil {
                     differenceIndex = i
@@ -309,7 +292,6 @@ private extension TextView {
             }
         }
         
-        print("상갑 logEvent \(#function) differenceIndex: \(differenceIndex)")
         let range = NSRange(location: differenceIndex ?? .zero, length: textView.text.count - (differenceIndex ?? .zero))
         
         var replacementText: String = ""
@@ -318,41 +300,26 @@ private extension TextView {
             replacementText = String(self.text.suffix(self.text.count - differenceIndex))
         }
         
-        print("상갑 logEvent \(#function) replacementText: \(replacementText)")
-        print("상갑 logEvent \(#function) range: \(range)")
-        
         self.replacementCondition(textView, shouldChangeTextIn: range, replacementText: replacementText, context: context)
     }
     
     func replacementCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) {
-        print("상갑 logEvent \(#function)")
-        print("상갑 logEvent \(#function) replacementText: \(Optional(text))")
-        print("상갑 logEvent \(#function) range: \(range)")
-        
         if range.location == .zero {
-            print("처음부터 바꾸는거니까 trim만 적용시켜도 될 듯")
+            
             self.testLocationZero(textView, shouldChangeTextIn: range, replacementText: text, context: context)
-//            if let textRange = Range(range, in: textView.text) {
-//                // TODO: trim추가
-//                textView.text = textView.text.replacingCharacters(in: textRange, with: text)
-//                if self.text != textView.text {
-//                    self.text = textView.text
-//                }
-//            }
+            
         } else {
             // 기존 textViewl.text 뒤에 공백이 있는데 또 replacementText가 앞에 공백으로 시작하면 이상해져버림.. 그럴 땐 막아버리자
             if context.coordinator.checkInputBreakMode(textView, replacementText: text) {
                 let reassembleText = viewModel(\.reassembleMode) != .trim ? self.reassembleInputBreak(text) : text
 //                let reassembleText = self.reassembleInputBreak(text)
-                print("상갑 logEvent \(#function) reassembleText: \(Optional(reassembleText))")
+                
                 if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
-                    print("limitLineCondition")
                     self.text = textView.text
                     return
                 }
                 
                 if self.checkLimitCountCondition(textView, shouldChangeTextIn: range, replacementText: text, context: context) {
-                    print("checkLimitCountCondition")
                     if self.text != textView.text {
                         self.text = textView.text
                     }
@@ -377,14 +344,11 @@ private extension TextView {
     func checkLimitCountCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) -> Bool {
         let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: range, replacementText: text)
         
-        let changedText = self.reassembleTrimMode(newText)
-        let basicText = self.reassembleTrimMode(textView.text)
-        
-        print("상갑 logEvent \(#function) changedText: \(Optional(changedText))")
-        print("상갑 logEvent \(#function) basicText: \(Optional(basicText))")
+        let changedText = viewModel(\.reassembleMode) != .inputBreak ? self.reassembleTrimMode(newText) : newText
+        let basicText = viewModel(\.reassembleMode) != .inputBreak ? self.reassembleTrimMode(textView.text) : textView.text
         
         if changedText.count > viewModel(\.styleState.limitCount) {
-            let prefixCount = max(0, viewModel(\.styleState.limitCount) - basicText.count)
+            let prefixCount = max(0, viewModel(\.styleState.limitCount) - (basicText?.count ?? .zero))
             
             let prefixText = text.prefix(prefixCount)
             
@@ -407,14 +371,15 @@ extension TextView {
         let reassembleText = viewModel(\.reassembleMode) != .trim ? self.reassembleInputBreak(text) : text
         
         if let textRange = Range(range, in: textView.text) {
-            let newText: String = viewModel(\.reassembleMode) == .trim ? self.reassembleTrimMode(textView.text.replacingCharacters(in: textRange, with: reassembleText)) : reassembleText
+            let newText: String = viewModel(\.reassembleMode) != .inputBreak ? self.reassembleTrimMode(textView.text.replacingCharacters(in: textRange, with: reassembleText)) : reassembleText
             textView.text = newText
             
             if self.text != textView.text {
                 self.text = textView.text
             }
+            
         } else {
-            let newText: String = viewModel(\.reassembleMode) == .trim ? self.reassembleTrimMode(self.text) : self.text
+            let newText: String = viewModel(\.reassembleMode) != .inputBreak ? self.reassembleTrimMode(self.text) : self.text
             textView.text = newText
             
             if self.text != textView.text {
