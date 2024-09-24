@@ -28,7 +28,7 @@ struct ContentView: View {
     
     @State private var inputBreakMode: TextViewInputBreakMode = .continuousWhiteSpace
     @State private var trimMode: TextViewTrimMode = .blankWithWhitespacesAndNewlines
-    @State private var reassembleMode: TextViewReassembleMode = .none
+    @State private var reassembleMode: Bool = false
     
     var body: some View {
         Text("현재 text count : \(textCount)")
@@ -205,45 +205,45 @@ struct ContentView: View {
                     .fill(.blue.opacity(0.5))
                     .frame(width: 50, height: 50)
                     .overlay {
-                        Text("none")
+                        Text("reassemble Off")
                     }
                     .onTapGesture {
-                        reassembleMode = .none
+                        reassembleMode = false
                     }
-                    .accessibilityIdentifier("reassembleMode none")
+                    .accessibilityIdentifier("reassembleMode off")
                 
                 Rectangle()
                     .fill(.pink.opacity(0.5))
                     .frame(width: 50, height: 50)
                     .overlay {
-                        Text("inputbreak")
+                        Text("reassemble On")
                     }
                     .onTapGesture {
-                        reassembleMode = .inputBreak
+                        reassembleMode = true
                     }
-                    .accessibilityIdentifier("reassembleMode inputBreak")
+                    .accessibilityIdentifier("reassembleMode on")
                 
-                Rectangle()
-                    .fill(.gray.opacity(0.5))
-                    .frame(width: 50, height: 50)
-                    .overlay {
-                        Text("trim")
-                    }
-                    .onTapGesture {
-                        reassembleMode = .trim
-                    }
-                    .accessibilityIdentifier("reassembleMode trim")
-                
-                Rectangle()
-                    .fill(.orange.opacity(0.5))
-                    .frame(width: 50, height: 50)
-                    .overlay {
-                        Text("all")
-                    }
-                    .onTapGesture {
-                        reassembleMode = .all
-                    }
-                    .accessibilityIdentifier("reassembleMode all")
+//                Rectangle()
+//                    .fill(.gray.opacity(0.5))
+//                    .frame(width: 50, height: 50)
+//                    .overlay {
+//                        Text("trim")
+//                    }
+//                    .onTapGesture {
+//                        reassembleMode = .trim
+//                    }
+//                    .accessibilityIdentifier("reassembleMode trim")
+//                
+//                Rectangle()
+//                    .fill(.orange.opacity(0.5))
+//                    .frame(width: 50, height: 50)
+//                    .overlay {
+//                        Text("all")
+//                    }
+//                    .onTapGesture {
+//                        reassembleMode = .all
+//                    }
+//                    .accessibilityIdentifier("reassembleMode all")
             }
         }
         

@@ -404,3 +404,58 @@ extension TextViewCoordinator {
         return changedText
     }
 }
+
+extension TextViewCoordinator {
+    func checkInputBreakMode(_ textView: UITextView, range: NSRange, replacementText text: String) -> Bool {
+        let inputbreakMode: TextViewInputBreakMode = viewModel(\.styleState).inputBreakMode
+        
+        switch inputbreakMode {
+        case .none:
+            return true
+        case .lineBreak:
+            
+            if text == "\n" {
+                return false
+            } else {
+                return true
+            }
+            
+        case .whiteSpace:
+            
+            if text == " " {
+                return false
+            } else {
+                return true
+            }
+            
+        case .continuousWhiteSpace:
+            
+            let lastText = textView.text.prefix(range.location).last
+            
+            if lastText == " " && text == " " {
+                return false
+            } else {
+                return true
+            }
+            
+        case .lineWithWhiteSpace:
+            
+            if text == "\n" || text == " " {
+                return false
+            } else {
+                return true
+            }
+            
+        case .lineWithContinuousWhiteSpace:
+            
+            let lastText = textView.text.prefix(range.location).last
+            
+            if text == "\n" || lastText == " " && text == " " {
+                return false
+            } else {
+                return true
+            }
+            
+        }
+    }
+}

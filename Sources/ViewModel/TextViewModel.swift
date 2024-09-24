@@ -181,7 +181,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var isConfigurationMode: Bool = false
         var delegateMode: TextViewDelegateMode = .automatic
         var sizeMode: TextViewSizeMode = .fixed
-        var reassembleMode: TextViewReassembleMode = .none
+//        var reassembleMode: TextViewReassembleMode = .none
+        var reassembleMode: Bool = false
     }
     
     enum MainAction: Equatable {
@@ -193,7 +194,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateIsConfigurationMode(Bool)
         case updateDelegateMode(TextViewDelegateMode)
         case updateSizeMode(TextViewSizeMode)
-        case updateReassembleMode(TextViewReassembleMode)
+        case updateReassembleMode(Bool)
     }
     // ------------------------------------------------------------------------------------ //
     
@@ -221,8 +222,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             update(\.delegateMode, value: mode)
         case .updateSizeMode(let mode):
             update(\.sizeMode, value: mode)
-        case .updateReassembleMode(let mode):
-            update(\.reassembleMode, value: mode)
+        case .updateReassembleMode(let status):
+            update(\.reassembleMode, value: status)
         }
     }
 }
