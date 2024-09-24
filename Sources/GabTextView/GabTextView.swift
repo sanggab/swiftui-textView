@@ -304,21 +304,10 @@ private extension TextView {
     }
     
     func replacementCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) {
-        print("상갑 logEvent \(#function) textView.text: \(Optional(textView.text))")
-        print("상갑 logEvent \(#function) range: \(Optional(range))")
-        print("상갑 logEvent \(#function) range location: \(Optional(range.location))")
-        print("상갑 logEvent \(#function) range lenght: \(Optional(range.length))")
-        print("상갑 logEvent \(#function) replacementText: \(Optional(text))")
-        
-        
-        
-        /// 이게 틀린 이유  - range가 count  끝이 아닌 textView의 처음이나 중간부터 시작하면 해당 location 뒤부터 체크해야 하기 때문에 다시 만든다
         if context.coordinator.checkInputBreakMode(textView, range: range, replacementText: text) {
-            print("1")
             let reassembleInputBreakText = self.reassembleInputBreak(text)
             let finalText = self.reassembleTrimMode(reassembleInputBreakText)
-            print("상갑 logEvent \(#function) reassembleInputBreakText: \(Optional(reassembleInputBreakText))")
-            print("상갑 logEvent \(#function) finalText: \(Optional(finalText))")
+            
             if finalText.isEmpty {
                 if self.text != textView.text {
                     self.text = textView.text
@@ -350,45 +339,8 @@ private extension TextView {
             }
             
         } else {
-            print("2")
             self.text = textView.text
         }
-        
-//        if range.location == .zero {
-//            
-//            self.testLocationZero(textView, shouldChangeTextIn: range, replacementText: text, context: context)
-//            
-//        } else {
-//            // 기존 textViewl.text 뒤에 공백이 있는데 또 replacementText가 앞에 공백으로 시작하면 이상해져버림.. 그럴 땐 막아버리자
-//            if context.coordinator.checkInputBreakMode(textView, replacementText: text) {
-//                let reassembleText = viewModel(\.reassembleMode) != .trim ? self.reassembleInputBreak(text) : text
-////                let reassembleText = self.reassembleInputBreak(text)
-//                
-//                if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
-//                    self.text = textView.text
-//                    return
-//                }
-//                
-//                if self.checkLimitCountCondition(textView, shouldChangeTextIn: range, replacementText: text, context: context) {
-//                    if self.text != textView.text {
-//                        self.text = textView.text
-//                    }
-//                    return
-//                }
-//                
-//                if let textRange = Range(range, in: textView.text) {
-//                    let replacementText: String = textView.text.replacingCharacters(in: textRange, with: reassembleText)
-//                    let newText: String = viewModel(\.reassembleMode) == .trim ? self.reassembleTrimMode(replacementText) : replacementText
-//                    textView.text = newText
-//                    
-//                    if self.text != textView.text {
-//                        self.text = textView.text
-//                    }
-//                }
-//            } else {
-//                self.text = textView.text
-//            }
-//        }
     }
     
     func checkLimitCountCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) -> Bool {
@@ -412,29 +364,4 @@ private extension TextView {
         
         return false
     }
-}
-
-extension TextView {
-//    
-//    func testLocationZero(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) {
-//        print("상갑 logEvent \(#function)")
-//        let reassembleText = viewModel(\.reassembleMode) != .trim ? self.reassembleInputBreak(text) : text
-//        
-//        if let textRange = Range(range, in: textView.text) {
-//            let newText: String = viewModel(\.reassembleMode) != .inputBreak ? self.reassembleTrimMode(textView.text.replacingCharacters(in: textRange, with: reassembleText)) : reassembleText
-//            textView.text = newText
-//            
-//            if self.text != textView.text {
-//                self.text = textView.text
-//            }
-//            
-//        } else {
-//            let newText: String = viewModel(\.reassembleMode) != .inputBreak ? self.reassembleTrimMode(self.text) : self.text
-//            textView.text = newText
-//            
-//            if self.text != textView.text {
-//                self.text = textView.text
-//            }
-//        }
-//    }
 }

@@ -27,7 +27,7 @@ struct ContentView: View {
     ]
     
     @State private var inputBreakMode: TextViewInputBreakMode = .continuousWhiteSpace
-    @State private var trimMode: TextViewTrimMode = .blankWithWhitespacesAndNewlines
+    @State private var trimMode: TextViewTrimMode = .none
     @State private var reassembleMode: Bool = false
     
     var body: some View {

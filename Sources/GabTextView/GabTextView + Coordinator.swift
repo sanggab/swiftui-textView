@@ -95,7 +95,7 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     
     // TODO: 여기는 inputBreakMode만 적용시켜야 한다. 그 이유는 키보드 입력시의 Text들이 들어오는데 trim을 시킨 Text는 오직 textcount하고 line을 계산할 때 필요하기 때문
     private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if checkInputBreakMode(textView, replacementText: text) {
+        if checkInputBreakMode(textView, range: range, replacementText: text) {
             
             if limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 return false
