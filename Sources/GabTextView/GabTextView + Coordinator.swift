@@ -61,19 +61,24 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             switch trimMode {
             case .whitespaces:
                 textView.text = textView.text.trimmingCharacters(in: .whitespaces)
-                parent.text = textView.text
+//                parent.text = textView.text
             case .whitespacesAndNewlines:
                 textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-                parent.text = textView.text
+//                parent.text = textView.text
             case .blankWithWhitespaces:
                 textView.text = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
-                parent.text = textView.text
+//                parent.text = textView.text
             case .blankWithWhitespacesAndNewlines:
                 textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
-                parent.text = textView.text
+//                parent.text = textView.text
             case .none:
                 break
             }
+            
+            if parent.text != textView.text {
+                parent.text = textView.text
+            }
+            
         case .modifier:
             parent.textViewDidEndEditing?(textView)
         }
@@ -348,9 +353,7 @@ extension TextViewCoordinator {
         
         let changedText = makeTrimText(newText)
         let basicText = makeTrimText(textView.text)
-        // TODO: replacementText는 앞으로 입력될 단어
-        // TODO: 결국엔 이 단어가 limitCount Modifier에 의해 입력이 막아져야할 경우가 생기는데
-        // TODO: count를 막아야 할 경우나 line을 막아야 할 경우는 trim모드로 계산만 도와주기
+        
         if changedText.count > viewModel(\.styleState.limitCount) {
             let prefixCount = max(0, viewModel(\.styleState.limitCount) - basicText.count)
             
@@ -367,17 +370,6 @@ extension TextViewCoordinator {
         
         return false
     }
-    
-//    func limitNewLineAndSpaceCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        if text == " " || text == "\n" {
-//            let trimText = makeTrimText(textView.text)
-//            if trimText.count >= viewModel(\.styleState.limitCount) {
-//                return true
-//            }
-//        }
-//        
-//        return false
-//    }
 }
 
 extension TextViewCoordinator {

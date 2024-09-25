@@ -27,7 +27,7 @@ struct ContentView: View {
     ]
     
     @State private var inputBreakMode: TextViewInputBreakMode = .continuousWhiteSpace
-    @State private var trimMode: TextViewTrimMode = .none
+    @State private var trimMode: TextViewTrimMode = .whitespacesAndNewlines
     @State private var reassembleMode: Bool = false
     
     var body: some View {
@@ -66,6 +66,7 @@ struct ContentView: View {
                     .overlay {
                         Text("append")
                     }
+                    .accessibilityIdentifier("Text 추가")
                     .onTapGesture {
                         let random = randomSentence.randomElement() ?? ""
                         
@@ -73,7 +74,6 @@ struct ContentView: View {
                         text += random
                         print("상갑 logEvent \(#function) text: \(text)")
                     }
-                    .accessibilityIdentifier("Text 변경")
                 
                 Rectangle()
                     .fill(.pink)

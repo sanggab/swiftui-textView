@@ -91,6 +91,24 @@ final class GabTextViewDemoUITests: XCTestCase {
         
         textView.typeText("가\n나\n다\n라\n")
     }
+    
+    func testReassembleModifier() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let textView = app.textViews["GabTextView"].firstMatch
+        
+        XCTAssertNotNil(textView)
+        
+        let appendBtn = app.otherElements["Text 변경"].firstMatch
+        print("상갑 logEvent \(#function) appendBtn: \(appendBtn)")
+        XCTAssertNotNil(appendBtn)
+        
+        appendBtn.tap()
+        appendBtn.tap()
+        appendBtn.tap()
+        
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {

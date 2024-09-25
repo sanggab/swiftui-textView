@@ -9,19 +9,19 @@ import SwiftUI
 
 // MARK: - Style
 public extension TextView {
-    /// TextView가 키보드가 focus / noneFocus 시에 font랑 Color를 지정합니다.
+    /// TextView의 키보드가 focus / noneFocus 시에 font랑 Color를 지정합니다.
     func setTextViewAppearanceModel(_ config: TextViewAppearanceModel = .default) -> TextView {
         let view = self
         view.viewModel.action(.updateStyleState(.updateTextViewAppearanceModel(config)))
         return view
     }
-    
+    /// TextView의 키보드 foucs 시에 font랑 Color를 정합니다.
     func setFocusAppearance(_ config: TextAppearance = .focus) -> TextView {
         let view = self
         view.viewModel.action(.updateStyleState(.updateTextAppearance(.focus, config)))
         return view
     }
-    
+    /// TextView의 키보드 noneFoucs 시에 font랑 Color를 정합니다.
     func setNoneFocusAppearance(_ config: TextAppearance = .noneFocus) -> TextView {
         let view = self
         view.viewModel.action(.updateStyleState(.updateTextAppearance(.noneFocus, config)))

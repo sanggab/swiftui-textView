@@ -247,9 +247,9 @@ private extension TextView {
 }
 
 private extension TextView {
-    // TODO: NSRange는 location과 length로 구성
-    // TODO: location은 현재 textView에서 공백을 제외한 위치를 나타냄. ex) 하이 요 다음에 다라는 글자가 들어오면 공백은 제외하고 location은 4가 들어옴. 근데 문제는 자음을 입력하면 location이 4가 됫을 때, 모음이 들어와서 합쳐져도 location은 4
-    // TODO: length는 delete시에 지워지는 값들을 의미
+    /// textView.text와 @Binding text가 다른지 체크하는 method
+    ///
+    /// 외부에서 @Binding text를 수정한 경우에 reassembleMode가 켜져 있다면 textView.text와 비교해서 적용시킨다.
     func checkDifferent(_ textView: UIViewType, _ context: Context) {
         if viewModel(\.reassembleMode) {
             DispatchQueue.main.async {
@@ -263,7 +263,9 @@ private extension TextView {
             }
         }
     }
-    
+    /// range랑 replacementText를 결정하는 method
+    ///
+    /// textView.text와 @Binding text를 비교해서 range랑 replacementText를 결정하고, ``replacementCondition(_:shouldChangeTextIn:replacementText:context:)``를 통해 최종적으로 적용시키는 여부를 결정한다.
     func determineRangeAndReplacementText(_ textView: UITextView, _ context: Context) {
         var differenceIndex: Int?
         let maxCount: Int = max(textView.text.count, self.text.count)
@@ -302,8 +304,13 @@ private extension TextView {
         
         self.replacementCondition(textView, shouldChangeTextIn: range, replacementText: replacementText, context: context)
     }
-    
+    /// textView.text를 range랑 replacementText를 가지고 실제로 적용시킬지 말지 결정하는 method
+    ///
+    /// determineRangeAndReplacementText에 의해 결정된 range랑 replacementText를 가지고 inputBreakMode랑 TrimMode의 종류에 따라 textView에 적용시킬지 말지 결정한다.
+    ///
+    /// textView에 적용을 안시킬 경우에, @Binding text를 textView.text로 교체한다.
     func replacementCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) {
+        /// checkInputBreakMode으로 연속공백, 개행 막는다
         if context.coordinator.checkInputBreakMode(textView, range: range, replacementText: text) {
             let reassembleInputBreakText = self.reassembleInputBreak(text)
             let finalText = self.reassembleTrimMode(reassembleInputBreakText)
@@ -342,7 +349,10 @@ private extension TextView {
             self.text = textView.text
         }
     }
-    
+    /// limitCount에 걸리는지 체크하는 method
+    ///
+    /// textView.text에 replacementText를 append시키고 trimMode로 reassemble된 text를 가지고 비교해서 추가 될 text가 limitCount보다 over될 경우에
+    /// over된 count만큼 replacementText를 짤라서 append시킨다.
     func checkLimitCountCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String, context: Context) -> Bool {
         let newText = context.coordinator.makeNewText(textView, shouldChangeTextIn: range, replacementText: text)
         

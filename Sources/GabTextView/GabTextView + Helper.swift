@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension TextView {
-    /// Range의 Location이 zero일 경우에만 사용
+    /// replacementText를 inputBreakMode 스타일에 따라 reassemble해주는 method
     func reassembleInputBreak(_ replacementText: String) -> String {
         switch viewModel(\.styleState.inputBreakMode) {
         case .none:
@@ -25,7 +25,7 @@ extension TextView {
             return checkLineWithContinuousWhiteSpace(replacementText: replacementText)
         }
     }
-    
+    /// replacementText를 inputBreakMode 스타일에 따라 reassemble해주는 method
     func reassembleInputBreak(_ textView: UITextView, replacementText: String) -> String {
         switch viewModel(\.styleState.inputBreakMode) {
         case .none:
@@ -42,7 +42,7 @@ extension TextView {
             return checkLineWithContinuousWhiteSpace(textView, replacementText: replacementText)
         }
     }
-    
+    /// replacementText를 trimMode 스타일에 따라 reassemble해주는 method
     func reassembleTrimMode(_ replacementText: String) -> String {
         switch viewModel(\.styleState.trimMode) {
         case .none:
@@ -60,7 +60,6 @@ extension TextView {
 }
 
 extension TextView {
-    
     func checkLineBreak(replacementText: String) -> String {
         var limitIndex: Int?
         
