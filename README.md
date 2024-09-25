@@ -11,16 +11,18 @@
 * [Modifier](#modifier)
   * [ViewOption](#viewOption)
     * [ChangeBackgroundColor](#changebackgroundcolor)
-    * [ScrollEnabled](#isscrollenabled)
-    * [Editable](#iseditable)
-    * [Selectable](#isselectable)
   * [Style](#style)
     * [Appearance](#appearance)
     * [Limit](#limit)
       * [TextCount](#textcountlimit)
       * [TextLine](#textlintlimit)
   * [PlaceHolder](#placeholder)
-
+  * [Configuration](#configuration)
+  * [Delegate](#delegate)
+  * [SizeMode](#sizemode)
+  * [ReassembleMode](#reassembleMode)
+  * [ReceiveTextViewHeight](#receiveTextViewHeight)
+  * [ReceiveTextCount](#receiveTextCount)
 
 <a name="documentation"></a>
 # Documentation
@@ -47,42 +49,6 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```swift
   TextView(text: $text)
       .changeBackgroundColor(.gray)
-  ```
-  <br>
-  
-<a name="isscrollenabled"></a>
-* `func isScrollEnabled(_ state: Bool) -> TextView`   
-  TextView의 isScrollEnabled를 설정합니다.   
-  default값은 true입니다.
-
-  ##### Usage examples:
-  ```swift
-  TextView(text: $text)
-      .isScrollEnabled(false)
-  ```
-  <br>
-  
-<a name="iseditable"></a>
-* `func isEditable(_ state: Bool) -> TextView`   
-  TextView의 isEditable을 설정합니다.   
-  default값은 true입니다.
-
-  ##### Usage examples:
-  ```swift
-  TextView(text: $text)
-      .isEditable(false)
-  ```
-  <br>
-  
-<a name="isselectable"></a>
-* `func isSelectable(_ state: Bool) -> TextView`   
-  TextView의 isSelectable을 설정합니다.   
-  default값은 true입니다.
-
-  ##### Usage examples:
-  ```swift
-  TextView(text: $text)
-      .isSelectable(false)
   ```
   <br>
 
@@ -188,6 +154,42 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
 
   <img src="doc_img/modifier/overlayPlaceHolder/overlayPlaceHolder.gif"/>
+
+
+<a name="configuration"></a>
+## Configuration
+
+* `func textViewConfiguration(_ configuration: @escaping (UITextView) -> Void) -> TextView`   
+  TextView의 옵션을 세팅합니다.   
+  configuration의 UITextView에 원하는 옵션들을 설정하면, makeUIView에서 해당 옵션들을 세팅합니다.
+  다른 modifier로 옵션들을 설정하는걸 원치 않을 경우에, 해당 modifier를 사용해서 TextView를 구현하면 됩니다.
+
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+    .textViewConfiguration { textView in
+        textView.backgroundColor = .gray
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = .zero
+        textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+    }
+  ```
+
+
+<a name="delegate"></a>
+## Delegate
+
+<a name="sizemode"></a>
+## Sizemode
+
+<a name="reassembleMode"></a>
+## ReassembleMode
+
+<a name="receiveTextViewHeight"></a>
+## ReceiveTextViewHeight
+
+<a name="receiveTextCount"></a>
+## ReceiveTextCount
 
   <br>
   <br>
