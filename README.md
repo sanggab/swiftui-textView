@@ -167,29 +167,98 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ##### Usage examples:
   ```swift
   TextView(text: $text)
-    .textViewConfiguration { textView in
-        textView.backgroundColor = .gray
-        textView.textContainerInset = .zero
-        textView.textContainer.lineFragmentPadding = .zero
-        textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+      .textViewConfiguration { textView in
+          textView.backgroundColor = .gray
+          textView.textContainerInset = .zero
+          textView.textContainer.lineFragmentPadding = .zero
+          textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
   ```
+
 
 
 <a name="delegate"></a>
 ## Delegate
 
+* `func controlTextViewDelegate(_ mode: TextViewDelegateMode = .automatic) -> TextView`   
+  TextView의 delegate를 설정합니다.   
+  TextViewDelegateMode의 옵션에 따라 UITextViewDelegate를 처리하는 방식을 정합니다.
+
+  | mode | description |
+  |:--:|:--:|
+  | `none` | configuration을 이용해서 Delegate 처리 |
+  | `modifier` | modifier로 구현된 것 받아서 처리 |
+  | `automatic` | 시스템 방식대로 처리 |
+
+
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .controlTextViewDelegate(.automatic)
+  ```
+
+  
+
 <a name="sizemode"></a>
 ## Sizemode
 
-<a name="reassembleMode"></a>
-## ReassembleMode
+* `func sizeMode(_ mode: TextViewSizeMode = .fixed) -> TextView`   
+  TextView의 Size를 고정으로 처리할 것 인지, 동적으로 처리할 것 인지 정합니다.   
+  sizeMode를 dynamic으로 설정을 하면, receiveTextViewHeight modifier에 textView의 height을 리턴합니다.
+
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .sizeMode(.dynamic)
+  ```
+
+  
 
 <a name="receiveTextViewHeight"></a>
 ## ReceiveTextViewHeight
 
+* `func receiveTextViewHeight(_ height: @escaping ((CGFloat) -> Void)) -> TextView`   
+  TextView의 height을 알려주는 Modifier입니다.
+  해당 Modifiersms sizeMode의 mode가 dynamic인 경우에만 작동합니다.
+
+
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .receiveTextViewHeight { height in
+          textViewHeight = height
+      }
+  ```
+
+
 <a name="receiveTextCount"></a>
 ## ReceiveTextCount
+
+* `func receiveTextCount(_ count: @escaping ((Int) -> Void)) -> TextView`   
+  TextView의 text count를 알려주는 Modifier입니다.
+  해당 Modifier는 trimMode에 영향을 받습니다.
+
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .receiveTextCount { count in
+          textCount = count
+      }
+  ```
+
+  
+
+<a name="reassembleMode"></a>
+## ReassembleMode
+
+* `func reassembleMode(_ mode: Bool = false) -> TextView`   
+
+
+
+
+
+
+
 
   <br>
   <br>
