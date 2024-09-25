@@ -16,6 +16,8 @@
     * [Limit](#limit)
       * [TextCount](#textcountlimit)
       * [TextLine](#textlintlimit)
+    * [InputBreak](#inputbreak)
+    * [Trim](#trim) 
   * [PlaceHolder](#placeholder)
   * [Configuration](#configuration)
   * [Delegate](#delegate)
@@ -252,11 +254,20 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
 ## ReassembleMode
 
 * `func reassembleMode(_ mode: Bool = false) -> TextView`   
+  TextView를 구현할 때 설정한 @State의 text를 키보드 입력이 아닌 방식으로 수정을 할 때, UITextView의 text에 업데이트 할지 말지를 정하는 기능입니다.
+  
+  키보드 입력 없이 TextView의 text를 변경하고 싶으나 id를 부여해서 초기화 하는 방법을 원치 않을 경우에 reassembleMode를 사용하면 됩니다.
+  
+  기존 `UITextView`의 text하고 `@Binding` text가 달라진 `range`랑 `replacementText`를 뽑아 내고 `replacementText`가 `inputBreakMode`에 의해 통과되는지 검사를 합니다.   
+  그 다음, `limitLine`, `limitCount`, `inputBreakMode`, `trimMode`에 의해 reassemble된 text를 가지고 UITextView에 업데이트 결정합니다.   
+  
+  그 후, 맨 마지막으로 @Binding text가 UITextView의 text하고 다른 경우에 @Binding text를 UITextView text로 변경합니다.
 
-
-
-
-
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .reassembleMode(true)
+  ```
 
 
 
