@@ -136,6 +136,40 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
   ```
   <br>
 
+<a name="inputbreak"></a>
+### InputBreak
+
+* `func inputBreakMode(_ mode: TextViewInputBreakMode = .none) -> TextView`   
+  TextView의 입력을 TextViewInputBreakMode에 따라 막습니다.   
+  이 modifier는 controlTextViewDelegate에서 설정한 TextViewDelegateMode가 automatic일 때 작동합니다.
+
+  | mode | description |
+  |:--:|:--:|
+  | `none` | default |
+  | `lineBreak` | 개행의 입력을 막는다. |
+  | `whiteSpace` | 공백의 입력을 막는다. |
+  | `continuousWhiteSpace` | 연속된 공백의 입력을 막는다. |
+  | `lineWithWhiteSpace` | 개행과 공백의 입력을 막는다. |
+  | `lineWithContinuousWhiteSpace` | 개행과 연속된 공백의 입력을 막는다. |
+
+
+<a name="trim"></a>
+### Trim
+
+* `func trimMode(_ method: TextViewTrimMode = .whitespaces) -> TextView`   
+  TextView의 text에 있는 공백이나 개행을 제거합니다.   
+  이 modifier는 controlTextViewDelegate에서 설정한 TextViewDelegateMode가 automatic일 때 작동합니다.
+
+  | mode | description |
+  |:--:|:--:|
+  | `none` | default |
+  | `whitespaces` | trimmingCharacters의 whitespaces와 같습니다. |
+  | `whitespacesAndNewlines` | trimmingCharacters의 whitespacesAndNewlines와 같습니다. |
+  | `blankWithWhitespaces` | 문자열 사이의 공백과 whitespaces를 제거합니다. |
+  | `blankWithWhitespacesAndNewlines` | 문자열 사이의 공백과 blankWithWhitespacesAndNewlines를 제거합니다. |
+  
+  
+
 <a name="placeholder"></a>
 ## PlaceHolder
 
@@ -163,7 +197,7 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
 
 * `func textViewConfiguration(_ configuration: @escaping (UITextView) -> Void) -> TextView`   
   TextView의 옵션을 세팅합니다.   
-  configuration의 UITextView에 원하는 옵션들을 설정하면, makeUIView에서 해당 옵션들을 세팅합니다.
+  configuration의 UITextView에 원하는 옵션들을 설정하면, makeUIView에서 해당 옵션들을 세팅합니다.   
   다른 modifier로 옵션들을 설정하는걸 원치 않을 경우에, 해당 modifier를 사용해서 TextView를 구현하면 됩니다.
 
   ##### Usage examples:
