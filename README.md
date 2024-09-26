@@ -19,7 +19,6 @@
   * [PlaceHolder](#placeholder)
   * [Configuration](#configuration)
   * [Delegate](#delegate)
-  * [SizeMode](#sizemode)
   * [ReassembleMode](#reassembleMode)
   * [ReceiveTextViewHeight](#receiveTextViewHeight)
   * [ReceiveTextCount](#receiveTextCount)
@@ -235,22 +234,7 @@ TextView(text: $text)
       .controlTextViewDelegate(.automatic)
   ```
 
-  
 
-<a name="sizemode"></a>
-## Sizemode
-
-* `func sizeMode(_ mode: TextViewSizeMode = .fixed) -> TextView`   
-  TextView의 Size를 고정으로 처리할 것 인지, 동적으로 처리할 것 인지 정합니다.   
-  sizeMode를 dynamic으로 설정을 하면, receiveTextViewHeight modifier에 textView의 height을 리턴합니다.
-
-  ##### Usage examples:
-  ```swift
-  TextView(text: $text)
-      .sizeMode(.dynamic)
-  ```
-
-  
 
 <a name="receiveTextViewHeight"></a>
 ## ReceiveTextViewHeight
