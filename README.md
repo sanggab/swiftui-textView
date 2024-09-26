@@ -9,8 +9,6 @@
 ### Content
 * [Documentation](#documentation)
 * [Modifier](#modifier)
-  * [ViewOption](#viewOption)
-    * [ChangeBackgroundColor](#changebackgroundcolor)
   * [Style](#style)
     * [Appearance](#appearance)
     * [Limit](#limit)
@@ -32,27 +30,31 @@
 SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만, 이 기능은 실질적으로 UIKit의 TextView를 대체하기엔 너무 부족합니다.   
 그래서 이러한 불편함을 해결하기 위해 만든 swiftui-textView를 소개합니다!
 
+기본적으로 UITextView에서 지원하는 속성이나 UITextViewDelegate을 modifier로 지원하고 있습니다.   
+
+##### Usage examples:
+```swift
+TextView(text: $text)
+    .backgroundColor(color: .gray.opacity(0.5))
+    .textContainerInset(.zero)
+    .lineFragmentPadding(.zero)
+    .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+    .isScrollEnabled(true)
+    .isEditable(true)
+    .isSelectable(true)
+    .showsVerticalScrollIndicator(false)
+    .textViewDidChange { textView in
+         print(textView.text)
+     }
+```
+
 
 <a name="modifier"></a>
 # Modifier
 
+아래부터 소개하는 Modifier들은 같이 사용하면 좋은 기능들을 구현해놨습니다.
 
-
-<a name="viewOption"></a>
-## ViewOption
-
-<a name="changebackgroundcolor"></a>
-* `func changeBackgroundColor(_ color: Color) -> TextView`   
-  TextView의 backgroundColor를 지정합니다.
-  TextView의 backgroundColor를 변경하려면 Representable로 구현된 View에 .background() modifier 구현해도 변경되지 않기 때문에, UITextView의 background 옵션을 직접 변경해줘야 합니다.   
-  기본 값은 white 입니다.
-
-  ##### Usage examples:
-  ```swift
-  TextView(text: $text)
-      .changeBackgroundColor(.gray)
-  ```
-  <br>
+<br>
 
 <a name="style"></a>
 ## Style
