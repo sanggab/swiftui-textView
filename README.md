@@ -230,6 +230,36 @@ TextView(text: $text)
 
   ##### Usage examples:
   ```swift
+  /// TextViewDelegateMode : none
+
+  public var coordinator = Coordinator()
+  TextView(text: $text)
+      .textViewConfiguration { textView in
+          textView.delegate = coordinator
+       }
+      .controlTextViewDelegate(.none)
+  ```
+
+  ##### Usage examples:
+  ```swift
+
+  /// TextViewDelegateMode : modifier
+  TextView(text: $text)
+      .controlTextViewDelegate(.modifier)
+      .textViewDidBeginEditing { textView in
+          print(textView)
+      }
+      .textViewDidChange { textView in
+          print(textView)
+      }
+      .textViewDidEndEditing { textView in
+          print(textView)
+      }
+  ```
+
+  ##### Usage examples:
+  ```swift
+  /// TextViewDelegateMode : automatic
   TextView(text: $text)
       .controlTextViewDelegate(.automatic)
   ```
