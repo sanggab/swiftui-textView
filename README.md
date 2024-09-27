@@ -231,8 +231,8 @@ TextView(text: $text)
   ##### Usage examples:
   ```swift
   /// TextViewDelegateMode : none
-
   public var coordinator = Coordinator()
+  
   TextView(text: $text)
       .textViewConfiguration { textView in
           textView.delegate = coordinator
