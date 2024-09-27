@@ -209,7 +209,7 @@ TextView(text: $text)
           textView.textContainerInset = .zero
           textView.textContainer.lineFragmentPadding = .zero
           textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-    }
+      }
   ```
 
 
@@ -241,7 +241,6 @@ TextView(text: $text)
 
 * `func receiveTextViewHeight(_ height: @escaping ((CGFloat) -> Void)) -> TextView`   
   TextView의 height을 알려주는 Modifier입니다.
-  해당 Modifiersms sizeMode의 mode가 dynamic인 경우에만 작동합니다.
 
 
   ##### Usage examples:
