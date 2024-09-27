@@ -75,9 +75,10 @@ public struct TextView: UIViewRepresentable {
     @MainActor
     private func updateHeight(_ textView: UITextView) {
         DispatchQueue.main.async {
-            if viewModel(\.sizeMode) == .dynamic {
-                receiveTextViewHeight?(textView.contentSize.height)
-            }
+            receiveTextViewHeight?(textView.contentSize.height)
+//            if viewModel(\.sizeMode) == .dynamic {
+//                receiveTextViewHeight?(textView.contentSize.height)
+//            }
         }
     }
     
@@ -128,8 +129,11 @@ private extension TextView {
     func bindViewState(_ textView: UITextView) {
         let viewState = viewModel(\.viewState)
         
-        textView.backgroundColor = UIColor(viewModel(\.viewState).backgroundColor)
-        textView.textAlignment = viewModel(\.viewState).textAlignment
+        if let bgcolor = viewState.backgroundColor {
+            textView.backgroundColor = UIColor(bgcolor)
+        }
+        
+        textView.textAlignment = viewState.textAlignment
         textView.isEditable = viewState.isEditable
         textView.isSelectable = viewState.isSelectable
         

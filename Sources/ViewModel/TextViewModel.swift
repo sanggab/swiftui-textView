@@ -23,7 +23,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     
     // ------------------------------------------------------------------------------------ //
     struct ViewState: Equatable {
-        var backgroundColor: Color = .white
+        var backgroundColor: Color? = nil
         var textAlignment: NSTextAlignment = .natural
         var isEditable: Bool = true
         var isSelectable: Bool = true
@@ -37,7 +37,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     }
     
     enum ViewAction: Equatable {
-        case updateColor(Color)
+        case updateColor(Color?)
         case updateTextAlignment(NSTextAlignment)
         case updateIsEditable(Bool)
         case updateIsSelectable(Bool)
@@ -180,7 +180,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var textContainerState: TextContainerState = .init()
         var isConfigurationMode: Bool = false
         var delegateMode: TextViewDelegateMode = .automatic
-        var sizeMode: TextViewSizeMode = .fixed
+//        var sizeMode: TextViewSizeMode = .fixed
 //        var reassembleMode: TextViewReassembleMode = .none
         var reassembleMode: Bool = false
     }
@@ -193,7 +193,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateTextContainerState(TextContainerAction)
         case updateIsConfigurationMode(Bool)
         case updateDelegateMode(TextViewDelegateMode)
-        case updateSizeMode(TextViewSizeMode)
+//        case updateSizeMode(TextViewSizeMode)
         case updateReassembleMode(Bool)
     }
     // ------------------------------------------------------------------------------------ //
@@ -220,8 +220,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             update(\.isConfigurationMode, value: status)
         case .updateDelegateMode(let mode):
             update(\.delegateMode, value: mode)
-        case .updateSizeMode(let mode):
-            update(\.sizeMode, value: mode)
+//        case .updateSizeMode(let mode):
+//            update(\.sizeMode, value: mode)
         case .updateReassembleMode(let status):
             update(\.reassembleMode, value: status)
         }

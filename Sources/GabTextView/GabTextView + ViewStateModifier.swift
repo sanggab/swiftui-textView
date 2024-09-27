@@ -10,12 +10,22 @@ import SwiftUI
 
 // MARK: - View State Modifier
 public extension TextView {
-    /// TextView의 BackgroundColor를 변경합니다.
+    /// The view’s background color.
     ///
-    /// 초기 값은 White입니다.
-    func changeBackgroundColor(_ color: Color) -> TextView {
+    /// Changes to this property can be animated. The default value is nil, which results in a transparent background color.
+    func backgroundColor(color: Color?) -> TextView {
         let view: TextView = self
         view.viewModel.action(.updateViewState(.updateColor(color)))
+        return view
+    }
+    /// The view’s background color.
+    ///
+    /// Changes to this property can be animated. The default value is nil, which results in a transparent background color.
+    func backgroundColor(uiColor: UIColor?) -> TextView {
+        let view: TextView = self
+        if let color = uiColor {
+            view.viewModel.action(.updateViewState(.updateColor(Color(color))))
+        }
         return view
     }
     /// The technique for aligning the text.

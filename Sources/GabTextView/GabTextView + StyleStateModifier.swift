@@ -61,20 +61,20 @@ public extension TextView {
 
 // MARK: - Style
 public extension TextView {
-    /// TextView의 공백 처리를 정합니다.
-    ///
-    /// TextViewTrimMode에 따라 TextView의 공백을 처리하는 방법을 결정합니다.
-    func trimMode(_ method: TextViewTrimMode = .whitespaces) -> TextView {
-        let view: TextView = self
-        view.viewModel.action(.updateStyleState(.updateTrimMode(method)))
-        return view
-    }
     /// TextView의 입력 모드를 정합니다.
     ///
     /// TextViewInputBreakMode에 따라 TextView의 입력을 막습니다.
     func inputBreakMode(_ mode: TextViewInputBreakMode = .none) -> TextView {
         let view: TextView = self
         view.viewModel.action(.updateStyleState(.updateInputBreakMode(mode)))
+        return view
+    }
+    /// TextView의 공백 처리를 정합니다.
+    ///
+    /// TextViewTrimMode에 따라 TextView의 공백을 처리하는 방법을 결정합니다.
+    func trimMode(_ method: TextViewTrimMode = .whitespaces) -> TextView {
+        let view: TextView = self
+        view.viewModel.action(.updateStyleState(.updateTrimMode(method)))
         return view
     }
 }

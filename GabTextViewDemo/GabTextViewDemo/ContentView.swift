@@ -30,6 +30,8 @@ struct ContentView: View {
     @State private var trimMode: TextViewTrimMode = .whitespacesAndNewlines
     @State private var reassembleMode: Bool = false
     
+    @State private var color: UIColor? = .white
+    
     var body: some View {
         Text("현재 text count : \(textCount)")
             .accessibilityIdentifier("텍스트 카운트")
@@ -263,8 +265,17 @@ struct ContentView: View {
                 id = UUID()
             }
         
+        Text("백그라운드 변경해")
+            .accessibilityLabel("보이스 기능 입니다. 백그라운드 변경")
+            .accessibilityIdentifier("백그라운드 변경")
+            .onTapGesture {
+                color = nil
+                id = UUID()
+            }
+        
         TextView(text: $text)
-            .changeBackgroundColor(.gray.opacity(0.5))
+            .backgroundColor(color: .gray.opacity(0.5))
+//            .backgroundColor(.gray.opacity(0.5))
             .setTextViewAppearanceModel(.default)
             .limitCountAndLine(100, 10)
             .textContainerInset(.zero)
@@ -272,7 +283,7 @@ struct ContentView: View {
             .controlTextViewDelegate(.automatic)
             .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             .trimMode(trimMode)
-            .sizeMode(.dynamic)
+//            .sizeMode(.dynamic)
             .inputBreakMode(inputBreakMode)
             .receiveTextViewHeight { height in
                 textViewHeight = height
