@@ -33,18 +33,22 @@ SwiftUI에서도 TextView를 대체한 TextEditor라는 View가 존재하지만,
 
 ##### Usage examples:
 ```swift
-TextView(text: $text)
-    .backgroundColor(color: .gray.opacity(0.5))
-    .textContainerInset(.zero)
-    .lineFragmentPadding(.zero)
-    .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-    .isScrollEnabled(true)
-    .isEditable(true)
-    .isSelectable(true)
-    .showsVerticalScrollIndicator(false)
-    .textViewDidChange { textView in
-         print(textView.text)
-     }
+struct ContentView: View {
+    var body: some View {
+        TextView(text: $text)
+            .backgroundColor(color: .gray.opacity(0.5))
+            .textContainerInset(.zero)
+            .lineFragmentPadding(.zero)
+            .setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            .isScrollEnabled(true)
+            .isEditable(true)
+            .isSelectable(true)
+            .showsVerticalScrollIndicator(false)
+            .textViewDidChange { textView in
+                 print(textView.text)
+             }
+    }
+}
 ```
 
 
