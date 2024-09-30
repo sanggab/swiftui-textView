@@ -18,7 +18,7 @@
   * 해당 기능으로 UITextView를 구성할 경우에, UITextView의 옵션을 설정해주는 modifier들은 적용이 안됩니다. ( GabTextView만의 modifier들은 적용이 됩니다. )
   
   #### Delegate
-  * UITextViewDelegate를 
+  * UITextViewDelegate를 처리하는 방식을 결정할 수 있는 modifier를 추가했습니다.
   
   #### ReceiveTextViewHeight
   * UITextView의 height를 받을 수 있는 modifier를 추가했습니다.
