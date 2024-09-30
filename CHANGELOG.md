@@ -10,23 +10,23 @@
   #### InputBreak
   * UITextView에서 Text 입력을 할 때, 공백이나 개행과 관련된 입력을 막아주는 modifier를 추가했습니다.
 
-  ##### Trim
+  #### Trim
   * UITextView에서 Text의 입력을 마무리 할 때, 공백이나 개행을 제거해주는 modifier를 추가했습니다.
 
-  ##### Configuration
+  #### Configuration
   * UITextView의 옵션들을 modifier가 아닌 직접 설정하게 해주는 modifier를 추가했습니다.
   * 해당 기능으로 UITextView를 구성할 경우에, UITextView의 옵션을 설정해주는 modifier들은 적용이 안됩니다. ( GabTextView만의 modifier들은 적용이 됩니다. )
   
-  ##### Delegate
+  #### Delegate
   * UITextViewDelegate를 
   
-  ##### ReceiveTextViewHeight
+  #### ReceiveTextViewHeight
   * UITextView의 height를 받을 수 있는 modifier를 추가했습니다.
   
-  ##### ReceiveTextCount
+  #### ReceiveTextCount
   * UITextView의 text count를 받을 수 있는 modifier를 추가했습니다.
   
-  ##### ReassembleMode
+  #### ReassembleMode
   * 키보드의 입력이 아닌 TextView를 구현할 때 생성자 매개변수에 들어가는 @State 객체를 수정해서 UITextView에 update를 시켜주는 modifier를 추가했습니다.
 
 ---
