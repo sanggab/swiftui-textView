@@ -8,7 +8,6 @@
 import SwiftUI
 
 public extension TextView {
-    
     func textViewShouldBeginEditing(_ textViewShouldBeginEditing: @escaping ((UITextView) -> Bool)) -> TextView {
         var view: TextView = self
         view.textViewShouldBeginEditing = textViewShouldBeginEditing
@@ -47,7 +46,6 @@ public extension TextView {
 }
 
 public extension TextView {
-    
     func shouldChangeTextIn(_ shouldChangeTextIn: @escaping ((UITextView, NSRange, String) -> Bool)) -> TextView {
         var view: TextView = self
         view.shouldChangeTextIn = shouldChangeTextIn

@@ -7,9 +7,12 @@
 
 import SwiftUI
 
+/// UITextView
 @frozen
 public enum TextAppearanceType {
+    /// 키보드 활성화
     case focus
+    /// 키보드 비활성화
     case noneFocus
 }
 
@@ -125,14 +128,15 @@ public enum TextViewInputBreakMode {
 /// TextView의 ReassembleMode
 ///
 /// 외부의 State에서 변경을 시키면 그것을 감지해서 inputBreak랑 trim을 적용시킬지 말지 정한다.
-//@frozen
-//public enum TextViewReassembleMode {
-//    /// 기본
-//    case none
-//    /// 입력모드
-//    case inputBreak
-//    /// 트림
-//    case trim
-//    /// inputBreak & trim
-//    case all
-//}
+@available(*, deprecated, message: "이제 안쓰임")
+@frozen
+public enum TextViewReassembleMode {
+    /// 기본
+    case none
+    /// 입력모드
+    case inputBreak
+    /// 트림
+    case trim
+    /// inputBreak & trim
+    case all
+}

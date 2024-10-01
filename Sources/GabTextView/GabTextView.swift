@@ -76,9 +76,6 @@ public struct TextView: UIViewRepresentable {
     private func updateHeight(_ textView: UITextView) {
         DispatchQueue.main.async {
             receiveTextViewHeight?(textView.contentSize.height)
-//            if viewModel(\.sizeMode) == .dynamic {
-//                receiveTextViewHeight?(textView.contentSize.height)
-//            }
         }
     }
     
@@ -86,25 +83,19 @@ public struct TextView: UIViewRepresentable {
     private func updateTextCount(_ textView: UITextView) {
         DispatchQueue.main.async {
             var count: Int = 0
-//            var newText: String = ""
             
             let trimMode: TextViewTrimMode = viewModel(\.styleState.trimMode)
             
             switch trimMode {
             case .none:
-//                newText = textView.text
                 count = textView.text.count
             case .whitespaces:
-//                newText = textView.text.trimmingCharacters(in: .whitespaces)
                 count = textView.text.trimmingCharacters(in: .whitespaces).count
             case .whitespacesAndNewlines:
-//                newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
                 count = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).count
             case .blankWithWhitespaces:
-//                newText = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
                 count = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "").count
             case .blankWithWhitespacesAndNewlines:
-//                newText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
                 count = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "").count
             }
             

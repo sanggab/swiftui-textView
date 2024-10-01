@@ -43,11 +43,12 @@ public extension TextView {
     /// TextView의 Size를 고정 / 동적으로 처리할 것 인지 정하는 Modifier
     ///
     /// default값은 fixed
-//    func sizeMode(_ mode: TextViewSizeMode = .fixed) -> TextView {
-//        let view: TextView = self
-//        view.viewModel.action(.updateSizeMode(mode))
-//        return view
-//    }
+    @available(*, deprecated, message: "추후 업데이트")
+    func sizeMode(_ mode: TextViewSizeMode = .fixed) -> TextView {
+        let view: TextView = self
+        view.viewModel.action(.updateSizeMode(mode))
+        return view
+    }
     /// TextView에서 입력이 아닌 외부에서 text를 수정할 경우에 textView.text를 적용시킬지 말지 정하는 Modifier
     ///
     /// default값은 none

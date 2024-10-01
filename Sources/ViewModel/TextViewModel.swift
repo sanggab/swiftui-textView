@@ -180,8 +180,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         var textContainerState: TextContainerState = .init()
         var isConfigurationMode: Bool = false
         var delegateMode: TextViewDelegateMode = .automatic
-//        var sizeMode: TextViewSizeMode = .fixed
-//        var reassembleMode: TextViewReassembleMode = .none
+        var sizeMode: TextViewSizeMode = .fixed
         var reassembleMode: Bool = false
     }
     
@@ -193,7 +192,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
         case updateTextContainerState(TextContainerAction)
         case updateIsConfigurationMode(Bool)
         case updateDelegateMode(TextViewDelegateMode)
-//        case updateSizeMode(TextViewSizeMode)
+        case updateSizeMode(TextViewSizeMode)
         case updateReassembleMode(Bool)
     }
     // ------------------------------------------------------------------------------------ //
@@ -220,8 +219,8 @@ class TextViewModel: ObservableObject, TextViewFeatures {
             update(\.isConfigurationMode, value: status)
         case .updateDelegateMode(let mode):
             update(\.delegateMode, value: mode)
-//        case .updateSizeMode(let mode):
-//            update(\.sizeMode, value: mode)
+        case .updateSizeMode(let mode):
+            update(\.sizeMode, value: mode)
         case .updateReassembleMode(let status):
             update(\.reassembleMode, value: status)
         }

@@ -61,16 +61,12 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             switch trimMode {
             case .whitespaces:
                 textView.text = textView.text.trimmingCharacters(in: .whitespaces)
-//                parent.text = textView.text
             case .whitespacesAndNewlines:
                 textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-//                parent.text = textView.text
             case .blankWithWhitespaces:
                 textView.text = textView.text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "")
-//                parent.text = textView.text
             case .blankWithWhitespacesAndNewlines:
                 textView.text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
-//                parent.text = textView.text
             case .none:
                 break
             }
