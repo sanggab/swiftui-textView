@@ -2,7 +2,7 @@
 
 -----
 
-## [2.0 - GabTextView Cataclysmic patch](https://github.com/sanggab/swiftui-textView/releases/tag/2.0) (2024-09-30)
+## [2.0 - Cataclysmic patch](https://github.com/sanggab/swiftui-textView/releases/tag/2.0) (2024-10-01)
 #### Add
 
 * 이제 UITextView의 옵션들을 Modifier로 만나보실 수 있습니다. ex) isScrollEnabled, isEditable, setContentCompressionResistancePriority ...
