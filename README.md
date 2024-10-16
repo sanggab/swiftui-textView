@@ -195,6 +195,8 @@ struct ContentView: View {
   alignment옵션으로 content의 alignment를 설정할 수 있습니다.   
   text의 count가 0이하일 경우에만 content가 노출 되고, 아닐 경우에는 EmptyView()를 리턴합니다.
 
+이 옵션은 trimMode에 영향을 받지 않습니다.
+
   ##### Usage examples:
   ```swift
   TextView(text: $text)
