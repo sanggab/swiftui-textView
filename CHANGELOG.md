@@ -2,7 +2,15 @@
 
 -----
 
-## [2.0 - GabTextView Cataclysmic patch](https://github.com/sanggab/swiftui-textView/releases/tag/2.0) (2024-09-30)
+## [2.1 - Bug Fix](https://github.com/sanggab/swiftui-textView/releases/tag/2.1) (2025-02-03)
+#### Fix
+* TextView의 Modifier인 textViewConfiguration(_:)를 사용한 경우 Crash가 발생한 문제를 해결했습니다.
+* TextView의 Modifier인 setTextViewAppearanceModel(_:)를 사용 안 해도 TextViewAppearanceModel가 default로 들어가 있는 문제를 수정했습니다.
+* TextView의 Modifier인 textViewConfiguration(_:)를 사용한 경우에, UITextView의 font나 textColor를 수정해도 적용이 안되는 버그를 수정했습니다.
+
+---
+  
+## [2.0 - GabTextView Cataclysmic patch](https://github.com/sanggab/swiftui-textView/releases/tag/2.0) (2024-09-30)
 #### Add
 
 * 이제 UITextView의 옵션들을 Modifier로 만나보실 수 있습니다. ex) isScrollEnabled, isEditable, setContentCompressionResistancePriority ...
