@@ -157,6 +157,12 @@ struct ContentView: View {
   | `lineWithWhiteSpace` | 개행과 공백의 입력을 막는다. |
   | `lineWithContinuousWhiteSpace` | 개행과 연속된 공백의 입력을 막는다. |
 
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .inputBreakMode(.lineWithContinuousWhiteSpace)
+  ```
+
 
 <a name="trim"></a>
 ### Trim
@@ -172,7 +178,12 @@ struct ContentView: View {
   | `whitespacesAndNewlines` | trimmingCharacters의 whitespacesAndNewlines와 같습니다. |
   | `blankWithWhitespaces` | 문자열 사이의 공백과 whitespaces를 제거합니다. |
   | `blankWithWhitespacesAndNewlines` | 문자열 사이의 공백과 blankWithWhitespacesAndNewlines를 제거합니다. |
-  
+
+  ##### Usage examples:
+  ```swift
+  TextView(text: $text)
+      .trimMode(.blankWithWhitespacesAndNewlines)
+  ```
   
 
 <a name="placeholder"></a>
@@ -183,6 +194,8 @@ struct ContentView: View {
   TextView에 PlaceHolder를 세팅합니다.   
   alignment옵션으로 content의 alignment를 설정할 수 있습니다.   
   text의 count가 0이하일 경우에만 content가 노출 되고, 아닐 경우에는 EmptyView()를 리턴합니다.
+
+이 옵션은 trimMode에 영향을 받지 않습니다.
 
   ##### Usage examples:
   ```swift

@@ -2,6 +2,7 @@
 
 -----
 
+
 ## [2.1 - Bug Fix](https://github.com/sanggab/swiftui-textView/releases/tag/2.1) (2025-02-03)
 #### Fix
 * TextView의 Modifier인 textViewConfiguration(_:)를 사용한 경우 Crash가 발생한 문제를 해결했습니다.
@@ -10,7 +11,7 @@
 
 ---
   
-## [2.0 - GabTextView Cataclysmic patch](https://github.com/sanggab/swiftui-textView/releases/tag/2.0) (2024-09-30)
+## [2.0 - Cataclysmic patch](https://github.com/sanggab/swiftui-textView/releases/tag/2.0) (2024-10-01)
 #### Add
 
 * 이제 UITextView의 옵션들을 Modifier로 만나보실 수 있습니다. ex) isScrollEnabled, isEditable, setContentCompressionResistancePriority ...
