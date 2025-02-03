@@ -132,7 +132,7 @@ class TextViewModel: ObservableObject, TextViewFeatures {
     
     // ------------------------------------------------------------------------------------ //
     struct StyleState: Equatable {
-        var appearance: TextViewAppearanceModel = .default
+        var appearance: TextViewAppearanceModel = .init()
         var limitCount: Int = 999999
         var limitLine: Int = 999999
         var trimMode: TextViewTrimMode = .none

@@ -34,11 +34,11 @@ public struct TextAppearance: Equatable {
 public struct TextViewAppearanceModel: Equatable {
     public static let `default` = TextViewAppearanceModel(noneFocus: .noneFocus, focus: .focus)
     
-    public var noneFocus: TextAppearance
-    public var focus: TextAppearance
+    public var noneFocus: TextAppearance?
+    public var focus: TextAppearance?
     
-    public init(noneFocus: TextAppearance,
-                focus: TextAppearance) {
+    public init(noneFocus: TextAppearance? = nil,
+                focus: TextAppearance? = nil) {
         self.noneFocus = noneFocus
         self.focus = focus
     }

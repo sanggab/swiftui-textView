@@ -48,7 +48,9 @@ public struct TextView: UIViewRepresentable {
         let textView: UITextView = UITextView()
         
         if let configuration {
-            configuration(textView)
+            DispatchQueue.main.async {
+                configuration(textView)
+            }
         } else {
             textView.text = text
             bindTextView(textView)
@@ -216,9 +218,10 @@ private extension TextView {
     func bindStyleState(_ textView: UITextView) {
         let styleState = viewModel(\.styleState)
         
-        let noneFocusModel = styleState.appearance.noneFocus
-        textView.font = noneFocusModel.font
-        textView.textColor = UIColor(noneFocusModel.color)
+        if let noneFocusModel = styleState.appearance.noneFocus {
+            textView.font = noneFocusModel.font
+            textView.textColor = UIColor(noneFocusModel.color)
+        }
         
         if self.text.count > styleState.limitCount {
             let prefixText = textView.text.prefix(styleState.limitCount)

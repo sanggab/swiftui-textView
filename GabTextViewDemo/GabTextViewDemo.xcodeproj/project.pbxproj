@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF24CC4E2D508E76001C5292 /* ConfigurationTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24CC4D2D508E76001C5292 /* ConfigurationTextView.swift */; };
 		EF36A5942C6C4162006CF215 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A5932C6C4162006CF215 /* ContentView.swift */; };
 		EF4C220E2C53905700688997 /* GabTextViewDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C220D2C53905700688997 /* GabTextViewDemoApp.swift */; };
 		EF4C22122C53905800688997 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF4C22112C53905800688997 /* Assets.xcassets */; };
@@ -50,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EF24CC4D2D508E76001C5292 /* ConfigurationTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTextView.swift; sourceTree = "<group>"; };
 		EF36A5932C6C4162006CF215 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EF4C220A2C53905700688997 /* GabTextViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GabTextViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C220D2C53905700688997 /* GabTextViewDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewDemoApp.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			children = (
 				EF36A5932C6C4162006CF215 /* ContentView.swift */,
 				EF4C220D2C53905700688997 /* GabTextViewDemoApp.swift */,
+				EF24CC4D2D508E76001C5292 /* ConfigurationTextView.swift */,
 				EF4C22112C53905800688997 /* Assets.xcassets */,
 				EF4C22132C53905800688997 /* Preview Content */,
 			);
@@ -287,6 +290,7 @@
 			files = (
 				EF36A5942C6C4162006CF215 /* ContentView.swift in Sources */,
 				EF4C220E2C53905700688997 /* GabTextViewDemoApp.swift in Sources */,
+				EF24CC4E2D508E76001C5292 /* ConfigurationTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

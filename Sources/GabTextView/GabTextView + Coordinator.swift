@@ -24,9 +24,11 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         case .none:
             break
         case .automatic:
-            let focusAppearance: TextAppearance = viewModel(\.styleState.appearance).focus
-            textView.font = focusAppearance.font
-            textView.textColor = UIColor(focusAppearance.color)
+            if let focusAppearance: TextAppearance = viewModel(\.styleState.appearance).focus {
+                print("상갑 logEvent \(#function) focusAppearance: \(focusAppearance)")
+                textView.font = focusAppearance.font
+                textView.textColor = UIColor(focusAppearance.color)
+            }
         case .modifier:
             parent.textViewDidBeginEditing?(textView)
         }
@@ -52,9 +54,10 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
         case .none:
             break
         case .automatic:
-            let noneFocusAppearance: TextAppearance = viewModel(\.styleState.appearance).noneFocus
-            textView.font = noneFocusAppearance.font
-            textView.textColor = UIColor(noneFocusAppearance.color)
+            if let noneFocusAppearance: TextAppearance = viewModel(\.styleState.appearance).noneFocus {
+                textView.font = noneFocusAppearance.font
+                textView.textColor = UIColor(noneFocusAppearance.color)
+            }
             
             let trimMode: TextViewTrimMode = viewModel(\.styleState.trimMode)
             

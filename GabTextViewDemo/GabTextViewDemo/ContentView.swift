@@ -286,6 +286,7 @@ struct ContentView: View {
 //            .sizeMode(.dynamic)
             .inputBreakMode(inputBreakMode)
             .receiveTextViewHeight { height in
+                print("상갑 logEvent \(#function) receiveTextViewHeight: \(height)")
                 textViewHeight = height
             }
             .receiveTextCount { count in
