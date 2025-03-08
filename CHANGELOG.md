@@ -2,6 +2,11 @@
 
 -----
 
+## [2.2 - Bug Fix](https://github.com/sanggab/swiftui-textView/releases/tag/2.2) (2025-03-08)
+#### Fix
+* TextView의 framework 네이밍이 폴더의 네이밍과 같아서 TextViewModel이나 TextView를 찾을 수 없는 문제를 수정했습니다.
+
+---
 
 ## [2.1 - Bug Fix](https://github.com/sanggab/swiftui-textView/releases/tag/2.1) (2025-02-03)
 #### Fix
