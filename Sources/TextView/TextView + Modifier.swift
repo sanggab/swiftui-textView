@@ -1,5 +1,5 @@
 //
-//  GabTextView + Modifier.swift
+//  TextView + Modifier.swift
 //  GabTextView
 //
 //  Created by Gab on 2024/08/09.

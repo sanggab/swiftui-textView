@@ -1,5 +1,5 @@
 //
-//  GabTextView + StyleStateModifier.swift
+//  TextView + StyleStateModifier.swift
 //  GabTextView
 //
 //  Created by Gab on 2024/08/13.

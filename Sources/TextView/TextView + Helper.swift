@@ -1,5 +1,5 @@
 //
-//  GabTextView + Helper.swift
+//  TextView + Helper.swift
 //  GabTextView
 //
 //  Created by Gab on 2024/09/11.

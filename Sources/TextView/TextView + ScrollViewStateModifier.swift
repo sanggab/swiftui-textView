@@ -1,5 +1,5 @@
 //
-//  GabTextView + ScrollViewModifier.swift
+//  TextView + ScrollViewModifier.swift
 //  GabTextView
 //
 //  Created by Gab on 2024/08/13.

@@ -1,5 +1,5 @@
 //
-//  GabTextView + Coordinator.swift
+//  TextView + Coordinator.swift
 //  GabTextView
 //
 //  Created by Gab on 2024/08/13.

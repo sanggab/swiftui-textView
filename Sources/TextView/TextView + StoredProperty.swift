@@ -1,5 +1,5 @@
 //
-//  GabTextView + StoredProperty.swift
+//  TextView + StoredProperty.swift
 //  GabTextView
 //
 //  Created by Gab on 2024/08/27.

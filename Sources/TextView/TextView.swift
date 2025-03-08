@@ -1,5 +1,5 @@
 //
-//  GabTextView.swift
+//  TextView.swift
 //  GabTextView
 //
 //  Created by Gab on 2024/07/26.
@@ -373,3 +373,4 @@ private extension TextView {
         return false
     }
 }
+
