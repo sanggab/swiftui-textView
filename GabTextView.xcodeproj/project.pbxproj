@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EF1AE13D2C7C3CA600544B7F /* GabTextView + TextViewDelegateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1AE13C2C7C3CA600544B7F /* GabTextView + TextViewDelegateModifier.swift */; };
-		EF1AE13F2C7D5FCE00544B7F /* GabTextView + StoredProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1AE13E2C7D5FCE00544B7F /* GabTextView + StoredProperty.swift */; };
-		EF36A5922C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A5912C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift */; };
+		4B5163782D7C54BB00767156 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B51636C2D7C54BB00767156 /* TextView.swift */; };
+		4B5163792D7C54BB00767156 /* TextView + StyleStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5163722D7C54BB00767156 /* TextView + StyleStateModifier.swift */; };
+		4B51637A2D7C54BB00767156 /* TextView + Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B51636F2D7C54BB00767156 /* TextView + Modifier.swift */; };
+		4B51637B2D7C54BB00767156 /* TextView + ViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5163752D7C54BB00767156 /* TextView + ViewStateModifier.swift */; };
+		4B51637C2D7C54BB00767156 /* TextView+ Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5163762D7C54BB00767156 /* TextView+ Coordinator.swift */; };
+		4B51637D2D7C54BB00767156 /* TextView + ScrollViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5163702D7C54BB00767156 /* TextView + ScrollViewStateModifier.swift */; };
+		4B51637E2D7C54BB00767156 /* TextView + ContentPriorityStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B51636D2D7C54BB00767156 /* TextView + ContentPriorityStateModifier.swift */; };
+		4B51637F2D7C54BB00767156 /* TextView + StoredProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5163712D7C54BB00767156 /* TextView + StoredProperty.swift */; };
+		4B5163802D7C54BB00767156 /* TextView + Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B51636E2D7C54BB00767156 /* TextView + Helper.swift */; };
+		4B5163812D7C54BB00767156 /* TextView + TextViewDelegateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5163742D7C54BB00767156 /* TextView + TextViewDelegateModifier.swift */; };
+		4B5163822D7C54BB00767156 /* TextView + TextContainerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5163732D7C54BB00767156 /* TextView + TextContainerModifier.swift */; };
 		EF36A5982C6C6A8D006CF215 /* ViewStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A5972C6C6A8D006CF215 /* ViewStateTests.swift */; };
-		EF44A2312C69A1D100687479 /* GabTextView + ViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */; };
-		EF44A2332C6B3F9700687479 /* GabTextView + Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2322C6B3F9700687479 /* GabTextView + Coordinator.swift */; };
-		EF44A2352C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */; };
-		EF44A2372C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2362C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift */; };
-		EF44A2392C6B450700687479 /* GabTextView + StyleStateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44A2382C6B450700687479 /* GabTextView + StyleStateModifier.swift */; };
 		EF4C21EE2C538FDB00688997 /* GabTextView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4C21E42C538FDB00688997 /* GabTextView.framework */; };
 		EF4C21F32C538FDB00688997 /* GabTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */; };
-		EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C21FB2C538FEB00688997 /* GabTextView.swift */; };
-		EF6D3B6F2C6608FF00D70E66 /* GabTextView + Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6D3B6E2C6608FF00D70E66 /* GabTextView + Modifier.swift */; };
-		EFB7B15A2C91166D005D9DE3 /* GabTextView + Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7B1592C91166D005D9DE3 /* GabTextView + Helper.swift */; };
 		EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */; };
 		EFC4CA662C58D15D00C1C86D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC4CA652C58D15D00C1C86D /* Model.swift */; };
 /* End PBXBuildFile section */
@@ -36,21 +36,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EF1AE13C2C7C3CA600544B7F /* GabTextView + TextViewDelegateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + TextViewDelegateModifier.swift"; sourceTree = "<group>"; };
-		EF1AE13E2C7D5FCE00544B7F /* GabTextView + StoredProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + StoredProperty.swift"; sourceTree = "<group>"; };
-		EF36A5912C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + TextContainerModifier.swift"; sourceTree = "<group>"; };
+		4B51636C2D7C54BB00767156 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		4B51636D2D7C54BB00767156 /* TextView + ContentPriorityStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView + ContentPriorityStateModifier.swift"; sourceTree = "<group>"; };
+		4B51636E2D7C54BB00767156 /* TextView + Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView + Helper.swift"; sourceTree = "<group>"; };
+		4B51636F2D7C54BB00767156 /* TextView + Modifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView + Modifier.swift"; sourceTree = "<group>"; };
+		4B5163702D7C54BB00767156 /* TextView + ScrollViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView + ScrollViewStateModifier.swift"; sourceTree = "<group>"; };
+		4B5163712D7C54BB00767156 /* TextView + StoredProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView + StoredProperty.swift"; sourceTree = "<group>"; };
+		4B5163722D7C54BB00767156 /* TextView + StyleStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView + StyleStateModifier.swift"; sourceTree = "<group>"; };
+		4B5163732D7C54BB00767156 /* TextView + TextContainerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView + TextContainerModifier.swift"; sourceTree = "<group>"; };
+		4B5163742D7C54BB00767156 /* TextView + TextViewDelegateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView + TextViewDelegateModifier.swift"; sourceTree = "<group>"; };
+		4B5163752D7C54BB00767156 /* TextView + ViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView + ViewStateModifier.swift"; sourceTree = "<group>"; };
+		4B5163762D7C54BB00767156 /* TextView+ Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView+ Coordinator.swift"; sourceTree = "<group>"; };
 		EF36A5972C6C6A8D006CF215 /* ViewStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStateTests.swift; sourceTree = "<group>"; };
-		EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ViewStateModifier.swift"; sourceTree = "<group>"; };
-		EF44A2322C6B3F9700687479 /* GabTextView + Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + Coordinator.swift"; sourceTree = "<group>"; };
-		EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ScrollViewStateModifier.swift"; sourceTree = "<group>"; };
-		EF44A2362C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + ContentPriorityStateModifier.swift"; sourceTree = "<group>"; };
-		EF44A2382C6B450700687479 /* GabTextView + StyleStateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + StyleStateModifier.swift"; sourceTree = "<group>"; };
 		EF4C21E42C538FDB00688997 /* GabTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GabTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C21ED2C538FDB00688997 /* GabTextViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GabTextViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4C21F22C538FDB00688997 /* GabTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextViewTests.swift; sourceTree = "<group>"; };
-		EF4C21FB2C538FEB00688997 /* GabTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GabTextView.swift; sourceTree = "<group>"; };
-		EF6D3B6E2C6608FF00D70E66 /* GabTextView + Modifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + Modifier.swift"; sourceTree = "<group>"; };
-		EFB7B1592C91166D005D9DE3 /* GabTextView + Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GabTextView + Helper.swift"; sourceTree = "<group>"; };
 		EFC4CA622C58B5AC00C1C86D /* TextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewModel.swift; sourceTree = "<group>"; };
 		EFC4CA652C58D15D00C1C86D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +74,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B5163772D7C54BB00767156 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				4B51636C2D7C54BB00767156 /* TextView.swift */,
+				4B51636D2D7C54BB00767156 /* TextView + ContentPriorityStateModifier.swift */,
+				4B51636E2D7C54BB00767156 /* TextView + Helper.swift */,
+				4B51636F2D7C54BB00767156 /* TextView + Modifier.swift */,
+				4B5163702D7C54BB00767156 /* TextView + ScrollViewStateModifier.swift */,
+				4B5163712D7C54BB00767156 /* TextView + StoredProperty.swift */,
+				4B5163722D7C54BB00767156 /* TextView + StyleStateModifier.swift */,
+				4B5163732D7C54BB00767156 /* TextView + TextContainerModifier.swift */,
+				4B5163742D7C54BB00767156 /* TextView + TextViewDelegateModifier.swift */,
+				4B5163752D7C54BB00767156 /* TextView + ViewStateModifier.swift */,
+				4B5163762D7C54BB00767156 /* TextView+ Coordinator.swift */,
+			);
+			path = TextView;
+			sourceTree = "<group>";
+		};
 		EF4C21892C538F3E00688997 = {
 			isa = PBXGroup;
 			children = (
@@ -95,29 +113,11 @@
 		EF4C21BF2C538FA700688997 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4B5163772D7C54BB00767156 /* TextView */,
 				EFC4CA642C58D15700C1C86D /* Model */,
 				EFC4CA612C58B5A600C1C86D /* ViewModel */,
-				EF4C21E52C538FDB00688997 /* GabTextView */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		EF4C21E52C538FDB00688997 /* GabTextView */ = {
-			isa = PBXGroup;
-			children = (
-				EF4C21FB2C538FEB00688997 /* GabTextView.swift */,
-				EFB7B1592C91166D005D9DE3 /* GabTextView + Helper.swift */,
-				EF1AE13E2C7D5FCE00544B7F /* GabTextView + StoredProperty.swift */,
-				EF44A2322C6B3F9700687479 /* GabTextView + Coordinator.swift */,
-				EF6D3B6E2C6608FF00D70E66 /* GabTextView + Modifier.swift */,
-				EF1AE13C2C7C3CA600544B7F /* GabTextView + TextViewDelegateModifier.swift */,
-				EF44A2302C69A1D100687479 /* GabTextView + ViewStateModifier.swift */,
-				EF44A2342C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift */,
-				EF44A2362C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift */,
-				EF44A2382C6B450700687479 /* GabTextView + StyleStateModifier.swift */,
-				EF36A5912C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift */,
-			);
-			path = GabTextView;
 			sourceTree = "<group>";
 		};
 		EF4C21F12C538FDB00688997 /* GabTextViewTests */ = {
@@ -262,19 +262,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF36A5922C6C38AA006CF215 /* GabTextView + TextContainerModifier.swift in Sources */,
-				EF1AE13D2C7C3CA600544B7F /* GabTextView + TextViewDelegateModifier.swift in Sources */,
 				EFC4CA662C58D15D00C1C86D /* Model.swift in Sources */,
-				EF4C21FC2C538FEB00688997 /* GabTextView.swift in Sources */,
-				EF1AE13F2C7D5FCE00544B7F /* GabTextView + StoredProperty.swift in Sources */,
 				EFC4CA632C58B5AC00C1C86D /* TextViewModel.swift in Sources */,
-				EF6D3B6F2C6608FF00D70E66 /* GabTextView + Modifier.swift in Sources */,
-				EF44A2312C69A1D100687479 /* GabTextView + ViewStateModifier.swift in Sources */,
-				EF44A2392C6B450700687479 /* GabTextView + StyleStateModifier.swift in Sources */,
-				EF44A2352C6B43F600687479 /* GabTextView + ScrollViewStateModifier.swift in Sources */,
-				EF44A2332C6B3F9700687479 /* GabTextView + Coordinator.swift in Sources */,
-				EFB7B15A2C91166D005D9DE3 /* GabTextView + Helper.swift in Sources */,
-				EF44A2372C6B447400687479 /* GabTextView + ContentPriorityStateModifier.swift in Sources */,
+				4B5163782D7C54BB00767156 /* TextView.swift in Sources */,
+				4B5163792D7C54BB00767156 /* TextView + StyleStateModifier.swift in Sources */,
+				4B51637A2D7C54BB00767156 /* TextView + Modifier.swift in Sources */,
+				4B51637B2D7C54BB00767156 /* TextView + ViewStateModifier.swift in Sources */,
+				4B51637C2D7C54BB00767156 /* TextView+ Coordinator.swift in Sources */,
+				4B51637D2D7C54BB00767156 /* TextView + ScrollViewStateModifier.swift in Sources */,
+				4B51637E2D7C54BB00767156 /* TextView + ContentPriorityStateModifier.swift in Sources */,
+				4B51637F2D7C54BB00767156 /* TextView + StoredProperty.swift in Sources */,
+				4B5163802D7C54BB00767156 /* TextView + Helper.swift in Sources */,
+				4B5163812D7C54BB00767156 /* TextView + TextViewDelegateModifier.swift in Sources */,
+				4B5163822D7C54BB00767156 /* TextView + TextContainerModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

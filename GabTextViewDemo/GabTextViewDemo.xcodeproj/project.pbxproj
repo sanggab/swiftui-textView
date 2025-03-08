@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B5163692D7C54A600767156 /* GabTextView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5163682D7C54A600767156 /* GabTextView.framework */; };
+		4B51636A2D7C54A600767156 /* GabTextView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5163682D7C54A600767156 /* GabTextView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EF24CC4E2D508E76001C5292 /* ConfigurationTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24CC4D2D508E76001C5292 /* ConfigurationTextView.swift */; };
 		EF36A5942C6C4162006CF215 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A5932C6C4162006CF215 /* ContentView.swift */; };
 		EF4C220E2C53905700688997 /* GabTextViewDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C220D2C53905700688997 /* GabTextViewDemoApp.swift */; };
@@ -15,8 +17,6 @@
 		EF4C221F2C53905900688997 /* GabTextViewDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C221E2C53905900688997 /* GabTextViewDemoTests.swift */; };
 		EF4C22292C53905900688997 /* GabTextViewDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C22282C53905900688997 /* GabTextViewDemoUITests.swift */; };
 		EF4C222B2C53905900688997 /* GabTextViewDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C222A2C53905900688997 /* GabTextViewDemoUITestsLaunchTests.swift */; };
-		EFC4CA5E2C58AF7100C1C86D /* GabTextView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFC4CA5D2C58AF7100C1C86D /* GabTextView.framework */; };
-		EFC4CA5F2C58AF7100C1C86D /* GabTextView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EFC4CA5D2C58AF7100C1C86D /* GabTextView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,13 +37,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		EFC4CA602C58AF7100C1C86D /* Embed Frameworks */ = {
+		4B51636B2D7C54A600767156 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				EFC4CA5F2C58AF7100C1C86D /* GabTextView.framework in Embed Frameworks */,
+				4B51636A2D7C54A600767156 /* GabTextView.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,6 +51,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4B5163642D7C547B00767156 /* GabTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GabTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B5163682D7C54A600767156 /* GabTextView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GabTextView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF24CC4D2D508E76001C5292 /* ConfigurationTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationTextView.swift; sourceTree = "<group>"; };
 		EF36A5932C6C4162006CF215 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EF4C220A2C53905700688997 /* GabTextViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GabTextViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFC4CA5E2C58AF7100C1C86D /* GabTextView.framework in Frameworks */,
+				4B5163692D7C54A600767156 /* GabTextView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +154,8 @@
 		EFC4CA5C2C58AF7100C1C86D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B5163682D7C54A600767156 /* GabTextView.framework */,
+				4B5163642D7C547B00767156 /* GabTextView.framework */,
 				EFC4CA5D2C58AF7100C1C86D /* GabTextView.framework */,
 			);
 			name = Frameworks;
@@ -167,7 +171,7 @@
 				EF4C22062C53905700688997 /* Sources */,
 				EF4C22072C53905700688997 /* Frameworks */,
 				EF4C22082C53905700688997 /* Resources */,
-				EFC4CA602C58AF7100C1C86D /* Embed Frameworks */,
+				4B51636B2D7C54A600767156 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
