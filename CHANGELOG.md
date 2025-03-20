@@ -2,6 +2,12 @@
 
 -----
 
+## [2.3 - Bug Fix](https://github.com/sanggab/swiftui-textView/releases/tag/2.3) (2025-03-21)
+#### Fix
+* TextView의 limitLineCondition에서 UITextView의 Font를 설정 안 할 경우에 fatalError로 Font를 설정하라는 기능을 추가했습니다.
+
+---
+
 ## [2.2 - Bug Fix](https://github.com/sanggab/swiftui-textView/releases/tag/2.2) (2025-03-08)
 #### Fix
 * TextView의 framework 네이밍이 폴더의 네이밍과 같아서 TextViewModel이나 TextView를 찾을 수 없는 문제를 수정했습니다.

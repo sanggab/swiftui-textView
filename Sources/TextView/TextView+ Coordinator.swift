@@ -332,6 +332,8 @@ extension TextViewCoordinator {
 
 extension TextViewCoordinator {
     func limitLineCondition(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard textView.font != nil else { fatalError("Please Setting UITextView Font") }
+        
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let textHeight = newText.boundingRect(with: CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude),
                                                   options: .usesLineFragmentOrigin,
