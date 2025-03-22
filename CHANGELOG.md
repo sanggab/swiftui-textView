@@ -2,6 +2,10 @@
 
 -----
 
+## [2.4 - Remove Print](https://github.com/sanggab/swiftui-textView/releases/tag/2.3) (2025-03-22)
+#### Fix
+* Print문을 제거했습니다.
+
 ## [2.3 - Bug Fix](https://github.com/sanggab/swiftui-textView/releases/tag/2.3) (2025-03-21)
 #### Fix
 * TextView의 limitLineCondition에서 UITextView의 Font를 설정 안 할 경우에 fatalError로 Font를 설정하라는 기능을 추가했습니다.
