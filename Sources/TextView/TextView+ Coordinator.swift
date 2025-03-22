@@ -25,7 +25,6 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
             break
         case .automatic:
             if let focusAppearance: TextAppearance = viewModel(\.styleState.appearance).focus {
-                print("상갑 logEvent \(#function) focusAppearance: \(focusAppearance)")
                 textView.font = focusAppearance.font
                 textView.textColor = UIColor(focusAppearance.color)
             }
