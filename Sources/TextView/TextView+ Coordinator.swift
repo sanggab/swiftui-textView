@@ -100,9 +100,9 @@ public final class TextViewCoordinator: NSObject, UITextViewDelegate {
     private func conditionTextView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if checkInputBreakMode(textView, range: range, replacementText: text) {
             
-            if limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
-                return false
-            }
+//            if limitLineCondition(textView, shouldChangeTextIn: range, replacementText: text) {
+//                return false
+//            }
             
             if limitCountCondition(textView, shouldChangeTextIn: range, replacementText: text) {
                 return false

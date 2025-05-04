@@ -70,11 +70,12 @@ struct ContentView: View {
                     }
                     .accessibilityIdentifier("Text 추가")
                     .onTapGesture {
-                        let random = randomSentence.randomElement() ?? ""
-                        
-                        print("상갑 logEvent \(#function) random: \(random)")
-                        text += random
-                        print("상갑 logEvent \(#function) text: \(text)")
+//                        let random = randomSentence.randomElement() ?? ""
+//                        
+//                        print("상갑 logEvent \(#function) random: \(random)")
+//                        text += random
+//                        print("상갑 logEvent \(#function) text: \(text)")
+                        text = "dd\ndd\ndd\ndd\ndd\ndddfsdf\ndfsfd\ndsfdf"
                     }
                 
                 Rectangle()
@@ -277,7 +278,7 @@ struct ContentView: View {
             .backgroundColor(color: .gray.opacity(0.5))
 //            .backgroundColor(.gray.opacity(0.5))
             .setTextViewAppearanceModel(.default)
-            .limitCountAndLine(100, 10)
+            .limitCountAndLine(100, 5)
             .textContainerInset(.zero)
             .lineFragmentPadding(.zero)
             .controlTextViewDelegate(.automatic)

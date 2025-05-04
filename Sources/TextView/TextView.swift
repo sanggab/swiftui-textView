@@ -64,10 +64,12 @@ public struct TextView: UIViewRepresentable {
     }
     
     public func updateUIView(_ textView: UIViewType, context: Context) {
-        context.coordinator.viewModel = viewModel
-        checkDifferent(textView, context)
-        updateHeight(textView)
-        updateTextCount(textView)
+        DispatchQueue.main.async {
+            context.coordinator.viewModel = viewModel
+            checkDifferent(textView, context)
+            updateHeight(textView)
+            updateTextCount(textView)
+        }
     }
     
     public func makeCoordinator() -> TextViewCoordinator {
@@ -76,14 +78,17 @@ public struct TextView: UIViewRepresentable {
     
     @MainActor
     private func updateHeight(_ textView: UITextView) {
-        DispatchQueue.main.async {
+        let lines = Int(textView.contentSize.height / (textView.font?.lineHeight ?? 0))
+        if lines > viewModel(\.styleState.limitLine) {
+            let newHeight: CGFloat = (textView.font?.lineHeight ?? 0) * CGFloat(viewModel(\.styleState.limitLine))
+            receiveTextViewHeight?(newHeight)
+        } else {
             receiveTextViewHeight?(textView.contentSize.height)
         }
     }
     
     @MainActor
     private func updateTextCount(_ textView: UITextView) {
-        DispatchQueue.main.async {
             var count: Int = 0
             
             let trimMode: TextViewTrimMode = viewModel(\.styleState.trimMode)
@@ -102,7 +107,6 @@ public struct TextView: UIViewRepresentable {
             }
             
             receiveTextCount?(count)
-        }
     }
 }
 
@@ -256,6 +260,8 @@ private extension TextView {
                         textView.text = ""
                     } else {
                         self.determineRangeAndReplacementText(textView, context)
+                        self.updateHeight(textView)
+                        self.updateTextCount(textView)
                     }
                 }
             }
@@ -320,12 +326,13 @@ private extension TextView {
                 return
             }
             
-            if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: finalText) {
-                if self.text != textView.text {
-                    self.text = textView.text
-                }
-                return
-            }
+//            if context.coordinator.limitLineCondition(textView, shouldChangeTextIn: range, replacementText: finalText) {
+//                if self.text != textView.text {
+//                    self.text = textView.text
+//                }
+//                return
+//            }
+            
             
             if self.checkLimitCountCondition(textView, shouldChangeTextIn: range, replacementText: text, context: context) {
                 if self.text != textView.text {
@@ -337,7 +344,7 @@ private extension TextView {
             
             if let textRange = Range(range, in: textView.text) {
                 textView.text = textView.text.replacingCharacters(in: textRange, with: finalText)
-                
+                textView.scrollRangeToVisible(NSRange(location: textView.text.count, length: 0))
                 if self.text != textView.text {
                     self.text = textView.text
                 }

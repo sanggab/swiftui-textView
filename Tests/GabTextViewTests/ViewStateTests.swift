@@ -41,7 +41,7 @@ final class ViewStateTests: XCTestCase {
     func testChangeBackgroundColor() throws {
         let textView = try XCTUnwrap(self.textView)
         
-        let _ = textView.changeBackgroundColor(.blue)
+        let _ = textView.backgroundColor(color: .black)
         
         XCTAssertEqual(textView.viewModel(\.viewState.backgroundColor), .blue)
     }
