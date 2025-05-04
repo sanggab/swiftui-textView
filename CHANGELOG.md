@@ -2,9 +2,18 @@
 
 -----
 
-## [2.4 - Remove Print](https://github.com/sanggab/swiftui-textView/releases/tag/2.3) (2025-03-22)
+## [2.5 - Change Limit Line Feature](https://github.com/sanggab/swiftui-textView/releases/tag/2.5) (2025-05-04)
+#### Fix
+* line을 limit하는 기능을 변경하였습니다.
+  * 기존에는 TextView의 입력 자체를 막았다면, 이제는 입력을 안 막고 Height을 막습니다.
+
+---
+
+## [2.4 - Remove Print](https://github.com/sanggab/swiftui-textView/releases/tag/2.4) (2025-03-22)
 #### Fix
 * Print문을 제거했습니다.
+
+---
 
 ## [2.3 - Bug Fix](https://github.com/sanggab/swiftui-textView/releases/tag/2.3) (2025-03-21)
 #### Fix
