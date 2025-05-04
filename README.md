@@ -128,6 +128,8 @@ struct ContentView: View {
       .limitLine(5)
   ```
   <br>
+> [!Note]
+> TextView의 Height을 line 수 만큼 제한합니다.
   
 
 * `func limitCountAndLine(_ count: Int, _ line: Int) -> TextView`    
@@ -140,6 +142,8 @@ struct ContentView: View {
       .limitCountAndLine(100, 5)
   ```
   <br>
+> [!Note]
+> TextView의 Height을 line 수 만큼 제한합니다.
 
 <a name="inputbreak"></a>
 ### InputBreak
